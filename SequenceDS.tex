@@ -549,10 +549,9 @@ $$\sum_{i=1}^{n}\sum_{j=1}^{i} d[j] = \sum_{i=1}^{n} (n-i+1) \cdot d[i] = (n+1) 
 	\subsection{更高維的版本}
 	BIT 動態前綴和推廣成高維版本的方式，就是使 BIT 的每一項都成為一個 BIT ，這樣便是一個二維 BIT 了，至於複雜度的話，每多增加一維，便會變為 $\log{N}$ 倍，因此複雜度為 $O(\log{N}^DQ)$，但倘若是要查詢任意區間的話，就必須要使用排容原理，複雜度 $O(2^D\log{N}^DQ)$ 。
 	
-\chapter{Sparse Table}
-\section{前言}
+\section{Sparse Table}
 sparse table 主要是處理 RMQ （區間最小值）的問題，為倍增法的一種實現。
-\section{原理}
+
 考慮到暴力建表需要$O(N^2)$的複雜度，我們發現以下的性質：
 \begin{center}
 $min(a,b)=min(a,b,b)$\\
@@ -562,7 +561,6 @@ $min(a,b)=min(a,b,b)$\\
 $\frac{r-l}{2} \leq d=2^k\leq r-l$
 \end{center}
 不難發現$k=[\log _2 (r-l)]$，$d=2^k =2^[\log _2 (r-l)]$。因此$min([l,r))=min([l,l+d),[r-d,r))$。於是我們建立一個 st 表格，其中st$[i][j]$代表編號在$[j,j+2^i)$範圍內的最小值。這樣一來只要將詢問轉換一下就可以$O(1)$查詢了。
-\section{操作流程}
 \subsection{預處理}
 建表時不難發現以下式子：
 $$\begin{cases}
@@ -585,7 +583,7 @@ int query(int l,int r){
 	return min(st[(int)log2(r-l)][l],st[(int)log2(r-l)][r-1<<((int)log2(r-l))]);
 }
 \end{C++}
-\section{小小的推廣}
+\subsection{小小的推廣}
 上述sparse table的min運算可替換為「具交換律、結合律且滿足$f(x,x)=x$」的任意二元運算$f$。\\
 \problem{胖胖殺蚯事件(TIOJ1603)}{給定$n$棟大樓高度$h[i]$和$m$筆詢問$[l,r]$，輸出每筆詢問區間的最大值$-$最小值。}
 

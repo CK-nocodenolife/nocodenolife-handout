@@ -1,0 +1,193 @@
+\chapter{pbds}
+\section{前言}
+這份講義要介紹的是一個GNU C++中的函式庫－－pbds(policy-based data structure)，俗稱平板電視。他跟STL有一點類似，但是他其中的某些功能是STL無法達到的。大家應該都知道STL在競賽中的重要性，因此pbds也絕對是幫助你邁向程式設計競賽成功的好幫手！話不多說，我們就趕快來看看怎麼用pbds吧！
+\section{pbds介紹}
+接下來就向各位介紹pbds的用法及其中的資料結構。\\
+首先，無論是使用pbds中的人和資料結構，都需要打上這兩行：\\
+\begin{C++}
+#include <ext/pb_ds/detail/standard_policies.hpp>
+using namespace __gnu_pbds;//there are two _ before gnu, but only one _ between gnu and pbds
+\end{C++}
+
+以下就開始正式開始介紹pbds中的資料結構囉！
+\subsection{Hash Table}
+就跟STL中的\inline{unordered\_map}幾乎一樣(可用中括號隨機存取、\inline{insert、delete
+、clear、find、查看size}、自定hash function，但不能\inline{count})，它分成\inline{gp\_hash\_table}和 \inline{cc\_hash\_table}，使用並無差異，只是處理碰撞的方式不同。\\
+而使用時還要加上：\inline{\#include<ext/pb\_ds/assoc\_container.hpp>}。
+讓我們直接來看一下範例程式碼吧！\\
+\begin{C++}
+#include<bits/stdc++.h>
+#include<ext/pb_ds/detail/standard_policies.hpp>
+#include<ext/pb_ds/assoc_container.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+int main()
+{
+  gp_hash_table<int,int> r;
+  for(int i = 0;i < 5000000;i++)
+  {
+    r.insert({i,i+1});
+  }
+  cout << (r.find(7))->second << endl;
+  for(int i = 0;i < 5000000;i++)
+  {
+    r.erase(i);
+  }
+  if(r.find(7) == r.end())
+  {
+    cout << "No!" << endl;
+  }
+}
+\end{C++}
+
+之後我又將\inline{cc\_hash\_table}換成\inline{gp\_hash\_table}和\inline{unordered\_map}。跑一樣的程式碼，\inline{cc\_hash\_table}跑2.42秒左右，\inline{gp\_hash\_table}跑2.53秒左右，\inline{unordered\_map}則跑了5.06秒。因此若覺得\inline{unordered\_map}常數太大的人可以考慮用用看pbds的hash table喔！
+
+\subsection{Priority Queue}
+對，這也跟STL的\inline{priority\_queue}差不多，STL的\inline{priority\_queue}支援的操作它都支援，而為了防止與STL中的\inline{priority\_queue}搞混，在使用上要特別注意在宣告的時候要加上\inline{\_\_gnu\_pbds::}，以確保用到的是pbds中的\inline{priority\_queue}。宣告方式也有些微差異，可在底下範例中看到。相較於STL的\inline{priority\_queue}只有一種，pbds的\inline{priority\_queue}可以在宣告時加上一個tag，以決定\inline{priority\_queue}的實作方式。使用不同的實作方式也就會導致不同操作有不同複雜度，簡單整理如下：\\
+
+\begin{tabular}{|m{4cm}|m{2cm}|m{2cm}|m{2cm}|m{2cm}|m{2cm}|}
+\hline
+ & \inline{push} & \inline{pop} & \inline{modify} & \inline{erase} & \inline{join} \\
+\hline
+\inline{std::priority\_queue} & 最差 $\Theta(n)$ & 最差$\Theta(\log n)$ & 最差$\Theta(n\log n)$ & $\Theta(n\log n)$ & $\Theta(n\log n)$ \\
+ & 均攤 $\Theta(\log n)$ & & & &\\
+\hline
+\end{tabular}
+
+其中的pairing heap和binomial heap較常用到。\\
+或許會有人好奇，要怎麼修改\inline{priority\_queue}內部的元素呢？\\
+首先，pbds的\inline{priority\_queue}的iterator宣告如下：
+\begin{C++}
+__gnu_pbds::priority_queue<int>::point_iterator it;
+\end{C++}
+此外，將元素\inline{push}到pbds的\inline{priority\_queue}的時候會有回傳值，即為該元素所在的iterator，只要在\inline{push}的時候紀錄一下，就可以利用\inline{modify}函式和iterator來進行修改囉！\\
+使用時別忘了加\inline{\#include<ext/pb\_ds/priority\_queue.hpp>}。\\
+給個範例程式：
+\begin{C++}
+#include<bits/stdc++.h>
+#include<ext/pb_ds/detail/standard_policies.hpp>
+#include<ext/pb_ds/priority_queue.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+int main()
+{
+  __gnu_pbds::priority_queue<int,less<int>,binomial_heap_tag> pq;//型態 比較函式 tag
+  __gnu_pbds::priority_queue<int,less<int>,binomial_heap_tag>::point_iterator it[20];
+  for(int i = 0;i < 10;i++)
+  {
+    it[i] = pq.push(i);
+  }
+  pq.modify(it[0],7122);
+  cout << pq.top() <<endl;
+}
+\end{C++}
+有沒有覺得寫dijkstra的時候會派上用場呢？
+
+接著示範合併(join)，注意被合併的\inline{priority\_queue}的大小會歸零。\\
+\begin{C++}
+#include<bits/stdc++.h>
+#include<ext/pb_ds/detail/standard_policies.hpp>
+#include<ext/pb_ds/priority_queue.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+int main()
+{
+  __gnu_pbds::priority_queue<int,less<int>,pairing_heap_tag> a,b;
+  for(int i = 0;i < 5;i++)
+  {
+    a.push(i);
+    b.push(i+5);
+  }
+  a.join(b);
+  cout << a.size() << " " << b.size() <<endl;
+  cout << a.top() <<endl;
+}
+
+\end{C++}
+\subsection{\inline{tree}}
+接下來講的就是大家常常抱怨的\inline{set}和\inline{map}的進化版了啊，就是pbds中的平衡二元樹。它除了\inline{insert、erase、lower\_bound、upper\_bound}等\inline{set}已經有的操作之外，還可以找$k$小值(\inline{find\_by\_order}，回傳iterator(0-based))和求排名(\inline{order\_of\_key}，回傳一整數(0-based))，還支援類似merge-split treap的\inline{join}(\inline{join}的時候兩棵樹的類型要相同，沒重複元素，且key值要左小右大)還有\inline{split}。\\
+它的宣告長這樣：\\
+\begin{C++}
+tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> tr;
+\end{C++}
+
+前三格就是STL \inline{map}中的key、對應的資料型態，和比較函式。第四格是各種樹的tag，有\inline{rb\_tree\_tag、splay\_tree\_tag、ov\_tree\_tag，其中的rb\_tree\_tag}較為常用。其他兩個的用處我不是很了解，但它在一般使用上的常數較高，盡量避免使用。最後就是更新方式了，不知道要打甚麼就照抄吧！\\
+它其實還有一些更進階的用法，像是自行定義點的更新方式，不過我也不會，而且蛋餅說還不如自己刻一顆treap，所以這邊我就不多說大家有興趣的自行研究喔！
+也記得要加上\inline{\#include<ext/pb\_ds/assoc\_container.hpp>}。\\
+嗯，一樣來看範例程式。\\
+\begin{C++}
+#include<iostream>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+int main()
+{
+  tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> a,b;
+  for(int i = 0;i < 10;i++)
+  {
+    a.insert(i*2);
+  }
+  a.erase(18); // tr = {0,2,4,6,8,10,12,14,16}
+  cout << *a.lower_bound(11) << endl; // 原本set和map支援的操作都有
+  cout << *a.find_by_order(0) << endl; 
+  cout << *a.find_by_order(5) << endl;
+  cout << a.order_of_key(9) << endl;
+  cout << a.order_of_key(10) << endl;
+  a.split(6,b);
+  for(auto i : a)
+  {
+    cout << i << " ";
+  }
+  cout << endl;
+  for(auto i : b)
+  {
+    cout << i << " ";
+  }
+  cout << endl;
+  a.join(b);
+  cout << a.size() << endl;
+}
+\end{C++}
+\subsection{Trie}
+大家可能會覺得剛剛的資料結構或許很厲害，但其實都只是STL之中不同資料結構的變形。但接下來要介紹的資料結構，STL之中就沒有了呢！它，就是大名鼎鼎的Trie！
+
+首先先介紹宣告方式，它的宣告方式比較複雜，我盡量想辦法簡單一點。\\
+它完整的宣告長這樣：
+\begin{C++}
+trie<string,null_type, trie_string_access_traits<>, pat_trie_tag, trie_prefix_search_node_update> tr;
+\end{C++}
+第一個參數一定要是字串型態，第二格可以是其他的資料型態(類似\inline{map}的感覺)，不用的話就用\inline{null\_type}，第三格是比較函式，第四格是trie的種類，最後則是更新方式。一般使用時後三格可以照打，有興趣者可自行研究。
+那你可以對它做啥操作呢？\\
+首先就是最基本的\inline{insert、delete、find字串，也可以進行合併(join)和分割(split)(要注意的是，join}的兩個trie一定要第一個字典序比較小，第二個比較大)。它還有一個很特別的操作，就是\inline{prefix\_range}的這個操作，它會回傳一個pair，代表以某個前綴開頭的字串的開頭的iterator和結尾的iterator。這樣講不太清楚，不如直接看範例吧！\\
+要記得加上\inline{\#include<ext/pb\_ds/assoc\_container.hpp>}。\\
+\begin{C++}
+#include <iostream>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/detail/standard_policies.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+int main()
+{
+  trie<string, null_type, trie_string_access_traits<>,pat_trie_tag,trie_prefix_search_node_update> a,b,c;
+  a.insert("her");
+  a.insert("hers");
+  b.insert("she");
+  b.insert("his");
+  a.join(b);
+  auto temp = a.prefix_range("h");
+  for(auto i = temp.first;i != temp.second;i++)
+  {
+    cout << *i << " ";
+  }
+  cout <<endl;
+  a.delete("hers");
+  a.split("r",b);
+  cout << a.size() << " " << b.size() <<endl;
+}
+\end{C++}
+\section{習題}
+其實pbds只是一個方便使用的工具，裡面很多的資料結構都可以自己手刻出來，因此我也不知道要放甚麼習題呢！大家好好思考下面的題目吧！
+\problem{忍者調度問題 (TIOJ4544 1429)}{
+	給定一個$N$個節點的有根樹，每個節點有兩個值($C$和$L$)，再給一個整數$M$，你要找到任意個節點，使的他們$C$值的和小於$M$，且選定的節點數乘上所有選定節點的某個共同祖先的$L$值最大，輸出該最大值。（$N   \leq10^5$，$M  \leq 10^9$）
+}
