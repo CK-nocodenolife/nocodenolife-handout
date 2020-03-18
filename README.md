@@ -9,3 +9,4 @@ git push -u origin master
 ```
 
 請記得要先 `git pull` 再修改喔～
+但是第一次請 `git clone` 
