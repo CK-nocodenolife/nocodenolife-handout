@@ -1,0 +1,39 @@
+\chapter{並查集 Disjoint Sets}
+	並查集 (Disjoint Sets)是一個用來處理集合的資料結構，他只支援兩種操作：
+	\begin{enumerate}
+		\item 將兩個集合合併(Union)
+		\item 查詢一個元素所在的集合(Find)
+	\end{enumerate}
+	這是一個基礎的資料結構，一定要學會，後面的演算法常常會用到這個概念!
+		
+	\subsection{實作}
+	一般我們維護一個DSU的方式都是以一棵樹來記錄一個集合，而利用root來代表該集合，事實上，要維護這些樹只要用一個array就行了，array第$i$項的值就是$i$的parent，而root的parent則是自己。前面說到一個正常的DSU應該要支援兩種功能，現在就來講講這兩種功能的實作概念吧～
+	\subsection{合併(Union)}
+	合併兩個集合的方式其實異常簡單，就是分別找到那兩個集合的root，將其中一個root指向另外一個，便大功告成了。
+	\subsection{查詢(Find)}
+	要查詢一個元素所在集合的方式也十分直觀：不斷往自己的parent找，直到找到一個元素的parent指向自己，那麼他就是root了。而在往上尋找時還有一個小技巧，就是在過程中記錄經過的節點，之後一併將這些點的parent改為root，便可以節省下次查詢這些點的時間。
+	\problem{DSU 練習}{
+		請實作一個\inline{DSU}，需要支援兩種操作：
+		\begin{enumerate}
+			\item \inline{Union}$(a, b)$，將 $a$ 所在的集合與 $b$ 所在的集合合併
+			\item \inline{Find}$(a)$，回傳 $a$ 所在的集合
+		\end{enumerate}
+		}
+	\begin{C++}
+int v[MAXN];
+
+void Find(int a) {
+	if (v[a] == a) return a;
+	v[a] = Find(v[a]);
+	return v[a];
+}
+
+void Union(int a, int b) {
+	v[Find(a)] = Find(b);
+}
+	\end{C++}
+	\subsection{維護 size}
+	倘若想同時記錄每個集合的大小，其實也沒那麼困難，只要多用一個size變數紀錄每個集合的大小，合併時將兩個集合的大小相加，就能成功維護集合大小了。
+	\subsection{一點小優化}
+	對於每個集合多給一個變數rank，記錄每個集合中tree的最大深度，合併時選擇rank較小的合併到rank較大的集合中，而倘若兩個集合的rank相同，則要在兩個集合合併後把rank值$+1$，這樣可以再降低之後Find的複雜度，使DSU操作的時間複雜度答案近$O(\alpha{N})$的程度。\\
+	（可以想想為什麼兩集合rank相同時，合併後要$+1$？
