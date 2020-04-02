@@ -154,7 +154,7 @@ void totalBinarySearch(int l,int r,vector<int> &V){
 	undo_update(L);
 }
 // split的實作，利用BIT
-void split(vector<int> &V,vector<int> &L,vector<int> &R,	int x){
+void split(vector<int> &V,vector<int> &L,vector<int> &R,int x){
 	for(int id:V){
 		if(...){ //是原序列數a_i
 			if(a_i < x) {
@@ -166,7 +166,7 @@ void split(vector<int> &V,vector<int> &L,vector<int> &R,	int x){
 		if(...){ // 是詢問(l,r,k)
 			int cnt = query(r)-query(l-1); // BIT
 			if(cnt < x) L.push_back(id);
-			else R.push_back(id);	
+			else R.push_back(id);
 		}
 	}
 	// 離開時記得 undo 讓 BIT 和進來前相同

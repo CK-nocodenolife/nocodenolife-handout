@@ -1,4 +1,4 @@
-\chapter{除了很強，只有更強}
+\chapter{除了很強，只有更強 - 常見資結技巧}
 	\section{讓資料結構如虎添翼！}
 		前面學過了許多的資料結構，像是線段樹、Treap、Fenwick Tree（只是想要讓你們複習一下BIT的另外一個名字）等，雖然可以做一些事，但是還是有許多的不足！可以透過新的概念來幫資料結構們加上裝備，讓他們可以做更多事！這裡的東西會比較難理解，需要慢慢讀文字，仔細思考，一小段可以看一個禮拜，慢慢吸收，慢慢理解。
 	\section{懶惰標誌（Lazy Propagation）}
@@ -170,6 +170,59 @@ Node *modify(Node *o, int pos, int dif,
 			剩下的就是一般的線段樹就好了（至少會和講義中的函數差不多），不需要變！每一次\inline{modify}的時候，就將回傳的新\inline{Node}小心翼翼地將它放進去存的地方，如陣列或BIT（真的）等。
 		\subsection{其他資料結構的持久化}
 			不只線段樹可以持久化，只要你想要，都可以持久化，只是比較難：幾乎所有的樹狀結構都可以持久化，像是Treap、Trie、左偏樹（可合併的heap）、Linked List、並查集（當然，就不能路徑壓縮了，複雜度退化成$O(\log n)$）等都可以寫成持久化，甚至序列看成Treap也可以持久化！可以去看CodeChef上有一篇文章叫做「\href{https://discuss.codechef.com/t/persistence-made-simple-tutorial/14915}{\underline{Persistence Made Simple}}」（URL），寫得很好，將持久化的精神解釋的很清楚。
+\section{動態開點}
+有時候因為題目的範圍非常的大，又不能（或不想）事先離散化，就必須用到動態開點的技巧！具體上就是沒碰到的點就讓他是空的，當查詢或修改必須用到時再為他開空間便可，和持久化的寫法很相似。這邊用偽指標的方法寫一份包含懶標的區間加值RMQ當作範例（沒有東西的話default會是0）。
+
+\begin{C++}
+struct Segtree {
+	struct node {
+		int mx, lz;
+		int l, r;
+	} M[N*4];
+	int tot;
+	void pull(int p) {
+		M[p].mx = max(M[M[p].l].mx, M[M[p].r].mx);
+	}
+	void upd(int p, int x) {
+		M[p].mx += x, M[p].lz += x;
+	}
+	void push(int p) {
+		if(!M[p].lz) return;
+		if(!M[p].l) M[p].l = ++tot;
+		if(!M[p].r) M[p].r = ++tot;
+		upd(M[p].l, M[p].lz);
+		upd(M[p].r, M[p].lz);
+		M[p].lz = 0;
+	}
+	void add(int &now, int ql, int qr, int x, int l, int r) {
+		if(l >= qr || r <= ql) return;
+		if (!now) now = ++tot;
+		push(now);
+		if(ql <= l && r <= qr) {
+			upd(now, x);
+			return;
+		}
+		int m = l+(r-l)/2;
+		add(M[now].l, ql, qr, x, l, m);
+		add(M[now].r, ql, qr, x, m, r);
+		pull(now);
+	}
+	int query(int now, int ql, int qr, int l, int r) {
+		if(l >= qr || r <= ql || !now) return 0;
+		push(now);
+		if(ql <= l && r <= qr) return M[now].mx;
+		int m = l+(r-l)/2;
+		return max(query(M[now].l, ql, qr, l, m),
+			query(M[now].r, ql, qr, m, r));
+	}
+} sgt;
+
+int main() {
+	int root = 0;
+	// add(root, ql, qr, x, 0, 1000000000);
+	// query(root, ql, qr, 0, 1000000000);
+}
+\end{C++}
 
 \chapter{樹堆Treap}
 \section{前言}
@@ -203,11 +256,11 @@ merge-split tree顧名思義，需要有merge（合併）、split（分裂）兩
 node *merge(node *a,node *b){ //將根節點為a,b的treap合併
 	if(!a) return b; //base case
 	if(!b) return a; //base case
-	if(a−>pri<b−>pri){
-		a−>r=merge(a−>r,b);
+	if(a->pri<b->pri){
+		a->r=merge(a->r,b);
 		return a;
 	}else{
-		b−>l=merge(a,b−>l);
+		b->l=merge(a,b->l);
 		return b;
 	} //pri值小的當父節點，大的當子節點。
 }
@@ -217,10 +270,10 @@ node *merge(node *a,node *b){ //將根節點為a,b的treap合併
 \begin{C++}
 void split(node *s,node *&a,int k,node *&b){
 	if(!s) a=b=nullptr; //base case
-	else if(s−>key<=k) //s的key較小，故s和其左子樹都在左邊
-		a=s,split(s−>r,k,a−>r,b); //分割右子樹
+	else if(s->key<=k) //s的key較小，故s和其左子樹都在左邊
+		a=s,split(s->r,k,a->r,b); //分割右子樹
 	else 
-		b=s,split(s−>l,k,a,b−>l); //分割左子樹
+		b=s,split(s->l,k,a,b->l); //分割左子樹
 }
 \end{C++}
 \section{延伸操作}
@@ -276,7 +329,7 @@ rank tree就是要能查詢各個rank的值以及每個值得rank。在search by
 \item 查詢序列第$k$的數字是多少。
 \end{enumerate}
 }
-每次都要搬動一個區間非常麻煩，但使用treap的話，只要切成$[0,l_1)$，$[l_1,r_1)$，$[r_1,l_2)$，$[l_2,r_2)$，$[r_2,n)$五段，在依$[0,l_1)$，$[l_2,r_2)$，$[r_1,l_2)$，$[l_1,r_1)$，$[r_2,n)$的順序merge回來就好了！是不是很簡單？我們來看code吧：
+每次都要搬動一個區間非常麻煩，但使用treap的話，只要切成$[0,l_1)$，$[l_1,r_1)$，$[r_1,l_2)$，$[l_2,r_2)$，$[r_2,n)$五段，再依$[0,l_1)$，$[l_2,r_2)$，$[r_1,l_2)$，$[l_1,r_1)$，$[r_2,n)$的順序merge回來就好了！是不是很簡單？我們來看code吧：
 \begin{C++}
 int rs=1e9+7;
 int rand(){return rs=(rs*rs)%0xdefaced;}
@@ -323,5 +376,156 @@ void change(node *&n,int l1,int r1,int l2,int r2){
     split(n,c,l2-r1+1,d);n=d;
     split(n,d,r2-l2+1,e);
     n=merg(merg(merg(merg(a,d),c),b),e);
+}
+\end{C++}
+
+
+\chapter{時間線段樹}
+\section{例題}
+來看看萬年的唯一例題(?)
+\problem{【Gate】這個笑容由我來守護（TIOJ 1890）}{
+給定一張$N$個點$M$條邊的圖，之後有$Q$次修改
+每次修改可能是新增一條邊，或者是刪除已經存在的一條邊
+對於每次修改後，請輸出這張圖當時的連通塊數量
+}
+
+如果現在題目只有加邊，那麼大家應該都會想到用DSU去處理吧！當題目只有刪邊，應該也可以很容易的想到可以時間倒過來用同樣的作法處理。
+
+具體來說時間線段樹是什麼呢？我們可以發現，每條邊有特定的一些存活時間，在時間上對應的是一段區間，若我們離線將修改都讀進來，就能對時間這條軸開一棵線段樹表示，每個節點存這個點代表的區間被哪些邊的存活時間完整覆蓋。
+
+接著，按照時間順序DFS，並跟著維護DSU，在遞迴到葉節點的時候就能得知該時間點的答案，但是在過程中我們會遇到必須要將DSU的合併動作「回復」，也就是說DFS離開某個節點的時候必須撤銷某個節點造成的影響，但只要把每個修改操作都記錄下來就能，這時候路徑壓縮的優化就會失效了（可以想想為什麼），但啟發式
+\begin{C++}
+#pragma GCC optimize ("Ofast")
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <map>
+#include <algorithm>
+#include <deque>
+#include <numeric>
+#define pii pair<int,int>
+#define piii pair<int,pair<int,int> >
+#define piiii pair<pii, pii>
+#define F first
+#define S second
+#define ericxiao ios_base::sync_with_stdio(0);cin.tie(0);
+#define endl '\n'
+using namespace std;
+
+const int maxN = 6e5;
+
+int T, N, M, Q, a, b, cc, ans[maxN + 10], dsu[maxN + 10], rk[maxN + 10];
+char com;
+
+vector<pii>seg[maxN * 4];
+
+
+inline void init();
+int  Find(int a);
+inline piiii Merge(int a, int b);
+
+void ins(int id, int l, int r, int ql, int qr, pii p){
+    if(qr <= l || ql >= r) return;
+    if(ql <= l && r <= qr){
+        seg[id].push_back(p);
+        return;
+    }
+    ins(2 * id + 1, l, (l + r)/2, ql, qr, p);
+    ins(2 * id + 2, (l + r)/2, r, ql, qr, p);
+}
+
+
+void dfs(int id, int l, int r){
+    vector<piiii> v;
+    for(auto p : seg[id]){
+        //do and record
+        v.push_back(Merge(p.F, p.S));
+    }
+    vector<pii>().swap(seg[id]);
+    //recurse
+    if(l + 1 < r){
+        dfs(2 * id + 1, l, (l + r) / 2);
+        dfs(2 * id + 2, (l + r) / 2, r);
+    } else {
+        ans[l] = cc;
+    }
+    //undo
+    reverse(v.begin(), v.end());
+    for(piiii p : v){
+        dsu[p.F.F] = p.F.F;
+        cc += p.F.S;
+        rk[p.S.F] = p.S.S;
+    }
+    vector<piiii>().swap(v);
+}
+
+int main(){
+    ericxiao;
+    cin >> T;
+    while(T--){
+        cin >> N >> M >> Q;
+        init();
+        int ct = 0;
+        map<pii,deque<int> > mp;
+        for(int i = 0; i < M; ++i){
+            cin >> a >> b;
+            if(a > b) swap(a, b);
+            mp[{a, b}].push_back(0);
+            ct++;
+        }
+        /*
+        com:
+        N new edge
+        D del edge
+        */
+        for(int i = 0; i < Q; ++i){
+            cin >> com >> a >> b;
+            if(a > b) swap(a, b);
+            if(com == 'N'){
+                mp[{a, b}].push_back(ct);
+            } else if(com == 'D') {
+                ins(0, 0, (M + Q), mp[{a, b}].front(), ct, {a, b});
+                mp[{a,b}].pop_front();
+            }
+            ct++;
+        }
+
+        for(auto p : mp){
+            if(p.S.empty()) continue;
+            while(p.S.size()){
+                ins(0, 0, (M + Q), p.S.front(), ct, p.F);
+                p.S.pop_front();
+            }
+        }
+        //cout << "Ct = " << ct << endl;
+        dfs(0, 0, (M + Q));
+        for(int i = 0; i < Q; ++i){
+            cout << ans[i + M] << '\n';
+        }
+    }
+}
+
+inline void init(){
+    iota(dsu, dsu + N, 0);
+    fill(rk, rk + N, 1);
+    cc = N;
+}
+
+int Find(int a){
+    if(dsu[a] == a) return a;
+    return Find(dsu[a]);
+}
+
+inline piiii Merge(int a, int b){
+    //cout << "Gonna merge " << a << " and " << b << endl;
+    //cout << "Find(a) = " << Find(a) << " and Find(b) = " << Find(b) << endl;
+    if(Find(a) == Find(b)) return {{Find(a), 0}, {Find(b), rk[Find(b)]}};
+    if(rk[Find(a)] > rk[Find(b)]) swap(a, b);
+    piiii res = {{Find(a), 1}, {Find(b), rk[Find(b)]}};
+    if(rk[Find(a)] == rk[Find(b)]) rk[Find(b)]++;
+    //cout << "Merging " << a << " and " << b << endl;
+    cc--;
+    dsu[ Find(a) ] = Find(b);
+    return res;
 }
 \end{C++}

@@ -28,7 +28,7 @@
 	numberfirstline=true,
 	% Code design
 	identifierstyle=\color{black},
-	keywordstyle={\color{magenta}},
+	keywordstyle={\color{primaryKeywords}},
 	keywordstyle={[2]{\color{primaryKeywords}}},
 	keywordstyle={[3]{\color{secondaryKeywords}}},
 	keywordstyle={[4]{\color{magenta}}},
@@ -40,8 +40,36 @@
 	showspaces=false,
 	showstringspaces=false,
 	extendedchars=true,
-%	breaklines=true,
+	breaklines=true,
 	captionpos=b,
+}
+\lstdefinestyle{bw} {%
+	% General design
+	backgroundcolor=\color{editorGray},
+	basicstyle={\small\ttfamily},   
+	frame=tb,
+	% line-numbers
+%	xleftmargin={0.75cm},
+	numbers=left,
+	numberstyle=\scriptsize\ttfamily,
+	stepnumber=1,
+	firstnumber=1,
+	numberfirstline=true,	
+	% Code design
+	identifierstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	commentstyle=\color{gray}\ttfamily,
+	% Code
+	%alsodigit={.:;},
+	tabsize=4,
+	showtabs=false,
+	showspaces=false,
+	showstringspaces=false,
+	extendedchars=true,
+	breaklines=true,
+	captionpos=b,
+}
+\iffalse
 	literate=%
 % numbers
 {0}{{{\color{numbers}0}}}1
@@ -79,35 +107,9 @@
 {\&}{{{\color{magenta}\&}}}{1}
 {\{}{{{\color{magenta}\{}}}{1}
 {\}}{{{\color{magenta}\}}}}{1},
-}
-\lstdefinestyle{bw} {%
-	% General design
-	backgroundcolor=\color{editorGray},
-	basicstyle={\small\ttfamily},   
-	frame=tb,
-	% line-numbers
-%	xleftmargin={0.75cm},
-	numbers=left,
-	numberstyle=\scriptsize\ttfamily,
-	stepnumber=1,
-	firstnumber=1,
-	numberfirstline=true,	
-	% Code design
-	identifierstyle=\ttfamily,
-	keywordstyle=\bfseries,
-	commentstyle=\color{gray}\ttfamily,
-	% Code
-	%alsodigit={.:;},
-	tabsize=4,
-	showtabs=false,
-	showspaces=false,
-	showstringspaces=false,
-	extendedchars=true,
-	breaklines=true,
-	captionpos=b,
-}
+\fi
 \lstdefinelanguage{cppcodeblocks}{
-%	language=C++,
+	language=C++,
 	sensitive=true,
 	morecomment=[l][\color{preprocessor}]{\#},
 	morecomment=[l][\color{gray}]{//}, % l for line comment
@@ -125,9 +127,8 @@ alignas, alignof, asm, auto, bool, break, case, catch, char, char16\_t, char32\_
 %	deletekeywords={(,),\{,\}},
 %	otherkeywords=[4]{(,),\{,\}},
 }
-\renewcommand\lstlistingname{Sample Code}
+%\renewcommand\lstlistingname{Sample Code}
 \newcommand{\inline}[2][black]{{\color{#1}\ttfamily{#2}}}
 %\newcommand{\inline}[1]{{\lstlisting[style=vivid,caption=,language=cppcodeblocks]{#1}}}
-\newcommand{\Cinline}[1]{\lstinline
-[style=bw, language = cppcodeblocks, keepspaces=true] {#1}}
-\lstnewenvironment{C++}[1][]{\lstset{style=vivid, caption = {#1}, language = cppcodeblocks}}{}
+%\newcommand{\Cinline}[1]{\lstinline [style=bw, language = cppcodeblocks, keepspaces=true] {#1}}
+\lstnewenvironment{C++}[1][]{\lstset{style=vivid, caption = {#1}, language=cppcodeblocks}}{}

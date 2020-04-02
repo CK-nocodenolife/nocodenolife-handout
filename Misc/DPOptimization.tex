@@ -25,7 +25,7 @@
 			首先，我們來處理「斜率單調」這個條件：若每一條加入的線的斜率都比前一條大，則可以發現：每次要比較的線段都會是最右邊的，然後再一個一個刪除之後放在最右邊。那要怎麼判定目前最右邊的線需不需要刪除呢？請看圖：
 			
 			\begin{center}
-				%\includegraphics*[width = 0.6\textwidth]{pictures/dpoptimization/bothdandiao_lines.png}
+\includegraphics*[width = 0.6\textwidth]{images/bothdandiao_lines.png}
 			\end{center}
 			若要加入的線為斜率比原有的$L_1$、$L_2$還要大的紅、綠色兩條線，與前一條$L_2$的交點為$B$、$C$，$L_1 \cup L_2 = A$。 可以明顯看到，若新的線的交點在原本的交點（$A$）的右邊，那就不需要刪除了（綠色線）；否則，若交點在左邊的話，就得和原本的線說さよなら啦（紅色線）！
 			
@@ -55,7 +55,7 @@
 	\subsection{驗證 \& 細節部分}
 		這是正確的想法，但是我們先來驗證一下——對於一個凸的$f(x)$，若$p$單調，則其$\min\arg$也會單調嗎？雖然這裏不給嚴謹的證明，但是附上精美圖片一張，讓讀者自行感受：
 		\begin{center}
-%			\includegraphics{images/aliensopt}
+			\includegraphics{images/aliensopt}
 		\end{center}
 		當然，可能會有一個問題出現：就是如果$p$的最小值出現在
 	\section{四邊形不等式優化}
@@ -308,7 +308,7 @@
 	\problem{超大畫框設置（TIOJ 1283）}{
 		給定一個類似這樣的多邊形：（線皆垂直，且上面為右下右下⋯⋯，下面為下右下右下右⋯⋯），請問裡面可以放的最大矩形面積為何？（總邊數$\leq 10^5$）
 		\begin{center}
-			%\includegraphics[width=0.5\textwidth]{images/1283_1}
+			\includegraphics[width=0.5\textwidth]{images/TIOJ1283}
 		\end{center}
 		
 	}
