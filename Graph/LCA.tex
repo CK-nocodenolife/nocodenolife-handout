@@ -143,7 +143,7 @@ void tarjanLCA(int u){//u為目前的節點
 	\definition{重鍊定義}{
 		對於一棵樹的每一個節點$u$，令其子樹的大小為$\text{sz}(u)$，則若存在一個$u$的子節點$v$使得$\frac{\text{sz}(u)}{2} < \text{sz}(v)$，那$u$和$v$就存在一條\textbf{重邊}（圖中粗邊為重邊，細邊為輕邊）。
 		\begin{center}
-			\includegraphics*[scale = 0.4]{HLD}
+			\includegraphics*[scale = 0.4]{images/HLD}
 		\end{center}
 		由圖看出，那些重邊會形成一條鍊，而那些鍊就是所謂的\textbf{重鍊}！
 	}

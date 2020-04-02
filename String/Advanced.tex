@@ -1,5 +1,5 @@
-\chapter{字串超階}
-	\section{前言}
+\chapter{字串\uppercase\expandafter{\romannumeral 2}}
+\section{前言}
 		前面已經學過了關於字串的一些知識，譬如KMP演算法，字典樹（Trie）等，這裡會介紹一些更進階的資料結構與演算法來更有效率的處理字串的各種問題，其中非常精妙，值得細嚼慢嚥的讀。
 	\section{後綴序列Suffix Array}
 		\subsection{什麼是後綴序列？}
@@ -196,3 +196,102 @@ void getlcp(string s){
 	\subsection{這是啥？有什麼用？}
 		因為在2019的YTP複賽出現過，所以就來介紹一下這個是做什麼的；//TODO
 		\theorem{abc}{def}
+
+\section{AC自動機（AC Automaton）}
+AC自動機顧名思義就是一種可以讓你自動AC的程式啊(X\\
+
+好，絕對不要聽別人這樣唬爛，事實上AC自動機是KMP字串匹配演算法的進階版，可以一次尋找很多目標字串各個在主字串中出現的地方。不知道大家還記不記得，KMP演算法是在進行字串匹配前，計算當匹配失敗時，可以直接從哪個位置開始重新匹配，也就是failure function。而在AC自動機中也是利用相同的手法，在目標字串們建構出的trie上計算failure pointer，同樣代表匹配失敗時應從哪裡重新開始。
+\subsection{節點}
+AC自動機的節點大致上與trie都一樣，只是會多新增幾個資料，詳細的\inline{struct}如下：
+\begin{C++}
+struct node{ //maxn means how many kinds of characters
+	node *p,*next[maxn],*fp; //記錄父節點、子節點們和failure pointer
+    int index; //第幾個單字的結尾，-1代表不是結尾
+    char ch;
+    node(){}
+    node(node *_p,char _c):p(_p),ch(_c){
+        for(int i=0;i<maxn;i++) next[i]=nullptr;
+        fp=nullptr; index=-1;
+    }
+};
+\end{C++}
+\subsection{build AC automaton}
+最重要的當然是先建構出trie才能做其他事吧！當然，建構方式和正常的trie也差不多，因此就直接看code吧：
+\begin{C++}
+node *build(vector<string> &dict){
+    node *root=new node(nullptr,'\0');
+    root->p=root;
+    for(int i=0;i<dict.size();i++){
+        node *ptr=root;
+        for(auto &j:dict[i]){
+            if(!ptr->next[j-'a'])
+                ptr->next[j-'a']=new node(ptr,j);
+            ptr=ptr->next[j-'a'];
+        }
+        ptr->index=i;
+    }
+    //failure pointer part
+    return root;
+}
+\end{C++}
+\subsection{failure pointer}
+為了方便，這裡的failure pointer定義和failure function會有點差異。而建立的方法我們知道原本failure function在計算時可以\inline{for}迴圈從頭開始一一往後建，也就是說計算某個點時其前面所有failure function都要先被算到。因此移到trie時我們選用BFS的遍歷順序依序計算，如此便可保證計算某一節點時比他上面的節點都已經算完了。說了這麼多，不如直接看程式碼吧（這邊會接續上面的程式碼）：
+\begin{C++}
+node *build(vector<string> &dict){
+    //failure pointer part
+    queue<node *> q;
+    for(int i=0;i<maxn;i++){ //根及第一層的fp都指向根
+        if(root->next[i]){
+            root->next[i]->fp=root;
+            for(int j=0;j<maxn;j++)
+                if(root->next[i]->next[j])
+                    q.push(root->next[i]->next[j]);
+        }
+    }
+    while(q.size()){
+        node *t=q.front(),*ptr=t->p->fp; q.pop();
+        while(ptr!=root&&!ptr->next[t->ch-'a'])
+            ptr=ptr->fp;
+        if(ptr->next[t->ch-'a']) t->fp=ptr->next[t->ch-'a'];
+        else t->fp=root;
+        for(int i=0;i<maxn;i++) if(t->next[i]) q.push(t->next[i]);
+    }
+    return root;
+}
+\end{C++}
+\subsection{開始匹配}
+不外乎就是跟KMP的方法一樣，從第一個字開始看，若遇到失配的狀況就走failure pointer。程式碼應該也相當易懂：
+\begin{C++}
+void ACsearch(node *r,string &s,vector<string> &dict){
+    //root of trie,input string and dictionary
+    node *ptr=r;
+    int i=0;
+    cout<<"string:\tposition:"<<endl;
+    while(i<s.size()){
+        if(ptr->next[s[i]-'a'])
+            ptr=ptr->next[s[i]-'a'],i++;
+        else if(ptr==r)
+            i++;
+        else
+            ptr=ptr->fp;
+        if(ptr->index!=-1)
+            cout<<dict[ptr->index]<<"\t"<<i-(int)dict[ptr->index].size()<<endl;
+    }
+    while(ptr!=r){
+        ptr=ptr->fp;
+        if(ptr->index!=-1)
+        	cout<<dict[ptr->index]<<"\t"<<i-(int)dict[ptr->index].size()<<endl;
+    } //makes ptr back to root
+}
+\end{C++}
+\subsection{你以為結束了？}
+多玩幾次之後就會發現上面AC自動機在目標字串互相包含時會出問題！看下面範例：\\
+
+\inline{dict={"ab","cababc"}; s="cababc"}。上面程式的輸出結果ab只在位置$0$和$4$，位置$2$的ab消失了！！！為什麼會這樣？你畫出AC自動機後自己走一次就會發現，整個匹配過程都是走"ababab"的那條路，經過第一個ab時在tire上有標記結尾，經過第三個ab時，因為結尾加上的\inline{'$\setminus$n'}不斷失配而往fp走，走到指向第一個ab的地方時就會被算到。然而經過第二個ab時，完全沒有標記讓AC自動機知道他也是一個單字。也就是說，只要某個字被包含在另一個字的中間時，就會被忽略（若是頭尾還是會被算到）。怎麼辦呢？？？\\
+
+假設從節點$S_{0,1\dots k-1}$走到$S_{0,1\dots k}$時，會使$S_{1,2\dots k-2}$的所有後綴字串沒有被考慮到。因此我們應該要瓊舉這些字串，檢查他們是不是也在字典中。然而，我們可以發現$S_{1,2\dots k-2}$後綴字串中所有在字典裡的字串，事實上就是不斷走failure pointer路上經過的那些字串！想一想就知道了！\\
+
+因此，實作上我們可以記錄所有點被走過幾次，然後在ACsearch跑完之後將每個節點被算到的次數不斷向他的failure pointer加。那應該用什麼順序處理這件事呢？因為要不斷向上推，不如就從最深的開始處理（用DFS就好了），如此就可以正確又高效率的完成了！所以來看一下code吧！（由於互相包含版紀錄位置很麻煩，我也不知道複雜度是不是好的，所以這邊就放計數就好了）
+\begin{C++}
+待補
+\end{C++}

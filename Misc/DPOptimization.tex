@@ -1,4 +1,4 @@
-\chapter{DP 優化}
+\chapter{DP優化}
 	\section{前言}
 		你大概知道DP是什麼——利用之前所得到的答案，和適當的轉移，以得到目前的答案。但是，有時候這個轉移會太慢，可能是轉移太慢或是比較棘手的狀態太多，此時，若為轉移太慢，或許就可以利用這裡的技巧來將轉移的速度加快，壓掉一個維度，從TLE變成AC！這麼神奇的工具，我們趕快來看看吧！
 	\section{斜率優化 Convex Hull Optimization}
@@ -25,7 +25,7 @@
 			首先，我們來處理「斜率單調」這個條件：若每一條加入的線的斜率都比前一條大，則可以發現：每次要比較的線段都會是最右邊的，然後再一個一個刪除之後放在最右邊。那要怎麼判定目前最右邊的線需不需要刪除呢？請看圖：
 			
 			\begin{center}
-				\includegraphics*[width = 0.6\textwidth]{pictures/dpoptimization/bothdandiao_lines.png}
+				%\includegraphics*[width = 0.6\textwidth]{pictures/dpoptimization/bothdandiao_lines.png}
 			\end{center}
 			若要加入的線為斜率比原有的$L_1$、$L_2$還要大的紅、綠色兩條線，與前一條$L_2$的交點為$B$、$C$，$L_1 \cup L_2 = A$。 可以明顯看到，若新的線的交點在原本的交點（$A$）的右邊，那就不需要刪除了（綠色線）；否則，若交點在左邊的話，就得和原本的線說さよなら啦（紅色線）！
 			
