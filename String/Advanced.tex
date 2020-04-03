@@ -202,8 +202,8 @@ AC自動機的節點大致上與trie都一樣，只是會多新增幾個資料�
 \begin{C++}
 struct node{ //K means how many kinds of characters
 	node *ch[K],*fail; //記錄子節點們和failure pointer
-	vector<string> endof; //紀錄這個節點表示了那些字典集中的字串
-	node(): endof(0){
+	vector<int> endof; //紀錄這個節點表示了那些字典集中的字串
+	node(): endof(){
 		for(int i=0; i<K; i++) ch[i]=nullptr;
 		fail=nullptr;
 	}
@@ -214,14 +214,14 @@ struct node{ //K means how many kinds of characters
 \begin{C++}
 node *build(const vector<string> &dict) {
     node *root=new node();
-    for(const string &word) {
+    for(int i=0; i<dict.size(); i++) {
 		node *now = root;
-		for(char c: word) {
+		for(char c: dict[i]) {
 			if(!now->ch[c-'a'])
 				now->ch[c-'a'] = new node();
 			now = now->ch[c-'a'];
 		}
-		now->endof.push_back(word);
+		now->endof.push_back(i);
     }
     return root;
 }
@@ -232,9 +232,12 @@ node *build(const vector<string> &dict) {
 vector<node *> buildFail(node *root) {
 	vector<node *> BFS; // 儲存BFS的遍歷順序，待會用到
 	queue<node *> Q;
-	for(int c=0; c<K; c++)
-		if(root->ch[c])
+	for(int c=0; c<K; c++) {
+		if(root->ch[c]) {
+			root->ch[c]->fail = root;
 			Q.push(root->ch[c]);
+		}
+	}
 	while(!Q.empty()) {
 		node *p = Q.front(); Q.pop();
 		BFS.push_back(p);
@@ -252,14 +255,14 @@ vector<node *> buildFail(node *root) {
 \subsection{開始匹配}
 不外乎就是跟KMP的方法一樣，從第一個字開始看，若遇到失配的狀況就走failure pointer。程式碼應該也相當易懂：
 \begin{C++}
-void match(node *root,const string &S){
+void match(node *root, const string &S, const vector<string> &dict){
     node *p = root;
     for(int i=0; i<S.size(); i++) {
     		while(p != root && !p->ch[S[i]-'a']) p = p->fail;
     		if(p->ch[S[i]-'a']) p = p->ch[S[i]-'a'];
-    		for(const string &P: p->endof) {
-    			cout << "Match " << P << " at position"
-    				<< i - P.size() << '\n';
+    		for(int id: p->endof) {
+    			cout << "Match pattern #" << id << " at position"
+    				<< i - dict[id].size() << '\n';
     		}
     }
 }
@@ -279,14 +282,14 @@ $$
 假設從節點$S_{0,1\dots k-1}$走到$S_{0,1\dots k}$時，會使$S_{1,2\dots k-2}$的所有後綴字串沒有被考慮到。因此我們應該要窮舉這些字串，檢查他們是不是也在字典中。然而，我們可以發現$S_{1,2\dots k-2}$後綴字串中所有在字典裡的字串，事實上就是不斷走failure pointer路上經過的那些字串！想一想就知道了！\\
 
 \begin{C++}
-void match(node *root, const string &S){
+void match(node *root, const string &S, const vector<string> &dict){
     node *p = root;
     for(int i=0; i<S.size(); i++) {
 		while(p != root && !p->ch[S[i]-'a']) p = p->fail;
 		if(p->ch[S[i]-'a']) p = p->ch[S[i]-'a'];
 		for(node *now=p; now!=root; now=now->fail) { //跳fail
-			for(const string &P: now->endof) {
-				cout << "Match " << P << " at position" << i - P.size() << '\n';
+			for(int id: now->endof) {
+				cout << "Match pattern #" << id << " at position" << i - dict[id].size() << '\n';
 			}
 		}
 	}
@@ -297,18 +300,52 @@ void match(node *root, const string &S){
 \begin{C++}
 void match(node *root,const string &S){
     node *p = root;
-    for(int i=0; i<S.size(); i++) {
-    		while(p != root && !p->ch[S[i]-'a']) p = p->fail;
-    		if(p->ch[S[i]-'a']) p = p->ch[S[i]-'a'];
+    for(char c: S) {
+    		while(p != root && !p->ch[c-'a']) p = p->fail;
+    		if(p->ch[c-'a']) p = p->ch[c-'a'];
     		p->cnt += 1;
     }
     reverse(BFS.begin(), BFS.end());
     for(node *p: BFS) {
-		for(const string &P: p->endof) {
-    			cout << "Match " << P << " " << p->cnt << " times\n";
+		for(int id: p->endof) {
+    			cout << "Match pattern #" << id << " " << p->cnt << " times\n";
 		}
 		p->fail->cnt += p->cnt;
     }
+}
+\end{C++}
+
+\subsection{一個小優化}
+看看我們的\inline{match}函式可以發現，如果我們要match很多個（或很多次）大字串，每次都得跑failure，感覺很浪費時間呢！是不是可以預先處理好如果以某個字元失配會跳到哪個節點呢？答案是肯定的！這樣做的優點還有在AC自動機上來回走的時候保證是$O(1)$，而跳fail的方法僅保證一次匹配的均攤是好的，不能保證來回走的時候不會跳太多次（後面有習題似乎需要這個優化，嘻嘻）。下面的code直接用\inline{ch}來儲存一個節點遇到一個字元應該跳到哪個節點，若會需要用到這個trie原來的結構可以另外開一個空間儲存。
+
+\begin{C++}
+void buildFail(node *root) {
+	queue<node *> Q;
+	for(int c=0; c<K; c++) {
+		if(root->ch[c]) {
+			root->ch[c]->fail = root;
+			Q.push(root->ch[c]);
+		} else root->ch[c] = root; // base case很重要
+	}
+	while(!Q.empty()) {
+		node *p = Q.front(); Q.pop();
+		for(int c=0; c<K; c++) {
+			node *f = p->fail;
+			if(p->ch[c]) { // 沒失配繼續往下走
+				p->ch[c]->fail = f->ch[c];
+				Q.push(p->ch[c]);
+			} else {
+				p->ch[c] = f->ch[c]; // 失配跳fail
+			}
+		}
+	}
+}
+void match(node *root, const string &S) {
+	node *p = root;
+	for(int i = 0; i < S.size(); i++) {
+		p = p->ch[s[i]-'a'];
+		// do something on node p
+	}
 }
 \end{C++}
 \subsection{更多活用}
@@ -318,7 +355,7 @@ void match(node *root,const string &S){
 }
 有些題目會要求在AC自動機上動態一些的做事，因為一個節點可能對他的祖先或是整個子樹產生影響，我們可以用樹壓平解決。
 
-AC自動機另一個優點是，他把所有可能跟小字串匹配的狀態從$\prod |P|$壓到$\sum |P|$（原本紀錄每個字串match到第幾個，現在只要知道match到哪個節點），因此也常常出現和DP配合的題目。
+AC自動機另一個優點是，他把所有可能跟小字串匹配的狀態從$\prod |P|$壓到$\sum |P|$（原本紀錄每個字串match到第幾個，現在只要知道match到哪個節點），因此也常常出現和DP配合的題目，例如筆者寫這份講義左右的入營考最後一題。
 
 %\section{Burrow-Wheeler Transform}
 %	\subsection{這是啥？有什麼用？}
@@ -327,7 +364,7 @@ AC自動機另一個優點是，他把所有可能跟小字串匹配的狀態從
 
 
 \section{習題}
-以下題目不一定要用到SA或AC自動機，請自行發揮創意找出更多不同解法！
+以下題目有可能不一定要用到SA或AC自動機，請自行發揮創意找出更多不同解法！
 \problem{似曾相識 (TIOJ 1515)}{給定一字串$s$，請問在此字串中重複出現兩次以上的最長字串長度為何(若無則輸出0)？}
 \problem{字串中的字串 (TIOJ 1306)}{給你一個字串$T$，以及很多字串$P$。對於每個$P$請輸出$P$在$T$中出現過幾次。($T$、$P$都是由小寫字母所組成，長度$\leq 10^4$)}
 \problem{猜謎遊戲 (Guess)（TIOJ 1091）}{

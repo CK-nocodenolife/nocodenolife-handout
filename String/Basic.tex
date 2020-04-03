@@ -217,42 +217,57 @@ void KMPSearch(string t, string p){
     }
 }
 \end{C++}
+另一種比較短的寫法是
+\begin{C++}
+void KMPsearch(string t, string p) {
+	vector<int> fail = build_failure(p);
+	for(int i = 0, j = 0; i < t.size(); i++) {
+		while(j && t[i] != p[j]) j = fail[j-1];
+		if(t[i] == p[j]) ++j;
+		if(j == p.size()) {
+			printf("Found pattern at index %d \n", i-j);
+			j = fail[j-1];
+		}
+	}
+}
+\end{C++}
 
 \section{Trie}
-首先考慮一個這樣的問題，你需要處理兩種操作：一、在資料結構中加入一個字串；二、給你一個字串，問你此字串是否曾經被插入該資料結構。大家或許會很直覺地認為直接開一個\inline{set}，然後把字串全部丟進去就解決了！那這麼做的複雜度會是多少呢？假設目前有$N$個字串在\inline{set}中，而當前要查詢一個長度為$L$的字串是否在\inline{set}中，這樣複雜度就是$O(L\lg N)$。有沒有可能有更好的複雜度呢？這時候就要派我們的Trie出場了呢！看看它的英文自首，就知道他絕對是跟樹有關了呢！它的的確確是一棵樹，它的每一顆節點都包含了字元集大小的那麼多個指標，舉例來說，若全部的字串都是由英文小寫字母所組成的話，那每顆節點都有26個指標。好，接下來就直接說要如何插入一個字串吧，直接來看例子比較直接：\\
-首先先插入"she"：
+首先考慮一個這樣的問題，你需要處理兩種操作：一、在資料結構中加入一個字串；二、給你一個字串，問你此字串是否曾經被插入該資料結構。大家或許會很直覺地認為直接開一個\inline{set}，然後把字串全部丟進去就解決了！那這麼做的複雜度會是多少呢？假設目前有$N$個字串在\inline{set}中，而當前要查詢一個長度為$L$的字串是否在\inline{set}中，這樣複雜度就是$O(L\lg N)$。有沒有可能有更好的複雜度呢？這時候就要派我們的Trie出場了呢！看看它的英文字首，就知道他絕對是跟樹有關了呢！它的的確確是一棵樹，它的每一顆節點都包含了字元集大小的那麼多個指標，舉例來說，若全部的字串都是由英文小寫字母所組成的話，那每顆節點都有26個指標。好，接下來就直接說要如何插入一個字串吧，直接來看例子比較直接：\\
+下圖插入了$"s", "so", "tp", "tip", "she", "x"$，灰色節點表示該節點是一個字串的結尾
 \begin{center}
 
+\iftrue
 \begin{tikzpicture}[every node/.style={draw},
 level 1/.style={sibling distance=36mm,circle,level distance=1.3cm},
 level 2/.style={sibling distance=18mm,circle,level distance=1.3cm},
-level 3/.style={sibling distance=9mm,circle,minimum width=7mm,minimum height=7mm}]
-\node[circle,fill=black!20]{39}
-	child { node[fill=black!20]{22} 
-		child{ node{8} 
-			child{ node{5} }
-			child{ node{3} }
-		}
-		child{ node[fill=black!20]{14} 
-			child{ node{6} }
-			child{ node[fill=black!20]{8} }
+level 3/.style={sibling distance=12mm,circle,minimum width=7mm,minimum height=7mm}]
+\node[circle]{$\epsilon$}
+	child { node[fill=black!20]{s} 
+		child{ node[fill=black!20]{so} }
+		child{ node{sh} 
+			child{ node[fill=black!20]{she} }
 		}
 	}
-	child { node{17} 
-		child{ node{7} 
-			child{ node{7} }
-			child{ node{0} }
+	child { node{t} 
+		child{ node{ti}
+			child{ node[fill=black!20]{tip} }
 		}
-		child{ node{10}
-			child{ node{9} }
-			child{ node{1} }
-		}
+		child{ node[fill=black!20]{tp} }
 	}
+	child { node[fill=black!20]{x} }
 ;
 \end{tikzpicture}
+\fi
 \end{center}
 相信大家看完了上面的例子，都大概了解Trie的運作方式了。而它的時間複雜度大家應該也知道，就是插入和查詢都是$O(N)$，而空間複雜度就是$O($字元集大小$\times \sum L_i)$。其實gcc中的pbds也有一個能直接拿來用的Trie，詳情就參考pbds的講義吧！
 
+在字元集越小的時候，Trie越容易派上用場，尤其是只有0跟1的時候，例如跟某些位元運算有關的題目常常得把Trie派出場。
+
+\problem{最大區間XOR（經典問題）} {
+給定一個序列，求最大的區間XOR值。
+}
+對序列做一次前綴可以發現問題變成找到兩個數字XOR起來最大，我們可以一個一個把前綴的二進位表示法丟進Trie裡面（最高位放在前面）並順便拿去Trie裡面查，能夠往相反的地方走就盡量往相反的地方走便能找到最大XOR值。
 \section{習題}
 排版跑掉了\ 郭死\\
 
