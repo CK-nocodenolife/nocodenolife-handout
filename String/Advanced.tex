@@ -200,7 +200,7 @@ AC自動機顧名思義就是一種可以讓你自動AC的程式啊(X\\
 \subsection{節點}
 AC自動機的節點大致上與trie都一樣，只是會多新增幾個資料，詳細的\inline{struct}如下：
 \begin{C++}
-struct node{ //K means how many kinds of characters
+struct node{ //K是字元集的大小
 	node *ch[K],*fail; //記錄子節點們和failure pointer
 	vector<int> endof; //紀錄這個節點表示了那些字典集中的字串
 	node(): endof(){
@@ -246,7 +246,7 @@ vector<node *> buildFail(node *root) {
 			while(f != root && !f->ch[c]) f = f->fail;
 			if(f->ch[c]) f = f->ch[c];
 			p->ch[c]->fail = f;
-			q.push(p->ch[c]);
+			Q.push(p->ch[c]);
 		}
 	}
 	return BFS;
@@ -258,10 +258,10 @@ vector<node *> buildFail(node *root) {
 void match(node *root, const string &S, const vector<string> &dict){
     node *p = root;
     for(int i=0; i<S.size(); i++) {
-    		while(p != root && !p->ch[S[i]-'a']) p = p->fail;
-    		if(p->ch[S[i]-'a']) p = p->ch[S[i]-'a'];
-    		for(int id: p->endof) {
-    			cout << "Match pattern #" << id << " at position"
+    	while(p != root && !p->ch[S[i]-'a']) p = p->fail;
+    	if(p->ch[S[i]-'a']) p = p->ch[S[i]-'a'];
+    	for(int id: p->endof) {
+    		cout << "Match pattern #" << id << " at position"
     				<< i - dict[id].size() << '\n';
     		}
     }
@@ -270,14 +270,12 @@ void match(node *root, const string &S, const vector<string> &dict){
 \subsection{你以為結束了？}
 多玩幾次之後就會發現上面AC自動機在目標字串互相包含時會出問題！看下面範例：\\
 
-$$
-dict=\{"ab","cababc"\}
-$$
-$$
+\begin{center}
+dict=\{"ab","cababc"\} \\
 S="cababc"
-$$
+\end{center}
 
-上面程式的輸出結果$ab$消失了！為什麼會這樣？你畫出AC自動機後自己走一次就會發現，整個匹配過程都是走$"cababc"$的那條路，然而經過$ab$時，完全沒有標記讓AC自動機知道他也是一個單字。也就是說，只要某個字被包含在另一個字的中間時，就會被忽略。怎麼辦呢？\\
+上面程式的輸出結果"ab"消失了！為什麼會這樣？你畫出AC自動機後自己走一次就會發現，整個匹配過程都是走"cababc"的那條路，然而經過"ab"時，完全沒有標記讓AC自動機知道他也是一個單字。也就是說，只要某個字被包含在另一個字的中間時，就會被忽略。怎麼辦呢？\\
 
 假設從節點$S_{0,1\dots k-1}$走到$S_{0,1\dots k}$時，會使$S_{1,2\dots k-2}$的所有後綴字串沒有被考慮到。因此我們應該要窮舉這些字串，檢查他們是不是也在字典中。然而，我們可以發現$S_{1,2\dots k-2}$後綴字串中所有在字典裡的字串，事實上就是不斷走failure pointer路上經過的那些字串！想一想就知道了！\\
 
@@ -301,9 +299,9 @@ void match(node *root, const string &S, const vector<string> &dict){
 void match(node *root,const string &S){
     node *p = root;
     for(char c: S) {
-    		while(p != root && !p->ch[c-'a']) p = p->fail;
-    		if(p->ch[c-'a']) p = p->ch[c-'a'];
-    		p->cnt += 1;
+    	while(p != root && !p->ch[c-'a']) p = p->fail;
+    	if(p->ch[c-'a']) p = p->ch[c-'a'];
+    	p->cnt += 1;
     }
     reverse(BFS.begin(), BFS.end());
     for(node *p: BFS) {
@@ -380,7 +378,7 @@ $k \leq 1000, \sum |t_i| \leq 1000, |c_i| \leq 10^6, |S| \leq 4 \cdot 10^5$
 Mishka最愛的樂團發行了新專輯！專輯中包含了$N$首歌，每首歌的歌名$s_i$可能是以下兩種：
 \begin{enumerate}
 \item $1 \ c$表示$s_i$是一個單獨的字母$c$
-\item $2 \ j \ c$表示$s_i$是$s_j$再加上一個字母$c$（$j \leq i$）
+\item $2 \ j \ c$表示$s_i$是$s_j$再加上一個字母$c$（$j < i$）
 \end{enumerate}
 Vova對這張專輯很感興趣，但他沒有足夠的時間去聆聽所有歌曲，因此他詢問了Mishka一共$M$個問題，每個問題包含了$i$和一個字串$t$，表示他想知道$s_i$裡面出現了幾次$t$。
 Mishka不知道他為何要問這些問題，但他盡力提供訊息。你可以幫助Mishka回答Vova所有的問題嗎？ \\
