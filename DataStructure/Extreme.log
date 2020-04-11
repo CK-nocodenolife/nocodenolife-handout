@@ -1,8 +1,11 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (MiKTeX 2.9.7050 64-bit) (preloaded format=xelatex 2019.6.8)  2 APR 2020 17:30
+This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2018.2.7)  11 APR 2020 13:09
 entering extended mode
-**./Extreme.tex
-(Extreme.tex
-LaTeX2e <2018-12-01>
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Extreme.tex
+(./Extreme.tex
+LaTeX2e <2017-04-15>
+Babel <3.17> and hyphenation patterns for 84 language(s) loaded.
 ! Undefined control sequence.
 l.1 \chapter
             {除了很強，只有更強 - 常見資結技巧}
@@ -20,7 +23,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1 \chapter{除
-              了很強，只有更強 - 常見資結技巧}
+                了很強，只有更強 - 常見資結技巧}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -362,7 +365,7 @@ Overfull \hbox (76.11165pt too wide) in paragraph at lines 1--9
 <recently read> \inline 
                         
 l.10 ^^I^^I^^I^^I^^I\item \inline
-                                 {1 l r k}，代表在$(l, r)$間的所有值都加$k$
+                                 {1 l r k}，代表在$(l, r)$間的所有�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -393,7 +396,7 @@ Overfull \hbox (25.713pt too wide) in paragraph at lines 10--11
 <recently read> \inline 
                         
 l.11 ^^I^^I^^I^^I^^I\item \inline
-                                 {2 l r}，請輸出$(l, r)$間所有的值的最大值
+                                 {2 l r}，請輸出$(l, r)$間所有的值�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -644,7 +647,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.19 ^^I^^I^^I那
-               ，具體要怎麼實作呀？對於每一個節點，除了維持值、左右方為何之外、還需要維持一個\inline{lazy}值，代表這個區間每...
+                 ，具體要怎麼實作呀？對於每一個節點，除�...
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -690,8 +693,8 @@ Missing character: There is no 持 in font nullfont!
 Missing character: There is no 一 in font nullfont!
 Missing character: There is no 個 in font nullfont!
 ! Undefined control sequence.
-l.19 ...怎麼實作呀？對於每一個節點，除了維持值、左右方為何之外、還需要維持一個\inline
-                                                  {lazy}值，代表這個區間每一個值都要加\inli...
+l.19 ...��何之外、還需要維持一個\inline
+                                                  {lazy}值，代表這個�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -718,8 +721,8 @@ Missing character: There is no 都 in font nullfont!
 Missing character: There is no 要 in font nullfont!
 Missing character: There is no 加 in font nullfont!
 ! Undefined control sequence.
-l.19 ...還需要維持一個\inline{lazy}值，代表這個區間每一個值都要加\inline
-                                                  {lazy}，如果為$0$則代表目前不需要加。為了實...
+l.19 ...��這個區間每一個值都要加\inline
+                                                  {lazy}，如果為$0$則�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -767,7 +770,7 @@ Missing character: There is no 所 in font nullfont!
 Missing character: There is no 用 in font nullfont!
 Missing character: There is no 的 in font nullfont!
 ! Undefined control sequence.
-l.19 ...$0$則代表目前不需要加。為了實施憲法中的明確性，先來看一下我們所用的\inline
+l.19 ...��，先來看一下我們所用的\inline
                                                   {node}長什麼樣吧！
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -907,7 +910,7 @@ Missing character: There is no 刀 in font nullfont!
 Missing character: There is no ： in font nullfont!
 ! Undefined control sequence.
 l.26 ^^I^^I^^I\subsection{兩把小刀：\inline
-                                      {push} 和 \inline{pull}}
+                                                {push} 和 \inline{pull}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -920,7 +923,7 @@ Missing character: There is no s in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no 和 in font nullfont!
 ! Undefined control sequence.
-l.26 ...^I\subsection{兩把小刀：\inline{push} 和 \inline
+l.26 ...n{兩把小刀：\inline{push} 和 \inline
                                                   {pull}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -939,7 +942,7 @@ Missing character: There is no 一 in font nullfont!
 Missing character: There is no 個 in font nullfont!
 ! Undefined control sequence.
 l.27 ^^I^^I^^I^^I對於每一個\inline
-                             {node}，都應該要有兩個函數，\inline{pull}應該已經看過了，很簡單：
+                                       {node}，都應該要有兩個函數�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -962,8 +965,8 @@ Missing character: There is no 函 in font nullfont!
 Missing character: There is no 數 in font nullfont!
 Missing character: There is no ， in font nullfont!
 ! Undefined control sequence.
-l.27 ...^^I^^I對於每一個\inline{node}，都應該要有兩個函數，\inline
-                                                  {pull}應該已經看過了，很簡單：
+l.27 ...e}，都應該要有兩個函數，\inline
+                                                  {pull}應該已經看過�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1072,8 +1075,8 @@ Missing character: There is no 的 in font nullfont!
 Missing character: There is no 捧 in font nullfont!
 Missing character: There is no 油 in font nullfont!
 ! Undefined control sequence.
-l.33 ^^I^^I^^I^^I但是最新進來的捧油\inline
-                                 {push}就比較奇特一點了，因應打懶標而出現，也就是將懶標往下打一層，話不多說，直接...
+l.33 ...^I^^I^^I但是最新進來的捧油\inline
+                                                  {push}就比較奇特一�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1365,8 +1368,8 @@ Missing character: There is no 本 in font nullfont!
 Missing character: There is no 有 in font nullfont!
 Missing character: There is no 的 in font nullfont!
 ! Undefined control sequence.
-l.46 ^^I^^I現在來示範怎麼修改原本有的\inline
-                               {query}函數和\inline{modify}函數：
+l.46 ...��來示範怎麼修改原本有的\inline
+                                                  {query}函數和\inline{mo...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1382,8 +1385,8 @@ Missing character: There is no 函 in font nullfont!
 Missing character: There is no 數 in font nullfont!
 Missing character: There is no 和 in font nullfont!
 ! Undefined control sequence.
-l.46 ^^I^^I現在來示範怎麼修改原本有的\inline{query}函數和\inline
-                                                {modify}函數：
+l.46 ...原本有的\inline{query}函數和\inline
+                                                  {modify}函數：
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1412,7 +1415,7 @@ Missing character: There is no 新 in font nullfont!
 Missing character: There is no 的 in font nullfont!
 ! Undefined control sequence.
 l.47 ^^I^^I\subsubsection{新的\inline
-                                   {query}}
+                                       {query}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1448,8 +1451,8 @@ Missing character: There is no 標 in font nullfont!
 Missing character: There is no 需 in font nullfont!
 Missing character: There is no 要 in font nullfont!
 ! Undefined control sequence.
-l.48 ^^I^^I^^I簡單來說，就是在詢問之前，都要確定沒有懶標需要\inline
-                                            {push}了，再查詢！
+l.48 ...��，都要確定沒有懶標需要\inline
+                                                  {push}了，再查詢！
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1693,7 +1696,7 @@ Missing character: There is no 新 in font nullfont!
 Missing character: There is no 的 in font nullfont!
 ! Undefined control sequence.
 l.57 ^^I^^I\subsection{新的\inline
-                                {modify}}
+                                    {modify}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1711,7 +1714,7 @@ Missing character: There is no 實 in font nullfont!
 Missing character: There is no 與 in font nullfont!
 ! Undefined control sequence.
 l.58 ^^I^^I^^I其實與\inline
-                        {query}差不多，先記得\inline{push}之後，修改懶標即可。
+                              {query}差不多，先記得\inline{push}之�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1731,8 +1734,8 @@ Missing character: There is no 先 in font nullfont!
 Missing character: There is no 記 in font nullfont!
 Missing character: There is no 得 in font nullfont!
 ! Undefined control sequence.
-l.58 ^^I^^I^^I其實與\inline{query}差不多，先記得\inline
-                                             {push}之後，修改懶標即可。
+l.58 ...\inline{query}差不多，先記得\inline
+                                                  {push}之後，修改懶�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2004,7 +2007,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.73 ^^I^^I這
-            就是你的第一個（或是第$k$個，$k \in \mathbb{N} \cap \{0\}$）懶標線段樹了！重點就是，如果遇到一個...
+              就是你的第一個（或是第$k$個，$k \in \mathbb{N} \c...
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -2024,8 +2027,8 @@ Missing character: There is no 第 in font nullfont!
 Missing character: There is no 個 in font nullfont!
 Missing character: There is no ， in font nullfont!
 ! Undefined control sequence.
-l.73 ^^I^^I這就是你的第一個（或是第$k$個，$k \in \mathbb
-                                          {N} \cap \{0\}$）懶標線段樹了！重點就是，如果遇到一個...
+l.73 ...�一個（或是第$k$個，$k \in \mathbb
+                                                  {N} \cap \{0\}$）懶標�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2152,8 +2155,8 @@ Missing character: There is no 就 in font nullfont!
 Missing character: There is no 是 in font nullfont!
 Missing character: There is no ， in font nullfont!
 ! Undefined control sequence.
-l.75 ...修改到東西不夠爽，所以就出現了另外一種寫的方法，可以供參考：想法就是，\inline
-                                                  {lazy}代表\textbf{子樹}所需要修改的東...
+l.75 ...��可以供參考：想法就是，\inline
+                                                  {lazy}代表\textbf{子樹...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2190,7 +2193,7 @@ Missing character: There is no 這 in font nullfont!
 Missing character: There is no 樣 in font nullfont!
 Missing character: There is no ， in font nullfont!
 ! Undefined control sequence.
-l.75 ...}代表\textbf{子樹}所需要修改的東西，自己則是修改完了！這樣，\inline
+l.75 ...��己則是修改完了！這樣，\inline
                                                   {push}會變成
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2404,7 +2407,7 @@ Missing character: There is no 至 in font nullfont!
 Missing character: There is no 於 in font nullfont!
 ! Undefined control sequence.
 l.87 ^^I至於\inline
-                 {modify}，也會變乾淨：
+                     {modify}，也會變乾淨：
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2783,7 +2786,7 @@ Overfull \hbox (27.03055pt too wide) in paragraph at lines 73--105
 <recently read> \inline 
                         
 l.106 ^^I^^I^^I^^I\item \inline
-                               {F a b}：請把第$a$個到第$b$個位置的數字都變成$1$
+                               {F a b}：請把第$a$個到第$b$個位置�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2818,7 +2821,7 @@ Overfull \hbox (14.57756pt too wide) in paragraph at lines 106--107
 <recently read> \inline 
                         
 l.107 ^^I^^I^^I^^I\item \inline
-                               {E a b}：請把第$a$個到第$b$個位置的數字都變成$0$
+                               {E a b}：請把第$a$個到第$b$個位置�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2853,7 +2856,7 @@ Overfull \hbox (14.57756pt too wide) in paragraph at lines 107--108
 <recently read> \inline 
                         
 l.108 ^^I^^I^^I^^I\item \inline
-                               {I a b}：請把第$a$個到第$b$個位置的數字，$0$變成$1$，$1$變成$0$
+                               {I a b}：請把第$a$個到第$b$個位置�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2891,7 +2894,7 @@ Overfull \hbox (29.5776pt too wide) in paragraph at lines 108--109
 <recently read> \inline 
                         
 l.109 ^^I^^I^^I^^I\item \inline
-                               {S a b}：請輸出第$a$個到第$b$個位置的數字總共有幾個$1$
+                               {S a b}：請輸出第$a$個到第$b$個位�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3025,7 +3028,7 @@ Overfull \hbox (86.3478pt too wide) in paragraph at lines 111--115
 <recently read> \text 
                       
 l.116 ^^I^^I^^I^^I\item $\text
-                              {inc}(lf, rg, v)$：將$[lf, rg]$內的數字全部加$v$
+                              {inc}(lf, rg, v)$：將$[lf, rg]$內的數字�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3051,7 +3054,7 @@ Overfull \hbox (87.88388pt too wide) in paragraph at lines 116--117
 <recently read> \text 
                       
 l.117 ^^I^^I^^I^^I\item $\text
-                              {rmq}(lf, rg)$：請輸出$[lf, rg]$中最小的數字
+                              {rmq}(lf, rg)$：請輸出$[lf, rg]$中最小�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3279,7 +3282,7 @@ Overfull \hbox (23.73883pt too wide) in paragraph at lines 119--127
 <recently read> \inline 
                         
 l.128 ^^I^^I^^I^^I\item \inline
-                               {0 L R}：輸出$[L,R]$中有幾種不同的數字
+                               {0 L R}：輸出$[L,R]$中有幾種不同的�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3310,7 +3313,7 @@ Overfull \hbox (24.47571pt too wide) in paragraph at lines 128--129
 <recently read> \inline 
                         
 l.129 ^^I^^I^^I^^I\item \inline
-                               {1 L R P}：把$[L,R]$中所有數字修改為$P$
+                               {1 L R P}：把$[L,R]$中所有數字修改�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3385,7 +3388,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.135 ^^I\section{持
-                   久化資料結構（Persistent Data Structure）}
+                     久化資料結構（Persistent Data Structure）}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -3815,7 +3818,7 @@ Missing character: There is no 了 in font nullfont!
 Missing character: There is no ！ in font nullfont!
 ! Undefined control sequence.
 l.144 ^^I^^I\subsection
-                       {實作方法 —— 來種一棵持久化線段樹吧！}
+                       {實作方法 —— 來種一棵持久化線段樹�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3871,8 +3874,8 @@ Missing character: There is no 先 in font nullfont!
 Missing character: There is no 來 in font nullfont!
 Missing character: There is no 看 in font nullfont!
 ! Undefined control sequence.
-l.145 ...I^^I其實重點就是要存那些新的根節點，用一個陣列存就可以了！先來看\inline
-                                                  {struct Node}長什麼樣子吧！
+l.145 ...�陣列存就可以了！先來看\inline
+                                                  {struct Node}長什麼樣�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -4162,7 +4165,7 @@ Missing character: There is no 除 in font nullfont!
 Missing character: There is no 了 in font nullfont!
 ! Undefined control sequence.
 l.157 ^^I^^I^^I 除了\inline
-                         {modify}以外的函數都和原本的線段樹差不多，可以明顯的看到，我們在做修改的時候都是新建一個\in...
+                             {modify}以外的函數都和原本的線段樹...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -4216,8 +4219,8 @@ Missing character: There is no 建 in font nullfont!
 Missing character: There is no 一 in font nullfont!
 Missing character: There is no 個 in font nullfont!
 ! Undefined control sequence.
-l.157 ...和原本的線段樹差不多，可以明顯的看到，我們在做修改的時候都是新建一個\inline
-                                                  {Node}，而不會動到原本的！這樣就可以完整的保存...
+l.157 ...�修改的時候都是新建一個\inline
+                                                  {Node}，而不會動到�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -4589,8 +4592,8 @@ Missing character: There is no 每 in font nullfont!
 Missing character: There is no 一 in font nullfont!
 Missing character: There is no 次 in font nullfont!
 ! Undefined control sequence.
-l.170 ...是一般的線段樹就好了（至少會和講義中的函數差不多），不需要變！每一次\inline
-                                                  {modify}的時候，就將回傳的新\inline{...
+l.170 ...�多），不需要變！每一次\inline
+                                                  {modify}的時候，就將...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -4614,8 +4617,8 @@ Missing character: There is no 傳 in font nullfont!
 Missing character: There is no 的 in font nullfont!
 Missing character: There is no 新 in font nullfont!
 ! Undefined control sequence.
-l.170 ...，不需要變！每一次\inline{modify}的時候，就將回傳的新\inline
-                                                  {Node}小心翼翼地將它放進去存的地方，如陣列或B...
+l.170 ...ify}的時候，就將回傳的新\inline
+                                                  {Node}小心翼翼地將�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -4830,7 +4833,7 @@ Missing character: There is no 叫 in font nullfont!
 Missing character: There is no 做 in font nullfont!
 Missing character: There is no 「 in font nullfont!
 ! Undefined control sequence.
-l.172 ...列看成Treap也可以持久化！可以去看CodeChef上有一篇文章叫做「\href
+l.172 ...�CodeChef上有一篇文章叫做「\href
                                                   {https://discuss.codechef....
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5964,7 +5967,7 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 220--226
  []
 
 ! Undefined control sequence.
-l.227 \chapter
+l.227 \section
               {樹堆Treap}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -5980,8 +5983,8 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no p in font nullfont!
 ! Undefined control sequence.
-l.228 \section
-              {前言}
+l.228 \subsection
+                 {前言}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -6159,8 +6162,8 @@ Missing character: There is no 尋 in font nullfont!
 Missing character: There is no 樹 in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.230 \section
-              {原理}
+l.230 \subsection
+                 {原理}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -6228,7 +6231,7 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no 值 in font nullfont!
 Missing character: There is no ， in font nullfont!
 ! Undefined control sequence.
-l.231 ...紀錄這個節點的數字（我們稱之為key值）外，同時會記錄一個pri值，\inline
+l.231 ...�，同時會記錄一個pri值，\inline
                                                   {struct}大概長這樣：
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6503,8 +6506,8 @@ Missing character: There is no 一 in font nullfont!
 Missing character: There is no 下 in font nullfont!
 Missing character: There is no ： in font nullfont!
 ! Undefined control sequence.
-l.243 \subsection
-                 {唯一性}
+l.243 \subsubsection
+                    {唯一性}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -6726,8 +6729,8 @@ Missing character: There is no 一 in font nullfont!
 Missing character: There is no 樣 in font nullfont!
 Missing character: There is no ） in font nullfont!
 ! Undefined control sequence.
-l.245 \subsection
-                 {當pri值=$1\~{} n$時}
+l.245 \subsubsection
+                    {當pri值=$1\~{} n$時}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -6745,7 +6748,7 @@ LaTeX Warning: Command \~ invalid in math mode on input line 245.
 
 LaTeX Font Info:    Try loading font information for OT1+lmr on input line 245.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/lm\ot1lmr.fd"
+(/usr/local/texlive/2017/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
@@ -6766,8 +6769,8 @@ LaTeX Font Warning: Font shape `/cmr/m/n' undefined
 ! Corrupted NFSS tables.
 wrong@fontshape ...message {Corrupted NFSS tables}
                                                   error@fontshape else let f...
-l.245 \subsection{當pri值=$1\~{}
-                               n$時}
+l.245 \subsubsection{當pri值=$1\~{}
+                                      n$時}
 This error message was generated by an \errmessage
 command, so I can't give any explicit help.
 Pretend that you're Hercule Poirot: Examine all clues,
@@ -6780,16 +6783,16 @@ LaTeX Font Warning: Font shape `/cmr/m/n' undefined
 ! Please use \mathaccent for accents in math mode.
 \add@accent ...@spacefactor \spacefactor }\accent 
                                                   #1 #2\egroup \spacefactor ...
-l.245 \subsection{當pri值=$1\~{}
-                               n$時}
+l.245 \subsubsection{當pri值=$1\~{}
+                                      n$時}
 I'm changing \accent to \mathaccent here; wish me luck.
 (Accents are not the same in formulas as they are in text.)
 
 ! Missing { inserted.
 <to be read again> 
                    \edef 
-l.245 \subsection{當pri值=$1\~{}
-                               n$時}
+l.245 \subsubsection{當pri值=$1\~{}
+                                      n$時}
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
 so that I will find a matching right brace soon.
@@ -6802,8 +6805,8 @@ LaTeX Font Warning: Font shape `/lmr/m/n' undefined
 ! You can't use `\spacefactor' in math mode.
 \add@accent ...}\accent #1 #2\egroup \spacefactor 
                                                   \accent@spacefactor 
-l.245 \subsection{當pri值=$1\~{}
-                               n$時}
+l.245 \subsubsection{當pri值=$1\~{}
+                                      n$時}
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
@@ -6812,8 +6815,8 @@ return to the right one by typing `I}' or `I$' or `I\par'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.245 \subsection{當pri值=$1\~{} n$
-                                 時}
+l.245 \subsubsection{當pri值=$1\~{} n$
+                                        時}
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
@@ -6875,16 +6878,16 @@ LaTeX Warning: Command \~ invalid in math mode on input line 246.
 ! Please use \mathaccent for accents in math mode.
 \add@accent ...@spacefactor \spacefactor }\accent 
                                                   #1 #2\egroup \spacefactor ...
-l.246 ...以想像一棵最普通的二元搜尋樹（只有key值），我們依原本節點pri值從$1\~{}
-                                                   n$的順序一一插入，因為越後面插入的節點一定在越下...
+l.246 ...��，我們依原本節點pri值從$1\~{}
+                                                   n$的順序一一插入�...
 I'm changing \accent to \mathaccent here; wish me luck.
 (Accents are not the same in formulas as they are in text.)
 
 ! Missing { inserted.
 <to be read again> 
                    \edef 
-l.246 ...以想像一棵最普通的二元搜尋樹（只有key值），我們依原本節點pri值從$1\~{}
-                                                   n$的順序一一插入，因為越後面插入的節點一定在越下...
+l.246 ...��，我們依原本節點pri值從$1\~{}
+                                                   n$的順序一一插入�...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
 so that I will find a matching right brace soon.
@@ -6893,8 +6896,8 @@ so that I will find a matching right brace soon.
 ! You can't use `\spacefactor' in math mode.
 \add@accent ...}\accent #1 #2\egroup \spacefactor 
                                                   \accent@spacefactor 
-l.246 ...以想像一棵最普通的二元搜尋樹（只有key值），我們依原本節點pri值從$1\~{}
-                                                   n$的順序一一插入，因為越後面插入的節點一定在越下...
+l.246 ...��，我們依原本節點pri值從$1\~{}
+                                                   n$的順序一一插入�...
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
@@ -6903,8 +6906,8 @@ return to the right one by typing `I}' or `I$' or `I\par'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.246 ...一棵最普通的二元搜尋樹（只有key值），我們依原本節點pri值從$1\~{} n$
-                                                  的順序一一插入，因為越後面插入的節點一定在越下面，因...
+l.246 ...��我們依原本節點pri值從$1\~{} n$
+                                                  的順序一一插入，�...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
@@ -6999,16 +7002,16 @@ LaTeX Warning: Command \~ invalid in math mode on input line 246.
 ! Please use \mathaccent for accents in math mode.
 \add@accent ...@spacefactor \spacefactor }\accent 
                                                   #1 #2\egroup \spacefactor ...
-l.246 ...下面。如此一來，tree和heap的性質就同時都滿足了。換句話說，每個$1\~{}
-                                                   n$的排列各自代表一種插入順序。
+l.246 ...��滿足了。換句話說，每個$1\~{}
+                                                   n$的排列各自代表�...
 I'm changing \accent to \mathaccent here; wish me luck.
 (Accents are not the same in formulas as they are in text.)
 
 ! Missing { inserted.
 <to be read again> 
                    \edef 
-l.246 ...下面。如此一來，tree和heap的性質就同時都滿足了。換句話說，每個$1\~{}
-                                                   n$的排列各自代表一種插入順序。
+l.246 ...��滿足了。換句話說，每個$1\~{}
+                                                   n$的排列各自代表�...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
 so that I will find a matching right brace soon.
@@ -7017,8 +7020,8 @@ so that I will find a matching right brace soon.
 ! You can't use `\spacefactor' in math mode.
 \add@accent ...}\accent #1 #2\egroup \spacefactor 
                                                   \accent@spacefactor 
-l.246 ...下面。如此一來，tree和heap的性質就同時都滿足了。換句話說，每個$1\~{}
-                                                   n$的排列各自代表一種插入順序。
+l.246 ...��滿足了。換句話說，每個$1\~{}
+                                                   n$的排列各自代表�...
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
@@ -7027,8 +7030,8 @@ return to the right one by typing `I}' or `I$' or `I\par'.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.246 ...如此一來，tree和heap的性質就同時都滿足了。換句話說，每個$1\~{} n$
-                                                  的排列各自代表一種插入順序。
+l.246 ...��足了。換句話說，每個$1\~{} n$
+                                                  的排列各自代表一�...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
 With luck, this will get me unwedged. But if you
@@ -7051,8 +7054,8 @@ Missing character: There is no 順 in font nullfont!
 Missing character: There is no 序 in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.247 \subsection
-                 {當pri值隨機時}
+l.247 \subsubsection
+                    {當pri值隨機時}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -7175,8 +7178,8 @@ Missing character: There is no 成 in font nullfont!
 Missing character: There is no 了 in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.249 \section
-              {實作方法}
+l.249 \subsection
+                 {實作方法}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -7446,8 +7449,17 @@ Missing character: There is no 分 in font nullfont!
 Missing character: There is no 吧 in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.253 \subsection
-                 {merge}
+l.253 \subsubsection
+                    {\inline{merge}}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.253 \subsubsection{\inline
+                            {merge}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -7702,8 +7714,17 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Undefined control sequence.
-l.268 \subsection
-                 {split}
+l.268 \subsubsection
+                    {\inline{split}}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.268 \subsubsection{\inline
+                            {split}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -7962,8 +7983,8 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Undefined control sequence.
-l.279 \section
-              {延伸操作}
+l.279 \subsection
+                 {延伸操作}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8020,8 +8041,8 @@ Missing character: There is no 操 in font nullfont!
 Missing character: There is no 作 in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.281 \subsection
-                 {\inline{insert}}
+l.281 \subsubsection
+                    {\inline{insert}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8029,8 +8050,8 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.281 \subsection{\inline
-                         {insert}}
+l.281 \subsubsection{\inline
+                            {insert}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8045,7 +8066,7 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no t in font nullfont!
 ! Undefined control sequence.
 l.282 \inline
-             {insert}的做法只需要先將原本的treap拆開，再把左、新節點、右依序合併就好了。以下是程式碼：
+             {insert}的做法只需要先將原本的treap拆開，再把�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8226,8 +8247,8 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Undefined control sequence.
-l.290 \subsection
-                 {\inline{erase}}
+l.290 \subsubsection
+                    {\inline{erase}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8235,8 +8256,8 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.290 \subsection{\inline
-                         {erase}}
+l.290 \subsubsection{\inline
+                            {erase}}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8250,7 +8271,7 @@ Missing character: There is no s in font nullfont!
 Missing character: There is no e in font nullfont!
 ! Undefined control sequence.
 l.291 \inline
-             {erase}基本上就是反著做\inline{insert}就好了。以下為程式碼：
+             {erase}基本上就是反著做\inline{insert}就好了。以�...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8271,8 +8292,8 @@ Missing character: There is no 反 in font nullfont!
 Missing character: There is no 著 in font nullfont!
 Missing character: There is no 做 in font nullfont!
 ! Undefined control sequence.
-l.291 \inline{erase}基本上就是反著做\inline
-                                   {insert}就好了。以下為程式碼：
+l.291 ...ine{erase}基本上就是反著做\inline
+                                                  {insert}就好了。以下...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8430,8 +8451,8 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! Undefined control sequence.
-l.301 \section
-              {比\inline{set}更強大的功能}
+l.301 \subsection
+                 {比\inline{set}更強大的功能}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8440,8 +8461,8 @@ and I'll forget about whatever was undefined.
 
 Missing character: There is no 比 in font nullfont!
 ! Undefined control sequence.
-l.301 \section{比\inline
-                       {set}更強大的功能}
+l.301 \subsection{比\inline
+                            {set}更強大的功能}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8538,8 +8559,8 @@ Missing character: There is no 講 in font nullfont!
 Missing character: There is no 起 in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.303 \subsection
-                 {記錄size}
+l.303 \subsubsection
+                    {記錄size}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8640,8 +8661,8 @@ Missing character: There is no 有 in font nullfont!
 Missing character: There is no ） in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.305 \subsection
-                 {名次樹（rank tree）}
+l.305 \subsubsection
+                    {名次樹（rank tree）}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -8988,8 +9009,8 @@ Missing character: There is no z in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.315 \subsection
-                 {split by rank}
+l.315 \subsubsection
+                    {split by rank}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -9119,8 +9140,8 @@ Missing character: There is no 東 in font nullfont!
 Missing character: There is no 西 in font nullfont!
 Missing character: There is no ： in font nullfont!
 ! Undefined control sequence.
-l.319 \subsection
-                 {序列轉treap}
+l.319 \subsubsection
+                    {序列轉treap}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -9321,8 +9342,8 @@ Missing character: There is no 了 in font nullfont!
 Missing character: There is no ） in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.321 \subsection
-                 {懶人標記（lazy tag）}
+l.321 \subsubsection
+                    {懶人標記（lazy tag）}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -9502,8 +9523,8 @@ Missing character: There is no 值 in font nullfont!
 Missing character: There is no 了 in font nullfont!
 Missing character: There is no 。 in font nullfont!
 ! Undefined control sequence.
-l.323 \subsection
-                 {區間操作}
+l.323 \subsubsection
+                    {區間操作}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -10040,7 +10061,7 @@ Overfull \hbox (936.65779pt too wide) in paragraph at lines 332--381
  []
 
 ! Undefined control sequence.
-l.383 \chapter
+l.383 \section
               {時間線段樹}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -10054,8 +10075,8 @@ Missing character: There is no 線 in font nullfont!
 Missing character: There is no 段 in font nullfont!
 Missing character: There is no 樹 in font nullfont!
 ! Undefined control sequence.
-l.384 \section
-              {例題}
+l.384 \subsection
+                 {例題}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -10270,6 +10291,43 @@ Missing character: There is no 什 in font nullfont!
 Missing character: There is no 麼 in font nullfont!
 Missing character: There is no 呢 in font nullfont!
 Missing character: There is no ？ in font nullfont!
+Missing character: There is no 如 in font nullfont!
+Missing character: There is no 果 in font nullfont!
+Missing character: There is no 將 in font nullfont!
+Missing character: There is no 所 in font nullfont!
+Missing character: There is no 有 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 操 in font nullfont!
+Missing character: There is no 作 in font nullfont!
+Missing character: There is no 依 in font nullfont!
+Missing character: There is no 序 in font nullfont!
+Missing character: There is no 加 in font nullfont!
+Missing character: There is no 上 in font nullfont!
+Missing character: There is no 時 in font nullfont!
+Missing character: There is no 間 in font nullfont!
+Missing character: There is no （ in font nullfont!
+Missing character: There is no 第 in font nullfont!
+Missing character: There is no 一 in font nullfont!
+Missing character: There is no 個 in font nullfont!
+Missing character: There is no 操 in font nullfont!
+Missing character: There is no 作 in font nullfont!
+Missing character: There is no 時 in font nullfont!
+Missing character: There is no 間 in font nullfont!
+Missing character: There is no 是 in font nullfont!
+Missing character: There is no 、 in font nullfont!
+Missing character: There is no 第 in font nullfont!
+Missing character: There is no 二 in font nullfont!
+Missing character: There is no 個 in font nullfont!
+Missing character: There is no 操 in font nullfont!
+Missing character: There is no 作 in font nullfont!
+Missing character: There is no 時 in font nullfont!
+Missing character: There is no 間 in font nullfont!
+Missing character: There is no 是 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no ） in font nullfont!
+Missing character: There is no ， in font nullfont!
 Missing character: There is no 我 in font nullfont!
 Missing character: There is no 們 in font nullfont!
 Missing character: There is no 可 in font nullfont!
@@ -10290,6 +10348,39 @@ Missing character: There is no 存 in font nullfont!
 Missing character: There is no 活 in font nullfont!
 Missing character: There is no 時 in font nullfont!
 Missing character: There is no 間 in font nullfont!
+Missing character: There is no （ in font nullfont!
+Missing character: There is no 像 in font nullfont!
+Missing character: There is no 是 in font nullfont!
+Missing character: There is no 某 in font nullfont!
+Missing character: There is no 一 in font nullfont!
+Missing character: There is no 個 in font nullfont!
+Missing character: There is no 邊 in font nullfont!
+Missing character: There is no 在 in font nullfont!
+Missing character: There is no 時 in font nullfont!
+Missing character: There is no 間 in font nullfont!
+Missing character: There is no 到 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 時 in font nullfont!
+Missing character: There is no 候 in font nullfont!
+Missing character: There is no 存 in font nullfont!
+Missing character: There is no 在 in font nullfont!
+Missing character: There is no 、 in font nullfont!
+Missing character: There is no 另 in font nullfont!
+Missing character: There is no 外 in font nullfont!
+Missing character: There is no 一 in font nullfont!
+Missing character: There is no 個 in font nullfont!
+Missing character: There is no 邊 in font nullfont!
+Missing character: There is no 在 in font nullfont!
+Missing character: There is no 到 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 時 in font nullfont!
+Missing character: There is no 候 in font nullfont!
+Missing character: There is no 存 in font nullfont!
+Missing character: There is no 在 in font nullfont!
+Missing character: There is no 之 in font nullfont!
+Missing character: There is no 類 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no ） in font nullfont!
 Missing character: There is no ， in font nullfont!
 Missing character: There is no 在 in font nullfont!
 Missing character: There is no 時 in font nullfont!
@@ -10300,7 +10391,10 @@ Missing character: There is no 應 in font nullfont!
 Missing character: There is no 的 in font nullfont!
 Missing character: There is no 是 in font nullfont!
 Missing character: There is no 一 in font nullfont!
-Missing character: There is no 段 in font nullfont!
+Missing character: There is no 些 in font nullfont!
+Missing character: There is no 互 in font nullfont!
+Missing character: There is no 斥 in font nullfont!
+Missing character: There is no 的 in font nullfont!
 Missing character: There is no 區 in font nullfont!
 Missing character: There is no 間 in font nullfont!
 Missing character: There is no ， in font nullfont!
@@ -10361,9 +10455,115 @@ Missing character: There is no 整 in font nullfont!
 Missing character: There is no 覆 in font nullfont!
 Missing character: There is no 蓋 in font nullfont!
 Missing character: There is no 。 in font nullfont!
+Missing character: There is no 在 in font nullfont!
+Missing character: There is no 修 in font nullfont!
+Missing character: There is no 改 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 時 in font nullfont!
+Missing character: There is no 候 in font nullfont!
+Missing character: There is no ， in font nullfont!
+Missing character: There is no 如 in font nullfont!
+Missing character: There is no 果 in font nullfont!
+Missing character: There is no 發 in font nullfont!
+Missing character: There is no 現 in font nullfont!
+Missing character: There is no 目 in font nullfont!
+Missing character: There is no 前 in font nullfont!
+Missing character: There is no 線 in font nullfont!
+Missing character: There is no 段 in font nullfont!
+Missing character: There is no 樹 in font nullfont!
+Missing character: There is no 所 in font nullfont!
+Missing character: There is no 在 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 節 in font nullfont!
+Missing character: There is no 點 in font nullfont!
+Missing character: There is no 所 in font nullfont!
+Missing character: There is no 對 in font nullfont!
+Missing character: There is no 應 in font nullfont!
+Missing character: There is no 到 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 區 in font nullfont!
+Missing character: There is no 間 in font nullfont!
+Missing character: There is no 完 in font nullfont!
+Missing character: There is no 全 in font nullfont!
+Missing character: There is no 被 in font nullfont!
+Missing character: There is no 要 in font nullfont!
+Missing character: There is no 修 in font nullfont!
+Missing character: There is no 改 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 區 in font nullfont!
+Missing character: There is no 間 in font nullfont!
+Missing character: There is no 包 in font nullfont!
+Missing character: There is no 覆 in font nullfont!
+Missing character: There is no ， in font nullfont!
+Missing character: There is no 就 in font nullfont!
+Missing character: There is no 可 in font nullfont!
+Missing character: There is no 以 in font nullfont!
+Missing character: There is no 回 in font nullfont!
+Missing character: There is no 去 in font nullfont!
+Missing character: There is no 了 in font nullfont!
+Missing character: There is no ， in font nullfont!
+Missing character: There is no 不 in font nullfont!
+Missing character: There is no 需 in font nullfont!
+Missing character: There is no 要 in font nullfont!
+Missing character: There is no 再 in font nullfont!
+Missing character: There is no 遞 in font nullfont!
+Missing character: There is no 迴 in font nullfont!
+Missing character: There is no 下 in font nullfont!
+Missing character: There is no 去 in font nullfont!
+Missing character: There is no 。 in font nullfont!
+Missing character: There is no 所 in font nullfont!
+Missing character: There is no 以 in font nullfont!
+Missing character: There is no ， in font nullfont!
+Missing character: There is no 更 in font nullfont!
+Missing character: There is no 準 in font nullfont!
+Missing character: There is no 確 in font nullfont!
+Missing character: There is no 來 in font nullfont!
+Missing character: There is no 說 in font nullfont!
+Missing character: There is no ， in font nullfont!
+Missing character: There is no 如 in font nullfont!
+Missing character: There is no 果 in font nullfont!
+Missing character: There is no 一 in font nullfont!
+Missing character: There is no 個 in font nullfont!
+Missing character: There is no 節 in font nullfont!
+Missing character: There is no 點 in font nullfont!
+Missing character: There is no 上 in font nullfont!
+Missing character: There is no 記 in font nullfont!
+Missing character: There is no 錄 in font nullfont!
+Missing character: There is no 者 in font nullfont!
+Missing character: There is no 一 in font nullfont!
+Missing character: There is no 條 in font nullfont!
+Missing character: There is no 邊 in font nullfont!
+Missing character: There is no 是 in font nullfont!
+Missing character: There is no 存 in font nullfont!
+Missing character: There is no 活 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no ， in font nullfont!
+Missing character: There is no 則 in font nullfont!
+Missing character: There is no 代 in font nullfont!
+Missing character: There is no 表 in font nullfont!
+Missing character: There is no 那 in font nullfont!
+Missing character: There is no 個 in font nullfont!
+Missing character: There is no 邊 in font nullfont!
+Missing character: There is no 在 in font nullfont!
+Missing character: There is no 節 in font nullfont!
+Missing character: There is no 點 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 整 in font nullfont!
+Missing character: There is no 個 in font nullfont!
+Missing character: There is no 時 in font nullfont!
+Missing character: There is no 間 in font nullfont!
+Missing character: There is no 區 in font nullfont!
+Missing character: There is no 間 in font nullfont!
+Missing character: There is no 內 in font nullfont!
+Missing character: There is no 都 in font nullfont!
+Missing character: There is no 是 in font nullfont!
+Missing character: There is no 存 in font nullfont!
+Missing character: There is no 活 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no 。 in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 394--395
-[] 
+Overfull \hbox (65.00014pt too wide) in paragraph at lines 394--395
+[]$\/lmr/m/n/10 1$$2$$1$$10$$71$$22$ 
  []
 
 Missing character: There is no 接 in font nullfont!
@@ -10515,6 +10715,61 @@ Missing character: There is no 但 in font nullfont!
 Missing character: There is no 啟 in font nullfont!
 Missing character: There is no 發 in font nullfont!
 Missing character: There is no 式 in font nullfont!
+Missing character: There is no 合 in font nullfont!
+Missing character: There is no 併 in font nullfont!
+Missing character: There is no 還 in font nullfont!
+Missing character: There is no 是 in font nullfont!
+Missing character: There is no 可 in font nullfont!
+Missing character: There is no 行 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no ， in font nullfont!
+Missing character: There is no 而 in font nullfont!
+Missing character: There is no 且 in font nullfont!
+Missing character: There is no 是 in font nullfont!
+Missing character: There is no 必 in font nullfont!
+Missing character: There is no 要 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no （ in font nullfont!
+Missing character: There is no 否 in font nullfont!
+Missing character: There is no 則 in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no U in font nullfont!
+Missing character: There is no 會 in font nullfont!
+Missing character: There is no 退 in font nullfont!
+Missing character: There is no 化 in font nullfont!
+Missing character: There is no 成 in font nullfont!
+Missing character: There is no 線 in font nullfont!
+Missing character: There is no 型 in font nullfont!
+Missing character: There is no 的 in font nullfont!
+Missing character: There is no ！ in font nullfont!
+Missing character: There is no ） in font nullfont!
+Missing character: There is no ， in font nullfont!
+Missing character: There is no 附 in font nullfont!
+Missing character: There is no 上 in font nullfont!
+Missing character: There is no 一 in font nullfont!
+Missing character: There is no 份 in font nullfont!
+Missing character: There is no 程 in font nullfont!
+Missing character: There is no 式 in font nullfont!
+Missing character: There is no 碼 in font nullfont!
+Missing character: There is no 供 in font nullfont!
+Missing character: There is no 參 in font nullfont!
+Missing character: There is no 考 in font nullfont!
+Missing character: There is no 。 in font nullfont!
+! Undefined control sequence.
+l.397 \subsection
+                 {範例程式碼}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no 範 in font nullfont!
+Missing character: There is no 例 in font nullfont!
+Missing character: There is no 程 in font nullfont!
+Missing character: There is no 式 in font nullfont!
+Missing character: There is no 碼 in font nullfont!
 
 ! LaTeX Error: Environment C++ undefined.
 
@@ -10522,14 +10777,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.397 \begin{C++}
+l.398 \begin{C++}
                  
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ! You can't use `macro parameter character #' in horizontal mode.
-l.398 #
+l.399 #
        pragma GCC optimize ("Ofast")
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10563,7 +10818,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no " in font nullfont!
 Missing character: There is no ) in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.399 #
+l.400 #
        include <iostream>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10588,7 +10843,7 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no m in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.400 #
+l.401 #
        include <vector>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10611,7 +10866,7 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.401 #
+l.402 #
        include <utility>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10635,7 +10890,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no y in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.402 #
+l.403 #
        include <map>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10655,7 +10910,7 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.403 #
+l.404 #
        include <algorithm>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10681,7 +10936,7 @@ Missing character: There is no h in font nullfont!
 Missing character: There is no m in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.404 #
+l.405 #
        include <deque>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10703,7 +10958,7 @@ Missing character: There is no u in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.405 #
+l.406 #
        include <numeric>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10727,7 +10982,7 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no c in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.406 #
+l.407 #
        define pii pair<int,int>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10757,7 +11012,7 @@ Missing character: There is no n in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.407 #
+l.408 #
        define piii pair<int,pair<int,int> >
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10798,7 +11053,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no > in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.408 #
+l.409 #
        define piiii pair<pii, pii>
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10830,7 +11085,7 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no > in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.409 #
+l.410 #
        define F first
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10850,7 +11105,7 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no t in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.410 #
+l.411 #
        define S second
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10871,7 +11126,7 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no d in font nullfont!
 ! You can't use `macro parameter character #' in horizontal mode.
-l.411 #
+l.412 #
        define ericxiao ios_base::sync_with_stdio(0);cin.tie(0);
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10898,13 +11153,13 @@ Missing character: There is no s in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.411 #define ericxiao ios_
+l.412 #define ericxiao ios_
                            base::sync_with_stdio(0);cin.tie(0);
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! You can't use `macro parameter character #' in math mode.
-l.412 #
+l.413 #
        define endl '\n'
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -10914,7 +11169,7 @@ return to the right one by typing `I}' or `I$' or `I\par'.
 ! Undefined control sequence.
 <recently read> \n 
                    
-l.412 #define endl '\n
+l.413 #define endl '\n
                       '
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -10925,30 +11180,30 @@ and I'll forget about whatever was undefined.
 ! Double superscript.
 <recently read> ^
                  
-l.412 #define endl '\n'
+l.413 #define endl '\n'
                        
 I treat `x^1^2' essentially like `x^1{}^2'.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.414 
+l.415 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 396--414
+Overfull \hbox (20.0pt too wide) in paragraph at lines 396--415
 []
  []
 
 
-Overfull \hbox (26.9796pt too wide) in paragraph at lines 396--414
+Overfull \hbox (26.9796pt too wide) in paragraph at lines 396--415
 []\OML/cmm/m/it/10 ase \/lmr/m/n/10 ::
  []
 
 
-Overfull \hbox (268.23738pt too wide) in paragraph at lines 396--414
+Overfull \hbox (268.23738pt too wide) in paragraph at lines 396--415
 \OML/cmm/m/it/10 sync[]ith[]tdio\/lmr/m/n/10 (0); \OML/cmm/m/it/10 cin:tie\/lmr
 /m/n/10 (0); \OML/cmm/m/it/10 defineendl[][]usingnamespacestd\/lmr/m/n/10 ;$ 
  []
@@ -10971,7 +11226,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no 5 in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 415--416
+Overfull \hbox (20.0pt too wide) in paragraph at lines 416--417
 []
  []
 
@@ -11040,7 +11295,7 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no m in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 417--419
+Overfull \hbox (20.0pt too wide) in paragraph at lines 418--420
 []
  []
 
@@ -11068,7 +11323,7 @@ Missing character: There is no 4 in font nullfont!
 Missing character: There is no ] in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 420--421
+Overfull \hbox (20.0pt too wide) in paragraph at lines 421--422
 []
  []
 
@@ -11132,7 +11387,7 @@ Missing character: There is no b in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 423--426
+Overfull \hbox (20.0pt too wide) in paragraph at lines 424--427
 []
  []
 
@@ -11209,7 +11464,7 @@ Missing character: There is no < in font nullfont!
 Missing character: There is no = in font nullfont!
 Missing character: There is no l in font nullfont!
 ! Misplaced alignment tab character &.
-l.429     if(ql <= l &
+l.430     if(ql <= l &
                       & r <= qr){
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -11219,7 +11474,7 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 ! Misplaced alignment tab character &.
-l.429     if(ql <= l &&
+l.430     if(ql <= l &&
                         r <= qr){
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -11249,13 +11504,13 @@ Missing character: There is no h in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.430         seg[id].push_
+l.431         seg[id].push_
                            back(p);
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.432     }
+l.433     }
            
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11264,7 +11519,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Extra }, or forgotten $.
-l.435 }
+l.436 }
        
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11275,54 +11530,54 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.436 
+l.437 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 427--436
+Overfull \hbox (20.0pt too wide) in paragraph at lines 428--437
 []
  []
 
 
-Overfull \hbox (98.44579pt too wide) in paragraph at lines 427--436
+Overfull \hbox (98.44579pt too wide) in paragraph at lines 428--437
 []\OML/cmm/m/it/10 ack\/lmr/m/n/10 (\OML/cmm/m/it/10 p\/lmr/m/n/10 ); \OML/cmm/
 m/it/10 return\/lmr/m/n/10 ; \OML/cmm/m/it/10 ins\/lmr/m/n/10 (2 \OMS/cmsy/m/n/
 10 ^^C
  []
 
 
-Overfull \hbox (16.4278pt too wide) in paragraph at lines 427--436
+Overfull \hbox (16.4278pt too wide) in paragraph at lines 428--437
 \OML/cmm/m/it/10 id \/lmr/m/n/10 +
  []
 
 
-Overfull \hbox (31.91669pt too wide) in paragraph at lines 427--436
+Overfull \hbox (31.91669pt too wide) in paragraph at lines 428--437
 \/lmr/m/n/10 1\OML/cmm/m/it/10 ; l; \/lmr/m/n/10 (\OML/cmm/m/it/10 l \/lmr/m/n/
 10 +
  []
 
 
-Overfull \hbox (90.4602pt too wide) in paragraph at lines 427--436
+Overfull \hbox (90.4602pt too wide) in paragraph at lines 428--437
 \OML/cmm/m/it/10 r\/lmr/m/n/10 )\OML/cmm/m/it/10 =\/lmr/m/n/10 2\OML/cmm/m/it/1
 0 ; ql; qr; p\/lmr/m/n/10 ); \OML/cmm/m/it/10 ins\/lmr/m/n/10 (2 \OMS/cmsy/m/n/
 10 ^^C
  []
 
 
-Overfull \hbox (16.4278pt too wide) in paragraph at lines 427--436
+Overfull \hbox (16.4278pt too wide) in paragraph at lines 428--437
 \OML/cmm/m/it/10 id \/lmr/m/n/10 +
  []
 
 
-Overfull \hbox (24.2917pt too wide) in paragraph at lines 427--436
+Overfull \hbox (24.2917pt too wide) in paragraph at lines 428--437
 \/lmr/m/n/10 2\OML/cmm/m/it/10 ; \/lmr/m/n/10 (\OML/cmm/m/it/10 l \/lmr/m/n/10 
 +
  []
 
 
-Overfull \hbox (69.44789pt too wide) in paragraph at lines 427--436
+Overfull \hbox (69.44789pt too wide) in paragraph at lines 428--437
 \OML/cmm/m/it/10 r\/lmr/m/n/10 )\OML/cmm/m/it/10 =\/lmr/m/n/10 2\OML/cmm/m/it/1
 0 ; r; ql; qr; p\/lmr/m/n/10 );$ 
  []
@@ -11406,13 +11661,13 @@ Missing character: There is no h in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.442         v.push_
+l.443         v.push_
                      back(Merge(p.F, p.S));
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.443     }
+l.444     }
            
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11421,7 +11676,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Extra }, or forgotten $.
-l.460 }
+l.461 }
        
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11432,41 +11687,41 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.461 
+l.462 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 438--461
+Overfull \hbox (20.0pt too wide) in paragraph at lines 439--462
 []
  []
 
 
-Overfull \hbox (140.64517pt too wide) in paragraph at lines 438--461
+Overfull \hbox (140.64517pt too wide) in paragraph at lines 439--462
 []\OML/cmm/m/it/10 ack\/lmr/m/n/10 (\OML/cmm/m/it/10 Merge\/lmr/m/n/10 (\OML/cm
 m/m/it/10 p:F; p:S\/lmr/m/n/10 )); \OML/cmm/m/it/10 vector <
  []
 
 
-Overfull \hbox (22.47702pt too wide) in paragraph at lines 438--461
+Overfull \hbox (22.47702pt too wide) in paragraph at lines 439--462
 \OML/cmm/m/it/10 pii >
  []
 
 
-Overfull \hbox (141.78409pt too wide) in paragraph at lines 438--461
+Overfull \hbox (141.78409pt too wide) in paragraph at lines 439--462
 \/lmr/m/n/10 ()\OML/cmm/m/it/10 :swap\/lmr/m/n/10 (\OML/cmm/m/it/10 seg\/lmr/m/
 n/10 [\OML/cmm/m/it/10 id\/lmr/m/n/10 ]); \OML/cmm/m/it/10 ==recurseif\/lmr/m/n
 /10 (\OML/cmm/m/it/10 l \/lmr/m/n/10 +
  []
 
 
-Overfull \hbox (15.55553pt too wide) in paragraph at lines 438--461
+Overfull \hbox (15.55553pt too wide) in paragraph at lines 439--462
 \/lmr/m/n/10 1 \OML/cmm/m/it/10 <
  []
 
 
-Overfull \hbox (510.52455pt too wide) in paragraph at lines 438--461
+Overfull \hbox (510.52455pt too wide) in paragraph at lines 439--462
 \OML/cmm/m/it/10 r\/lmr/m/n/10 )[]\OML/cmm/m/it/10 else[]==undoreverse\/lmr/m/n
 /10 (\OML/cmm/m/it/10 v:begin\/lmr/m/n/10 ()\OML/cmm/m/it/10 ; v:end\/lmr/m/n/1
 0 ()); \OML/cmm/m/it/10 for\/lmr/m/n/10 (\OML/cmm/m/it/10 piiiip \/lmr/m/n/10 :
@@ -11474,17 +11729,17 @@ Overfull \hbox (510.52455pt too wide) in paragraph at lines 438--461
  []
 
 
-Overfull \hbox (274.46507pt too wide) in paragraph at lines 438--461
+Overfull \hbox (274.46507pt too wide) in paragraph at lines 439--462
 \OML/cmm/m/it/10 v\/lmr/m/n/10 )[]\OML/cmm/m/it/10 vector <
  []
 
 
-Overfull \hbox (29.36728pt too wide) in paragraph at lines 438--461
+Overfull \hbox (29.36728pt too wide) in paragraph at lines 439--462
 \OML/cmm/m/it/10 piiii >
  []
 
 
-Overfull \hbox (48.75008pt too wide) in paragraph at lines 438--461
+Overfull \hbox (48.75008pt too wide) in paragraph at lines 439--462
 \/lmr/m/n/10 ()\OML/cmm/m/it/10 :swap\/lmr/m/n/10 (\OML/cmm/m/it/10 v\/lmr/m/n/
 10 );$ 
  []
@@ -11635,13 +11890,13 @@ Missing character: There is no h in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.473             mp[{a, b}].push_
+l.474             mp[{a, b}].push_
                                   back(0);
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.475         }
+l.476         }
                
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11652,53 +11907,53 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.492 
+l.493 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 462--492
+Overfull \hbox (20.0pt too wide) in paragraph at lines 463--493
 []
  []
 
 
-Overfull \hbox (52.08966pt too wide) in paragraph at lines 462--492
+Overfull \hbox (52.08966pt too wide) in paragraph at lines 463--493
 []\OML/cmm/m/it/10 ack\/lmr/m/n/10 (0); \OML/cmm/m/it/10 ct \/lmr/m/n/10 +
  []
 
 
-Overfull \hbox (22.22224pt too wide) in paragraph at lines 462--492
+Overfull \hbox (22.22224pt too wide) in paragraph at lines 463--493
 \/lmr/m/n/10 +; \OML/cmm/m/it/10 = \OMS/cmsy/m/n/10 ^^C
  []
 
 
-Overfull \hbox (23.51042pt too wide) in paragraph at lines 462--492
+Overfull \hbox (23.51042pt too wide) in paragraph at lines 463--493
 \OML/cmm/m/it/10 com \/lmr/m/n/10 :
  []
 
 
-Overfull \hbox (93.10222pt too wide) in paragraph at lines 462--492
+Overfull \hbox (93.10222pt too wide) in paragraph at lines 463--493
 \OML/cmm/m/it/10 NnewedgeDdeledge \OMS/cmsy/m/n/10 ^^C
  []
 
 
-Overfull \hbox (51.557pt too wide) in paragraph at lines 462--492
+Overfull \hbox (51.557pt too wide) in paragraph at lines 463--493
 \OML/cmm/m/it/10 =for\/lmr/m/n/10 (\OML/cmm/m/it/10 inti \/lmr/m/n/10 =
  []
 
 
-Overfull \hbox (23.44507pt too wide) in paragraph at lines 462--492
+Overfull \hbox (23.44507pt too wide) in paragraph at lines 463--493
 \/lmr/m/n/10 0; \OML/cmm/m/it/10 i <
  []
 
 
-Overfull \hbox (27.90556pt too wide) in paragraph at lines 462--492
+Overfull \hbox (27.90556pt too wide) in paragraph at lines 463--493
 \OML/cmm/m/it/10 Q\/lmr/m/n/10 ; + +
  []
 
 
-Overfull \hbox (764.01234pt too wide) in paragraph at lines 462--492
+Overfull \hbox (764.01234pt too wide) in paragraph at lines 463--493
 \OML/cmm/m/it/10 i\/lmr/m/n/10 )[]$ 
  []
 
@@ -11800,13 +12055,13 @@ Missing character: There is no p in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.497                 p.S.pop_
+l.498                 p.S.pop_
                               front();
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Extra }, or forgotten $.
-l.498             }
+l.499             }
                    
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11815,7 +12070,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Extra }, or forgotten $.
-l.499         }
+l.500         }
                
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11826,7 +12081,7 @@ deleted material, e.g., by typing `I$}'.
 ! Undefined control sequence.
 <recently read> \n 
                    
-l.503             cout << ans[i + M] << '\n
+l.504             cout << ans[i + M] << '\n
                                            ';
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -11837,12 +12092,12 @@ and I'll forget about whatever was undefined.
 ! Double superscript.
 <recently read> ^
                  
-l.503             cout << ans[i + M] << '\n'
+l.504             cout << ans[i + M] << '\n'
                                             ;
 I treat `x^1^2' essentially like `x^1{}^2'.
 
 ! Extra }, or forgotten $.
-l.505     }
+l.506     }
            
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11851,7 +12106,7 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Extra }, or forgotten $.
-l.506 }
+l.507 }
        
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -11862,61 +12117,61 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.507 
+l.508 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 493--507
+Overfull \hbox (20.0pt too wide) in paragraph at lines 494--508
 []
  []
 
 
-Overfull \hbox (83.50018pt too wide) in paragraph at lines 493--507
+Overfull \hbox (83.50018pt too wide) in paragraph at lines 494--508
 []\OML/cmm/m/it/10 ront\/lmr/m/n/10 (); \OML/cmm/m/it/10 ==cout <<
  []
 
 
-Overfull \hbox (27.02913pt too wide) in paragraph at lines 493--507
+Overfull \hbox (27.02913pt too wide) in paragraph at lines 494--508
 \/lmr/m/n/10 "\OML/cmm/m/it/10 Ct \/lmr/m/n/10 =
  []
 
 
-Overfull \hbox (23.33333pt too wide) in paragraph at lines 493--507
+Overfull \hbox (23.33333pt too wide) in paragraph at lines 494--508
 \/lmr/m/n/10 " \OML/cmm/m/it/10 <<
  []
 
 
-Overfull \hbox (26.27199pt too wide) in paragraph at lines 493--507
+Overfull \hbox (26.27199pt too wide) in paragraph at lines 494--508
 \OML/cmm/m/it/10 ct <<
  []
 
 
-Overfull \hbox (82.92253pt too wide) in paragraph at lines 493--507
+Overfull \hbox (82.92253pt too wide) in paragraph at lines 494--508
 \OML/cmm/m/it/10 endl\/lmr/m/n/10 ; \OML/cmm/m/it/10 dfs\/lmr/m/n/10 (0\OML/cmm
 /m/it/10 ; \/lmr/m/n/10 0\OML/cmm/m/it/10 ; \/lmr/m/n/10 (\OML/cmm/m/it/10 M \/
 lmr/m/n/10 +
  []
 
 
-Overfull \hbox (66.68475pt too wide) in paragraph at lines 493--507
+Overfull \hbox (66.68475pt too wide) in paragraph at lines 494--508
 \OML/cmm/m/it/10 Q\/lmr/m/n/10 )); \OML/cmm/m/it/10 for\/lmr/m/n/10 (\OML/cmm/m
 /it/10 inti \/lmr/m/n/10 =
  []
 
 
-Overfull \hbox (23.44507pt too wide) in paragraph at lines 493--507
+Overfull \hbox (23.44507pt too wide) in paragraph at lines 494--508
 \/lmr/m/n/10 0; \OML/cmm/m/it/10 i <
  []
 
 
-Overfull \hbox (27.90556pt too wide) in paragraph at lines 493--507
+Overfull \hbox (27.90556pt too wide) in paragraph at lines 494--508
 \OML/cmm/m/it/10 Q\/lmr/m/n/10 ; + +
  []
 
 
-Overfull \hbox (124.4457pt too wide) in paragraph at lines 493--507
+Overfull \hbox (124.4457pt too wide) in paragraph at lines 494--508
 \OML/cmm/m/it/10 i\/lmr/m/n/10 )[]$ 
  []
 
@@ -11928,7 +12183,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.507 
+l.508 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -11991,7 +12246,7 @@ Missing character: There is no = in font nullfont!
 Missing character: There is no N in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 508--513
+Overfull \hbox (20.0pt too wide) in paragraph at lines 509--514
 []
  []
 
@@ -12049,7 +12304,7 @@ Missing character: There is no ] in font nullfont!
 Missing character: There is no ) in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 514--518
+Overfull \hbox (20.0pt too wide) in paragraph at lines 515--519
 []
  []
 
@@ -12432,7 +12687,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.531 \end{C++}
+l.532 \end{C++}
                
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -12441,7 +12696,7 @@ or  <return>  to continue without it.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12452,7 +12707,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12463,7 +12718,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12474,7 +12729,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12485,7 +12740,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12496,7 +12751,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12507,7 +12762,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12518,7 +12773,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12529,7 +12784,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.531 \end{C++}
+l.532 \end{C++}
                
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -12539,17 +12794,17 @@ my insertion and my current dilemma will both disappear.
 
 )
 ! Emergency stop.
-<*> ./Extreme.tex
-                 
+<*> Extreme.tex
+               
 *** (job aborted, no legal \end found)
 
  
 Here is how much of TeX's memory you used:
- 61 strings out of 427669
- 1082 string characters out of 3149216
- 75241 words of memory out of 3000000
- 4202 multiletter control sequences out of 15000+200000
- 6599 words of font info for 17 fonts, out of 3000000 for 9000
+ 62 strings out of 493005
+ 1181 string characters out of 6134588
+ 72812 words of memory out of 5000000
+ 4123 multiletter control sequences out of 15000+600000
+ 6599 words of font info for 17 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 18i,4n,16p,326b,134s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 18i,4n,16p,324b,134s stack positions out of 5000i,500n,10000p,200000b,80000s
 Output written on Extreme.pdf (1 page).
