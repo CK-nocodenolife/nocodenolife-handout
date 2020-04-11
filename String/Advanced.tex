@@ -21,7 +21,7 @@
 					4&$b$\\
 				\end{tabular}
 			\end{center}
-			大家一定都想得到一個很簡單的方法來建這個序列：把東西全部都放進去一個陣列之後\inline{sort}，但是因為兩個字串的比較是$O(N)$（$N$為字串長度），所以這樣複雜度是$O(N^2 \log N)$，如果稍微大一點的字串就會超時。在這裡，我們介紹一個$O(N (\log N)^2)$的演算法，雖然有$O(N \log N)$甚至$O(N)$的演算法，但是都沒那麼好寫，比賽通常也不會壓這個常數，所以就介紹這個簡單一點的版本。
+			大家一定都想得到一個很簡單的方法來建這個序列：把東西全部都放進去一個陣列之後\inline{sort}，但是因為兩個字串的比較是$O(N)$（$N$為字串長度），所以這樣複雜度是$O(N^2 \log N)$，如果稍微大一點的字串就會超時。在這裡，我們介紹一個$O(N \log^2 N)$的演算法，雖然有$O(N \log N)$甚至$O(N)$的演算法，但是都沒那麼好寫，比賽通常也不會壓這個常數，所以先介紹這個簡單一點的版本。
 		\subsection{建立後綴序列}
 			注意：這裡要排序的一堆字串，不是隨便抓來的隨機字串，而是同一個字串的後綴！我們可以利用這個性質，來對演算法優化。我們的中心概念是「倍增法」：若可以依照前$2^k$個字元排序，能否用這個資訊得到前$2^{k + 1}$個字元的排序？答案是：可以的。假設對於每一個位置$i$，都已經知道對於目前前$2^k$個字元來說，$i$是第幾位（當然如果相同的話就並列），那要怎麼得到下一個是第幾位？
 			
@@ -33,7 +33,7 @@
 			}
 			
 			具體來說，若$L[i][k]$代表第$i$個前綴的前$2^{k}
-			$個字元（若沒有則取代為最小字元）是第幾小的。我們想要由$L[i][k]$獲得$L[i][k + 1]$。則因為第$i$個前綴的前$2^{k}$個字元其實就是第$i$個前綴的前$2^{k - 1}$個字元，我們如果要看第$i$個前綴和第$j$個前綴的前$2^{k + 1}$個字元哪一個比較小，先比較前面的：$L[i][k]$和$L[j][k]$。若分不出高下，再比較$L[i + 2^{k}][k]$和$L[j + 2^{k}][k]$，若超出範圍則看$i$和$j$哪一個比較大，大的代表字串長度比較小，放前面。以上會用到$O(N \log N)$的空間，可以滾動掉。時間的部分，可以知道有$O(\log N)$次的計算，每次都需要$O(N \log N)$來排序，所以總時間複雜度$O(N (\log N)^2)$。程式如下：
+			$個字元（若沒有則取代為最小字元）是第幾小的。我們想要由$L[i][k]$獲得$L[i][k + 1]$。則因為第$i$個前綴的前$2^{k}$個字元其實就是第$i$個前綴的前$2^{k - 1}$個字元，我們如果要看第$i$個前綴和第$j$個前綴的前$2^{k + 1}$個字元哪一個比較小，先比較前面的：$L[i][k]$和$L[j][k]$。若分不出高下，再比較$L[i + 2^{k}][k]$和$L[j + 2^{k}][k]$，若超出範圍則看$i$和$j$哪一個比較大，大的代表字串長度比較小，放前面。以上會用到$O(N \log N)$的空間，可以滾動掉。時間的部分，可以知道有$O(\log N)$次的計算，每次都需要$O(N \log N)$來排序，所以總時間複雜度$O(N \log^2 N)$。程式如下：
 			\begin{C++}
 vector<int> SA, nextrk, rk; //目前的後綴序列，下一個Rank，目前的Rank（第幾個）
 int gap, N;
@@ -64,7 +64,7 @@ void getSA(string s){
 		rk[i] = s[i] - 'a';
 	}
 	
-	for(gap = 1;; gap *= 2){ //gap就是一次看幾個字串
+	for(gap = 1; ; gap *= 2){ //gap就是一次看幾個字串
 		sort(SA.begin(), SA.end(), cmp);
 		for(int i = 1; i < N; i++) 
 			nextrk[i] = nextrk[i-1] + cmp(SA[i - 1], SA[i]); //若不同了，就要加一
@@ -93,15 +93,15 @@ int gap, N;
 vector<int> SA, nextrk, rk, temp, cnt;
 bool cmp(int i, int j){
 	if(rk[i] != rk[j])
-	return rk[i] < rk[j]; //若前面就能比較
-	
+		return rk[i] < rk[j]; //若前面就能比較
+
 	i += gap;
 	j += gap;
 	
 	if(i < N && j < N)
-	return rk[i] < rk[j]; //比較後面
+		return rk[i] < rk[j]; //比較後面
 	else
-	return i > j; //字串小的放前面
+		return i > j; //字串小的放前面
 }
 
 void getSA(string s){
@@ -192,10 +192,6 @@ void getlcp(string s){
 }
 			\end{C++}
 		而這個為什麼是$O(N)$呢？因為\inline{k} 除了一次之外，每次都最多減少$1$，所以\inline{while} 迴圈不可能跑太多次，故時間複雜度是$O(N)$。
-\section{Burrow-Wheeler Transform}
-	\subsection{這是啥？有什麼用？}
-		因為在2019的YTP複賽出現過，所以就來介紹一下這個是做什麼的；//TODO
-		\theorem{abc}{def}
 
 \section{AC自動機（AC Automaton）}
 AC自動機顧名思義就是一種可以讓你自動AC的程式啊(X\\
@@ -204,94 +200,193 @@ AC自動機顧名思義就是一種可以讓你自動AC的程式啊(X\\
 \subsection{節點}
 AC自動機的節點大致上與trie都一樣，只是會多新增幾個資料，詳細的\inline{struct}如下：
 \begin{C++}
-struct node{ //maxn means how many kinds of characters
-	node *p,*next[maxn],*fp; //記錄父節點、子節點們和failure pointer
-    int index; //第幾個單字的結尾，-1代表不是結尾
-    char ch;
-    node(){}
-    node(node *_p,char _c):p(_p),ch(_c){
-        for(int i=0;i<maxn;i++) next[i]=nullptr;
-        fp=nullptr; index=-1;
-    }
+struct node{ //K是字元集的大小
+	node *ch[K],*fail; //記錄子節點們和failure pointer
+	vector<int> endof; //紀錄這個節點表示了那些字典集中的字串
+	node(): endof(){
+		for(int i=0; i<K; i++) ch[i]=nullptr;
+		fail=nullptr;
+	}
 };
 \end{C++}
 \subsection{build AC automaton}
 最重要的當然是先建構出trie才能做其他事吧！當然，建構方式和正常的trie也差不多，因此就直接看code吧：
 \begin{C++}
-node *build(vector<string> &dict){
-    node *root=new node(nullptr,'\0');
-    root->p=root;
-    for(int i=0;i<dict.size();i++){
-        node *ptr=root;
-        for(auto &j:dict[i]){
-            if(!ptr->next[j-'a'])
-                ptr->next[j-'a']=new node(ptr,j);
-            ptr=ptr->next[j-'a'];
-        }
-        ptr->index=i;
+node *build(const vector<string> &dict) {
+    node *root=new node();
+    for(int i=0; i<dict.size(); i++) {
+		node *now = root;
+		for(char c: dict[i]) {
+			if(!now->ch[c-'a'])
+				now->ch[c-'a'] = new node();
+			now = now->ch[c-'a'];
+		}
+		now->endof.push_back(i);
     }
-    //failure pointer part
     return root;
 }
 \end{C++}
 \subsection{failure pointer}
-為了方便，這裡的failure pointer定義和failure function會有點差異。而建立的方法我們知道原本failure function在計算時可以\inline{for}迴圈從頭開始一一往後建，也就是說計算某個點時其前面所有failure function都要先被算到。因此移到trie時我們選用BFS的遍歷順序依序計算，如此便可保證計算某一節點時比他上面的節點都已經算完了。說了這麼多，不如直接看程式碼吧（這邊會接續上面的程式碼）：
+原本failure function代表的是某個前綴的「次長共同前後綴」，在trie上沿用這個概念的failure pointer指向的是「次長的存在於這個trie中的後綴」，我們同樣能知道failure pointer肯定離根比較近，因此移到trie時我們選用BFS的遍歷順序依序計算，如此便可保證計算某一節點時，長度更短的都已經算完了。說了這麼多，不如直接看程式碼吧：
 \begin{C++}
-node *build(vector<string> &dict){
-    //failure pointer part
-    queue<node *> q;
-    for(int i=0;i<maxn;i++){ //根及第一層的fp都指向根
-        if(root->next[i]){
-            root->next[i]->fp=root;
-            for(int j=0;j<maxn;j++)
-                if(root->next[i]->next[j])
-                    q.push(root->next[i]->next[j]);
-        }
-    }
-    while(q.size()){
-        node *t=q.front(),*ptr=t->p->fp; q.pop();
-        while(ptr!=root&&!ptr->next[t->ch-'a'])
-            ptr=ptr->fp;
-        if(ptr->next[t->ch-'a']) t->fp=ptr->next[t->ch-'a'];
-        else t->fp=root;
-        for(int i=0;i<maxn;i++) if(t->next[i]) q.push(t->next[i]);
-    }
-    return root;
+vector<node *> buildFail(node *root) {
+	vector<node *> BFS; // 儲存BFS的遍歷順序，待會用到
+	queue<node *> Q;
+	for(int c=0; c<K; c++) {
+		if(root->ch[c]) {
+			root->ch[c]->fail = root;
+			Q.push(root->ch[c]);
+		}
+	}
+	while(!Q.empty()) {
+		node *p = Q.front(); Q.pop();
+		BFS.push_back(p);
+		for(int c=0; c<K; c++) if(p->ch[c]) {
+			node *f = p->fail;
+			while(f != root && !f->ch[c]) f = f->fail;
+			if(f->ch[c]) f = f->ch[c];
+			p->ch[c]->fail = f;
+			Q.push(p->ch[c]);
+		}
+	}
+	return BFS;
 }
 \end{C++}
 \subsection{開始匹配}
 不外乎就是跟KMP的方法一樣，從第一個字開始看，若遇到失配的狀況就走failure pointer。程式碼應該也相當易懂：
 \begin{C++}
-void ACsearch(node *r,string &s,vector<string> &dict){
-    //root of trie,input string and dictionary
-    node *ptr=r;
-    int i=0;
-    cout<<"string:\tposition:"<<endl;
-    while(i<s.size()){
-        if(ptr->next[s[i]-'a'])
-            ptr=ptr->next[s[i]-'a'],i++;
-        else if(ptr==r)
-            i++;
-        else
-            ptr=ptr->fp;
-        if(ptr->index!=-1)
-            cout<<dict[ptr->index]<<"\t"<<i-(int)dict[ptr->index].size()<<endl;
+void match(node *root, const string &S, const vector<string> &dict){
+    node *p = root;
+    for(int i=0; i<S.size(); i++) {
+    	while(p != root && !p->ch[S[i]-'a']) p = p->fail;
+    	if(p->ch[S[i]-'a']) p = p->ch[S[i]-'a'];
+    	for(int id: p->endof) {
+    		cout << "Match pattern #" << id << " at position"
+    				<< i - dict[id].size() << '\n';
+    		}
     }
-    while(ptr!=r){
-        ptr=ptr->fp;
-        if(ptr->index!=-1)
-        	cout<<dict[ptr->index]<<"\t"<<i-(int)dict[ptr->index].size()<<endl;
-    } //makes ptr back to root
 }
 \end{C++}
 \subsection{你以為結束了？}
 多玩幾次之後就會發現上面AC自動機在目標字串互相包含時會出問題！看下面範例：\\
 
-\inline{dict={"ab","cababc"}; s="cababc"}。上面程式的輸出結果ab只在位置$0$和$4$，位置$2$的ab消失了！！！為什麼會這樣？你畫出AC自動機後自己走一次就會發現，整個匹配過程都是走"ababab"的那條路，經過第一個ab時在tire上有標記結尾，經過第三個ab時，因為結尾加上的\inline{'$\setminus$n'}不斷失配而往fp走，走到指向第一個ab的地方時就會被算到。然而經過第二個ab時，完全沒有標記讓AC自動機知道他也是一個單字。也就是說，只要某個字被包含在另一個字的中間時，就會被忽略（若是頭尾還是會被算到）。怎麼辦呢？？？\\
+\begin{center}
+dict=\{"ab","cababc"\} \\
+S="cababc"
+\end{center}
+
+上面程式的輸出結果"ab"消失了！為什麼會這樣？你畫出AC自動機後自己走一次就會發現，整個匹配過程都是走"cababc"的那條路，然而經過"ab"時，完全沒有標記讓AC自動機知道他也是一個單字。也就是說，只要某個字被包含在另一個字的中間時，就會被忽略。怎麼辦呢？\\
 
 假設從節點$S_{0,1\dots k-1}$走到$S_{0,1\dots k}$時，會使$S_{1,2\dots k-2}$的所有後綴字串沒有被考慮到。因此我們應該要窮舉這些字串，檢查他們是不是也在字典中。然而，我們可以發現$S_{1,2\dots k-2}$後綴字串中所有在字典裡的字串，事實上就是不斷走failure pointer路上經過的那些字串！想一想就知道了！\\
 
-因此，實作上我們可以記錄所有點被走過幾次，然後在ACsearch跑完之後將每個節點被算到的次數不斷向他的failure pointer加。那應該用什麼順序處理這件事呢？因為要不斷向上推，不如就從最深的開始處理（用DFS就好了），如此就可以正確又高效率的完成了！所以來看一下code吧！（由於互相包含版紀錄位置很麻煩，我也不知道複雜度是不是好的，所以這邊就放計數就好了）
 \begin{C++}
-待補
+void match(node *root, const string &S, const vector<string> &dict){
+    node *p = root;
+    for(int i=0; i<S.size(); i++) {
+		while(p != root && !p->ch[S[i]-'a']) p = p->fail;
+		if(p->ch[S[i]-'a']) p = p->ch[S[i]-'a'];
+		for(node *now=p; now!=root; now=now->fail) { //跳fail
+			for(int id: now->endof) {
+				cout << "Match pattern #" << id << " at position" << i - dict[id].size() << '\n';
+			}
+		}
+	}
+}
 \end{C++}
+
+如果只想知道各個字串被匹配到的次數，我們可以記錄所有點被走過幾次，然後在Match跑完之後將每個節點被經過的次數不斷向他的failure pointer加，類似在樹或DAG上DP的感覺。那應該用什麼順序處理這件事呢？因為要不斷向上推，不如就從最深的開始處理，由於failure pointer的深度一定比該節點的深度小，直接用BFS遍歷順序的逆序正好可以保證正確性！直接來看一下code吧！假設node裡面已經有宣告了\inline{cnt}，並且假如大字串在match中每一步走到的每個節點\inline{cnt}都增加1，經過DP之後最後的值將會表示大字串和這個節點所代表的字串的匹配數量。
+\begin{C++}
+void match(node *root,const string &S){
+    node *p = root;
+    for(char c: S) {
+    	while(p != root && !p->ch[c-'a']) p = p->fail;
+    	if(p->ch[c-'a']) p = p->ch[c-'a'];
+    	p->cnt += 1;
+    }
+    reverse(BFS.begin(), BFS.end());
+    for(node *p: BFS) {
+		for(int id: p->endof) {
+    			cout << "Match pattern #" << id << " " << p->cnt << " times\n";
+		}
+		p->fail->cnt += p->cnt;
+    }
+}
+\end{C++}
+
+\subsection{一個小優化}
+看看我們的\inline{match}函式可以發現，如果我們要match很多個（或很多次）大字串，每次都得跑failure，感覺很浪費時間呢！是不是可以預先處理好如果以某個字元失配會跳到哪個節點呢？答案是肯定的！這樣做的優點還有在AC自動機上來回走的時候保證是$O(1)$，而跳fail的方法僅保證一次匹配的均攤是好的，不能保證來回走的時候不會跳太多次（後面有習題似乎需要這個優化，嘻嘻）。下面的code直接用\inline{ch}來儲存一個節點遇到一個字元應該跳到哪個節點，若會需要用到這個trie原來的結構可以另外開一個空間儲存。
+
+\begin{C++}
+void buildFail(node *root) {
+	queue<node *> Q;
+	for(int c=0; c<K; c++) {
+		if(root->ch[c]) {
+			root->ch[c]->fail = root;
+			Q.push(root->ch[c]);
+		} else root->ch[c] = root; // base case很重要
+	}
+	while(!Q.empty()) {
+		node *p = Q.front(); Q.pop();
+		for(int c=0; c<K; c++) {
+			node *f = p->fail;
+			if(p->ch[c]) { // 沒失配繼續往下走
+				p->ch[c]->fail = f->ch[c];
+				Q.push(p->ch[c]);
+			} else {
+				p->ch[c] = f->ch[c]; // 失配跳fail
+			}
+		}
+	}
+}
+void match(node *root, const string &S) {
+	node *p = root;
+	for(int i = 0; i < S.size(); i++) {
+		p = p->ch[s[i]-'a'];
+		// do something on node p
+	}
+}
+\end{C++}
+\subsection{更多活用}
+這邊有一個引理
+\lemma{樹狀結構}{
+所有failure pointer會形成一棵樹，因為恰好有（節點數-1）條指向別人的failure pointer，並且每個節點的failure pointer唯一且比自己淺，所以不會有環。
+}
+有些題目會要求在AC自動機上動態一些的做事，因為一個節點可能對他的祖先或是整個子樹產生影響，我們可以用樹壓平解決。
+
+AC自動機另一個優點是，他把所有可能跟小字串匹配的狀態從$\prod |P|$壓到$\sum |P|$（原本紀錄每個字串match到第幾個，現在只要知道match到哪個節點），因此也常常出現和DP配合的題目，例如筆者寫這份講義左右的入營考最後一題。
+
+%\section{Burrow-Wheeler Transform}
+%	\subsection{這是啥？有什麼用？}
+%		因為在2019的YTP複賽出現過，所以就來介紹一下這個是做什麼的；//TODO
+%		\theorem{abc}{def}
+
+
+\section{習題}
+以下題目有可能不一定要用到SA或AC自動機，請自行發揮創意找出更多不同解法！
+\problem{似曾相識 (TIOJ 1515)}{給定一字串$s$，請問在此字串中重複出現兩次以上的最長字串長度為何(若無則輸出0)？}
+\problem{字串中的字串 (TIOJ 1306)}{給你一個字串$T$，以及很多字串$P$。對於每個$P$請輸出$P$在$T$中出現過幾次。($T$、$P$都是由小寫字母所組成，長度$\leq 10^4$)}
+\problem{猜謎遊戲 (Guess)（TIOJ 1091）}{
+給定$S,P(|S| > |P|)$，請問至少要在$S$中刪除幾個字元才能使得其不包含$P$作為子字串？ \\
+註：字元僅有AB兩種。$|P| \leq 100, |S| \leq 1000$
+}
+\problem{Letters and Question Marks（CF 1327G）}{
+給一個字串$S$，還有一些小字串$[t_1, t_2, \dots, t_k]$，每個小字串$t_i$有價值$c_i$，同時$S$和$t$除了問號以外都只包含前$14$個英文字母（a到n）。 \\
+$S$包含了不超過$14$個問號，這些問號必須被填入兩兩相異的字母，請找出所有可能的填入方法中，總價值最大可以是多少。總價值的計算方法，是對每個小字串計算在該字串中的出現次數乘上該小字串的價值，最後直接相加。 \\
+$k \leq 1000, \sum |t_i| \leq 1000, |c_i| \leq 10^6, |S| \leq 4 \cdot 10^5$
+}
+\problem{Indie Album（CF 1207G）}{
+Mishka最愛的樂團發行了新專輯！專輯中包含了$N$首歌，每首歌的歌名$s_i$可能是以下兩種：
+\begin{enumerate}
+\item $1 \ c$表示$s_i$是一個單獨的字母$c$
+\item $2 \ j \ c$表示$s_i$是$s_j$再加上一個字母$c$（$j < i$）
+\end{enumerate}
+Vova對這張專輯很感興趣，但他沒有足夠的時間去聆聽所有歌曲，因此他詢問了Mishka一共$M$個問題，每個問題包含了$i$和一個字串$t$，表示他想知道$s_i$裡面出現了幾次$t$。
+Mishka不知道他為何要問這些問題，但他盡力提供訊息。你可以幫助Mishka回答Vova所有的問題嗎？ \\
+所有字串僅包含小寫拉丁字母，$N, M \leq 4 \cdot 10^5, \sum |t| \leq 4 \cdot 10^5$
+}
+\problem{同步(Sync)（TIOJ 1927）	}{
+在一個多人單向卷軸遊戲中，有$N \leq 10^5$個格子，每個格子都有一個不超過$10^9+6$的正整數，代表該格的狀況。
+有時遊戲中的兩人會產生「同步」的現象。產生同步的條件是兩人所在的格子的數字$a,b$分別滿足$(ab)^\frac{p-1}{2} \equiv 1 \pmod p$，其中$p = 10^9+7$。產生同步後，兩人會瞬移至下一格。如果在下一格又產生「同步」，則會繼續往下走，直到其中一人超出格子範圍(到了終點了)或者兩人不再同步。
+
+現在有$Q \leq 10^6$個詢問，每次給定$N$個格子中的正整數以及兩人的起始位子，請計算他們兩個將會「同步」幾次。
+}
