@@ -224,10 +224,10 @@ int main() {
 }
 \end{C++}
 
-\chapter{樹堆Treap}
-\section{前言}
+\section{樹堆Treap}
+\subsection{前言}
 treap$=$tree(binary search tree)$+$heap，是一種隨機平衡二元搜尋樹，對於任意的序列，他的插入、刪除、查詢操作期望複雜度皆為$O(\log N)$。一般的BST雖然期望深度也是$O(\log N)$，但是只要刻意餵給他排序好的序列，就一定會退化成鍊狀，這就是為什麼我們需要treap了。因為其期望複雜度低且程式碼相對簡單，故有些時候能拿來代替自平衡二元搜尋樹。
-\section{原理}
+\subsection{原理}
 treap不同於一般二元搜尋樹的是，每個節點除了紀錄這個節點的數字（我們稱之為key值）外，同時會記錄一個pri值，\inline{struct}大概長這樣：
 \begin{C++}
 int randseed=7122;
@@ -240,17 +240,17 @@ struct node{
 };
 \end{C++}
 樹中的key值會保持BST的性質（所以他是一種二元搜尋樹），pri值則會保持heap（二叉堆）的性質。這樣可以幹嘛呢？？？我們先對這個結構熟悉一下：
-\subsection{唯一性}
+\subsubsection{唯一性}
 在介紹二元搜尋樹時，我們知道對於同一組數字建立二元搜尋樹，他可以有很多種不同的樣子。但在treap中當每對key,pri都固定時，其建構出來的treap是唯一的。你可以想像，BST的性質當中可以固定左右的關係（左邊的key值一定小於右邊），而heap的性質中可以固定上下的關係（上面的pri值一定小於下面），上下左右關係都固定的情形下，這棵treap自然就固定了啊！（你說這樣一點都不嚴謹？講的好像我知道怎麼嚴謹證明一樣）
-\subsection{當pri值=$1\~{} n$時}
+\subsubsection{當pri值=$1\~{} n$時}
 這個情況下，我們可以想像一棵最普通的二元搜尋樹（只有key值），我們依原本節點pri值從$1\~{} n$的順序一一插入，因為越後面插入的節點一定在越下面，因此pri值（$=$插入時間）大的一定在越下面。如此一來，tree和heap的性質就同時都滿足了。換句話說，每個$1\~{} n$的排列各自代表一種插入順序。
-\subsection{當pri值隨機時}
+\subsubsection{當pri值隨機時}
 根據上面的結論，pri值的大小可以視為插入時間的先後，那如果pri值隨機的話，不就是隨機順序插入的意思嗎？而我們都知道，隨機順序插入的二元搜尋樹，其期望深度$O(\log N)$（深度超過$2\log N$的機率是$\frac{1}{n^2}$），這也就是為什麼他的操作都可以$O(\log N)$達成了。
-\section{實作方法}
+\subsection{實作方法}
 聽到這裡，你可能會想說：講那麼多，到底要怎麼在操作的同時保持這些性質啊？事實上，維持這個性質的方法有很多，主要有merge-split treap和旋轉式treap。這邊要介紹的是merge-split treap，因為這種方法好刻code又短。\\
 
 merge-split tree顧名思義，需要有merge（合併）、split（分裂）兩個主要操作。而這兩個操作的實作方法其實就是遞迴，要詳細解釋也沒什麼意思，所以就直接切到程式碼的部分吧。
-\subsection{merge}
+\subsubsection{\inline{merge}}
 這個操作是要將$a,b$兩個treap合併成一個，\textbf{其中$a$的所有key值都小於$b$}。
 \begin{C++}
 node *merge(node *a,node *b){ //將根節點為a,b的treap合併
@@ -265,7 +265,7 @@ node *merge(node *a,node *b){ //將根節點為a,b的treap合併
 	} //pri值小的當父節點，大的當子節點。
 }
 \end{C++}
-\subsection{split}
+\subsubsection{\inline{split}}
 這個操作是要將一個treap的key值$\leq k$的都丟到$a$，其餘$>k$的丟到$b$。
 \begin{C++}
 void split(node *s,node *&a,int k,node *&b){
@@ -276,9 +276,9 @@ void split(node *s,node *&a,int k,node *&b){
 		b=s,split(s->l,k,a,b->l); //分割左子樹
 }
 \end{C++}
-\section{延伸操作}
+\subsection{延伸操作}
 上面兩個操作看起來實在是沒有什麼實際用途，所以我們要來介紹一下利用它們組合而成的延伸操作。
-\subsection{\inline{insert}}
+\subsubsection{\inline{insert}}
 \inline{insert}的做法只需要先將原本的treap拆開，再把左、新節點、右依序合併就好了。以下是程式碼：
 \begin{C++}
 void insert(node *&root,int t){
@@ -287,7 +287,7 @@ void insert(node *&root,int t){
 	root=merge(merge(a,new node(t)),b);
 }
 \end{C++}
-\subsection{\inline{erase}}
+\subsubsection{\inline{erase}}
 \inline{erase}基本上就是反著做\inline{insert}就好了。以下為程式碼：
 \begin{C++}
 void erase(node *&root,int t){
@@ -298,11 +298,11 @@ void erase(node *&root,int t){
 	root=merge(a,c);
 }
 \end{C++}
-\section{比\inline{set}更強大的功能}
+\subsection{比\inline{set}更強大的功能}
 treap是一個進階版的BST，因此能改裝成具有更多功能的東西。其中，treap最吸引人的功能就是merge和split了。不過我們先從一些初階的東西開始講起。
-\subsection{記錄size}
+\subsubsection{記錄size}
 要記錄每個子樹的size，就是自己的size$=$左子樹的size$+$右子樹的size$+1$。這簡單的運算一切就交給遞迴就好了（事實上就是線段樹的懶標）。這邊就不附上code了（後面會有）。
-\subsection{名次樹（rank tree）}
+\subsubsection{名次樹（rank tree）}
 rank tree就是要能查詢各個rank的值以及每個值得rank。在search by key時，可以用兩種方式（假設要查詢key$=k$的rank）：
 \begin{enumerate}
 \item 將key$\leq k$的split出來，最後根節點的size就是rank了。
@@ -312,15 +312,15 @@ rank tree就是要能查詢各個rank的值以及每個值得rank。在search by
 \end{enumerate}
 而search by rank時，假設要查詢rank$=k$的key值，從根節點開始：如果左子樹的size$+1=$rank，代表此節點的key值就是答案；如果size$\geq $rank,則向左子樹遞迴；如果size$+1<$rank，則向右子樹遞迴，並且rank-=左子樹的size$+1$。
 %%%%%
-\subsection{split by rank}
+\subsubsection{split by rank}
 既然可以search br rank，下一步就可以split by rank了！作法其實都一樣，只是要記的在遞迴後面加上pull()，才能保持住正確的size。\\
 
 剛剛講了這麼多，重點就是為了下面這個神奇的東西：
-\subsection{序列轉treap}
+\subsubsection{序列轉treap}
 什麼是序列轉treap呢？？？一般而言treap當中都是按照數字大小作為key值，達到BST的效果。然而現在，我們希望這棵treap中序尋訪的結果恰好就是原序列；也就是以index值作為key值。然而我們會知道，其實這邊的key值恰好就會是他的rank，在查詢、split時都可以用rank來進行就好，所以我們通常將key值省略不記（到後面你就會知道記與不記的差別了）。
-\subsection{懶人標記（lazy tag）}
+\subsubsection{懶人標記（lazy tag）}
 懶標你們一定不陌生，沒錯，他就是在線段樹上出現過的東西。這裡的treap恰好也是紀錄一個序列，所以，當然也可以使用懶標啦！假設我現在要對$[l,r)$進行區間加值，我們可以先利用split by rank將整棵treap進行split，分成$[0,l)$，$[l,r)$，$[r,n)$這三棵treap，然後在$[l,r)$這棵treap的根上打懶標，最後再merge回去，就完成區間加值了。
-\subsection{區間操作}
+\subsubsection{區間操作}
 從上面的例子你應該可以發現，在treap當中我們可以在$\log N$的時間內切出任意的區間，因此讓區間操作變得非常容易。這邊我們就舉交換區間的例子來讓大家更深刻體會treap的美妙吧！
 \problem{交換區間}{
 給定一序列及兩種操作：
@@ -380,8 +380,8 @@ void change(node *&n,int l1,int r1,int l2,int r2){
 \end{C++}
 
 
-\chapter{時間線段樹}
-\section{例題}
+\section{時間線段樹}
+\subsection{例題}
 來看看萬年的唯一例題(?)
 \problem{【Gate】這個笑容由我來守護（TIOJ 1890）}{
 給定一張$N$個點$M$條邊的圖，之後有$Q$次修改
@@ -391,9 +391,12 @@ void change(node *&n,int l1,int r1,int l2,int r2){
 
 如果現在題目只有加邊，那麼大家應該都會想到用DSU去處理吧！當題目只有刪邊，應該也可以很容易的想到可以時間倒過來用同樣的作法處理。
 
-具體來說時間線段樹是什麼呢？我們可以發現，每條邊有特定的一些存活時間，在時間上對應的是一段區間，若我們離線將修改都讀進來，就能對時間這條軸開一棵線段樹表示，每個節點存這個點代表的區間被哪些邊的存活時間完整覆蓋。
+具體來說時間線段樹是什麼呢？如果將所有的操作依序加上時間（第一個操作時間是$1$、第二個操作時間是$2$...），我們可以發現，每條邊有特定的一些存活時間（像是某一個邊在時間$1$到$10$的時候存在、另外一個邊在$71$到$22$的時候存在之類的），在時間上對應的是一些互斥的區間，若我們離線將修改都讀進來，就能對時間這條軸開一棵線段樹表示，每個節點存這個點代表的區間被哪些邊的存活時間完整覆蓋。在修改的時候，如果發現目前線段樹所在的節點所對應到的區間完全被要修改的區間包覆，就可以回去了，不需要再遞迴下去。所以，更準確來說，如果一個節點上記錄者一條邊是存活的，則代表那個邊在節點的整個時間區間內都是存活的。
 
-接著，按照時間順序DFS，並跟著維護DSU，在遞迴到葉節點的時候就能得知該時間點的答案，但是在過程中我們會遇到必須要將DSU的合併動作「回復」，也就是說DFS離開某個節點的時候必須撤銷某個節點造成的影響，但只要把每個修改操作都記錄下來就能，這時候路徑壓縮的優化就會失效了（可以想想為什麼），但啟發式
+接著，按照時間順序DFS，並跟著維護DSU，在遞迴到葉節點的時候就能得知該時間點的答案，但是在過程中我們會遇到必須要將DSU的合併動作「回復」，也就是說DFS離開某個節點的時候必須撤銷某個節點造成的影響，但只要把每個修改操作都記錄下來就能，這時候路徑壓縮的優化就會失效了（可以想想為什麼），但啟發式合併還是可行的，而且是必要的（否則DSU會退化成線型的！），附上一份程式碼供參考。
+
+
+\subsection{範例程式碼}
 \begin{C++}
 #pragma GCC optimize ("Ofast")
 #include <iostream>
@@ -529,3 +532,6 @@ inline piiii Merge(int a, int b){
     return res;
 }
 \end{C++}
+
+\subsection{其他用處}
+	其實編者我看到的用時間線段樹的題目真的是少之又少qq，所以不是很清楚；然而，用這種時間線段樹的作法有時候可以讓我們可以免除持久化！像是這一題，可能原本要寫個什麼持久化DSU、Treap之類的東西，可能就有辦法用時間線段樹離線掉！

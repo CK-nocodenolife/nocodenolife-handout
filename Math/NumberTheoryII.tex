@@ -128,3 +128,26 @@ void sieve(){
 		對於兩個函數$f$和$g$，我們定義他們的卷積$f \star g$為：
 		$$(f \star g)(n) = \sum_{d | n} f(d)g(\frac{n}{d})$$
 	}
+	先來看一下這個神奇運算子的一些基本性質吧！此處，$f, g, h$皆為數論函數。
+	\begin{enumerate}
+		\item 交換律：$f \star g = g \star f$
+		\item 結合律：$(f \star g) \star h = f \star (g \star h)$
+		\item 單位元：$e(n) = \lfloor \frac{1}{n} \rfloor = [n == 1]$
+		\item 反函數：對於所有的函數$f$，都存在一個函數$f^{-1}$使得$f \star f^{-1} = e$ 
+	\end{enumerate}
+	也就是說，若$F$為所有數論函數的集合，$G(F, \star)4$是一個阿貝爾群！再看一些常用函數（一些可能以上已經看過了）：
+	\begin{enumerate}
+		\item 單位函數$I(n) = n$
+		\item 一函數$1(n) = 1$
+		\item 因數個數$d(n) = \sum_{d | n} 1$
+		\item 所有因數和$\sigma(n) = \sum_{d | n} d$
+	\end{enumerate}
+	和一些常用的引理：
+	\begin{enumerate}
+		\item $1 \star 1 = d$
+		\item $I \star 1 = \sigma$
+		\item $\mu \star 1 = e$
+		\item $\phi \star 1 = I$
+	\end{enumerate}
+	前兩個根本就是定義，而後兩個的證明：
+	%待補
