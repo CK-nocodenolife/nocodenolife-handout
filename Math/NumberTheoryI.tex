@@ -39,10 +39,9 @@ $N$的正因數和為
 $$(1+p_1+\cdots+p_1^{\alpha_1})(1+p_2+\cdots+p_2^{\alpha_2}) \cdots (1+p_k+\cdots+p_k^{\alpha_k})$$
 
 \subsection{怪怪的定理}
-對於質數$p$
 \begin{itemize}
-\item （威爾遜定理） $(p-1)! \equiv -1 \pmod p$
-\item （費馬小定理） $a \neq 0 \Rightarrow a^{p-1} \equiv 1 \pmod p$
+\item （威爾遜定理） $p$是質數若且惟若$(p-1)! \equiv -1 \pmod p$
+\item （費馬小定理） 若$p$是質數則$a \neq 0 \Rightarrow a^{p-1} \equiv 1 \pmod p$
 \item （質數定理） 在$N$以下的質數數量大約是$\cfrac{N}{\ln N}$
 \end{itemize}
 
@@ -57,7 +56,7 @@ $$(1+p_1+\cdots+p_1^{\alpha_1})(1+p_2+\cdots+p_2^{\alpha_2}) \cdots (1+p_k+\cdot
 \item $\forall a,b \in \mathbb{Z} , \exists x,y \in \mathbb{Z}, s.t. ax+by = \gcd(a,b)$（Bezout's Theorem）
 \end{itemize}
 
-如果假定除法是$O(1)$的話，由$\gcd(a,b)=\gcd(b,a \mod b)$可以$O(\log C)$求得兩數的最大公因數。不失一般性假設$a>b$，因為$a \mod b < b$，所以$a \geq b+(a \mod b) > 2\cdot(a \mod b)$，也就是說每做一次有效的模，$a$的值就會砍半一次，最多砍半$O(\lg(a)+\lg(b))$次。通常可以直接用gcc的\inline{\_\_gcd}，但是負數要好好處理。
+如果假定除法是$O(1)$的話，由$\gcd(a,b)=\gcd(b,a \mod b)$可以$O(\log C)$求得兩數的最大公因數。不失一般性假設$a>b$，因為$a \mod b < b$，所以$a \geq b+(a \mod b) > 2\cdot(a \mod b)$，也就是說每做一次有效的模，$a$的值就會砍半一次，最多砍半$O(\log(a)+\log(b))$次。通常可以直接用gcc的\inline{\_\_gcd}，但是負數要好好處理。
 
 \subsection{擴展歐幾里得}
 考慮形如$ax+by=c$的等式，若$\gcd(a,b) {\not |} c$顯然沒有解，而若要找出一組$(x,y)$可以用和輾轉相除法類似的形式求解。
@@ -71,7 +70,7 @@ pair<int,int> extgcd(int a, int b) {
 	return {y, x - a/b * y};
 }
 \end{C++}
-注意得到的不是唯一解，若$(x,y)$是一組解則$(x+\frac{b}{g}t, y-\frac{a}{g}t)$（$g=\gcd(a,b)$）也是一組解。
+注意得到的不是唯一解，通解為$(x,y) = (x+\frac{b}{g}t, y-\frac{a}{g}t)$，其中$t \in \mathbb{Z}, g=\gcd(a,b)$。
 
 \section{同餘}
 若兩個整數$a,b$滿足$m | a-b$，則我們稱他們在模$m$下同餘，又記做$a \equiv b \pmod m$，C++中可以用 \inline{\%} 運算子來取餘數。
@@ -94,8 +93,8 @@ $$
 事實上，存在$a^{-1}$若且惟若$\gcd(a,m)=1$，但是要怎麼快速求模逆元呢？這邊提供三種方法
 \begin{itemize}
 \item 用擴展歐幾里得求$ax + m(-y) = 1$的一組解。
-\item 如果$m$是質數，利用費馬小定理，$a^{p-1} \equiv 1 \pmod p \Rightarrow a^{-1} \equiv a^{p-2}$。
-\item 如果$m$是小質數，利用DP的方式，\\ $m \% a = m - a \cdot \left \lfloor \frac{m}{a} \right \rfloor \Rightarrow a^{-1} \equiv (m \% a)^{-1} \cdot (- \left \lfloor \frac{m}{a} \right \rfloor) \pmod m$
+\item 如果$m$是質數，利用費馬小定理，$a^{p-1} \equiv 1 \pmod p \Rightarrow a^{-1} \equiv a^{p-2} \pmod p$。
+\item 如果$m$是質數，利用DP的方式，\\ $m \% a = m - a \cdot \left \lfloor \frac{m}{a} \right \rfloor \Rightarrow a^{-1} \equiv (m \% a)^{-1} \cdot (- \left \lfloor \frac{m}{a} \right \rfloor) \pmod m$
 \end{itemize}
 當然不論是何種方法，$0$、與$m$不互質的數都沒有模逆元。
 
