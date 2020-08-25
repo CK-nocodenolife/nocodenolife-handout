@@ -121,6 +121,12 @@ long long modinv(long long x, long long p) {
 }
 \end{C++}
 
+\subsection{離散對數}
+在實數的世界中，$\log_a b = x$表示$a^x = b$，而在同餘的世界中我們偶爾也需要解決這類問題：$a^x \equiv b \pmod p$。
+
+直接枚舉$x$會是$O(p)$，我們可以利用meet in the middle的方法來加速。
+假設$k$是一個常數，$x = kq+r$，我們把所有$a^k, a^{2k}, \dots, a^{qk}$丟進一個hash table裡面，然後枚舉$r$，可以知道$a^{kq} = y \cdot a^{-r}$，如果在hash table裡面找得到對應的$q$就能求得$x$了。如果改假設$x=kq-r$，就能夠避免求取模逆元，即$a^{kq} = y \cdot a^r$，複雜度為$O(\frac{p}{k} + k)$，取$k = \sqrt{p}$能夠把複雜度壓到$O(\sqrt{p})$。
+
 \section{例題}
 做題目的啦
 \problem{分組編隊（TIOJ 1668）}{
