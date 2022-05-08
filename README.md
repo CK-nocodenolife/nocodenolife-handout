@@ -21,7 +21,7 @@
 - 編輯自己的部份請自行開新的 branch ，完成後再發 pull request。
 	- 不知道怎麼做請去查 GitHub 教學，我也不會。
 
-## $\LaTeX$ 使用方式
+## LaTeX 使用方式
 
 ### 編譯及環境
 
@@ -64,7 +64,7 @@ int main() {
 ### 文字格式
 
 - 請先閱讀 [此文件](https://github.com/sparanoid/chinese-copywriting-guidelines) 。
-- 編寫時請按照上述格式，$\LaTeX$ 前後請比照數字做空格。
+- 編寫時請按照上述格式，數學式前後請比照數字做空格。
 
 ### 程式碼要求
 
