@@ -18,7 +18,8 @@
 
 - Commit message 請註明修改哪個章節。
 - 請記得要先 `git pull` 再修改。
-- 一定要先 `git pull`，千萬不要 `git push -f`。
+- 編輯自己的部份請自行開新的 branch ，完成後再發 pull request。
+	- 不知道怎麼做請去查 GitHub 教學，我也不會。
 
 ## $\LaTeX$ 使用方式
 
