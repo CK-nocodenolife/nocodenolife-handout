@@ -18,6 +18,7 @@
 
 - Commit message 請註明修改哪個章節。
 - 請記得要先 `git pull` 再修改。
+- 一定要先 `git pull`，千萬不要 `git push -f`。
 
 ## $\LaTeX$ 使用方式
 
@@ -25,6 +26,7 @@
 
 - Overleaf 上編譯 code 的字體會怪怪的，會介意的話請本機安裝 `texlive` 之類的。套件有點多，如果空間充足的話建議直接安裝 `texlive-full`。
 - 請在 `main.tex` 裡面 include 自己的部份直接編譯。
+- `main.tex` 上面的格式設定請不要動（想修改請發 issue ）。
 - 編譯的指令在 `compile.sh` 裡面都有，可以直接 `./compile.sh`。如果發現編譯之後 `main.pdf` 沒有變動的話，有可能是編譯出現錯誤了。請直接去看 `main.log` 最下面。
 
 ### 內容格式
