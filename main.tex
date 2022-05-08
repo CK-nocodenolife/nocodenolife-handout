@@ -1,5 +1,4 @@
 \documentclass[12pt, a4paper, oneside]{memoir}
-
 %%%%%%%%%%%%%%%% 引入 package %%%%%%%%%%%%%%%%
 \usepackage[margin=3cm]{geometry}
 \usepackage{amsmath,amsthm,amssymb} % 引入 AMS 數學環境
@@ -8,9 +7,16 @@
 \graphicspath{{images/}}	% 搜尋圖片目錄
 \usepackage{wrapfig}		% 文繞圖
 \usepackage{floatflt}		% 浮動 figure
+<<<<<<< HEAD
 \usepackage{float}			% 浮動環境
 \usepackage{subfig}		  % subfigures
 \usepackage{caption3}		% caption 增強
+=======
+%\usepackage{float}			% 浮動環境
+%\usepackage{subfig}		% subfigures
+%\usepackage{caption3}		% caption 增強
+\usepackage{setspace}   	% 控制空行
+>>>>>>> b4da648448aaaf11aab1cb9da9b4d2016483132d
 \usepackage{fontspec}		% 設定字體
 \usepackage{type1cm}		% 設定fontsize
 \usepackage{titlesec}		% 設定section等的字體
@@ -33,6 +39,7 @@
 \usepackage[unicode=true, pdfborder={0 0 0}, bookmarksdepth=-1]{hyperref}
 \usepackage[usenames, dvipsnames]{color}
 \usepackage[many]{tcolorbox}
+\usepackage{inconsolata}
 
 \usepackage{tikz} % 繪圖用
 \usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
@@ -41,11 +48,20 @@
 \usepackage{forest}
 
 \usepackage{xeCJK}  % xelatex 中文
+<<<<<<< HEAD
 \setCJKmainfont[BoldFont={* Bold}]{Noto Sans CJK TC}
+=======
+\setCJKmainfont[AutoFakeBold=3,AutoFakeSlant=.4]{Noto Sans CJK TC}
+
+>>>>>>> b4da648448aaaf11aab1cb9da9b4d2016483132d
 \defaultCJKfontfeatures{AutoFakeBold=3,AutoFakeSlant=.4}
 \XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip = 0pt plus 1pt
+\setCJKsansfont[]{Noto Sans CJK TC}
+\setCJKmonofont[]{Noto Sans Mono CJK TC}
 \setmonofont{DejaVu Sans Mono}
+
+\linespread{1.3}
 
 %%%%%%%%%%%%%%%% 頁面設定 %%%%%%%%%%%%%%%%
 \setlength{\headheight}{15pt}  % with titling
@@ -122,6 +138,7 @@
 	% \tableofcontents % 目錄
 	%%%%%%%%%%%%%%%% \include{filename} %%%%%%%%%%%%%%%%
 
+<<<<<<< HEAD
 	\include{Sample/Sample}
 	%	\include{Datastructure/Basic}
 	%	\include{Datastructure/Advanced}
@@ -142,6 +159,29 @@
 	%	\include{Misc/DPOptimization}
 	%	\include{Misc/OfflineAlgo}
 	%	\include{Misc/SqrtDecomposition}
+=======
+%	\include{Datastructure/Basic}
+%	\include{Datastructure/Advanced}
+%	\include{Datastructure/DisjointSets}
+%	\include{Datastructure/Pbds}
+%	\include{Datastructure/Extreme}
+%	\include{String/Basic}
+%	\include{String/Advanced}
+%	\include{Graph/Basic}
+%	\include{Graph/Matching}
+%	\include{Graph/LCA}
+%	\include{Graph/MST}
+%	\include{Graph/ShortestPath}
+%	\include{Math/NumberTheoryI}
+    \include{Math/Combinatorics}
+%    \include{Math/test}
+%	\include{Math/NumberTheoryII}
+%	\include{Misc/BasicAlgo}
+%	\include{Misc/Sorting}
+%	\include{Misc/DPOptimization}
+%	\include{Misc/OfflineAlgo}
+%	\include{Misc/SqrtDecomposition}
+>>>>>>> b4da648448aaaf11aab1cb9da9b4d2016483132d
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%\begin{thebibliography}{99}
