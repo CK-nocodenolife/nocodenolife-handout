@@ -4,6 +4,8 @@
 
 - 會使用 Git 及 GitHub。
 學習資源：[連猴子都能懂的 Git 入門指南](https://backlog.com/git-tutorial/tw/)
+- 會使用終端機打 `make` 指令。
+下面會教怎麼做。
 - 會使用基本的 $\LaTeX$ 做文書處理。（不是只有打數學式喔！）
 學習資源：
     - [PAPAYA 電腦教室的影片](https://youtu.be/mQamBS6uTOc)
@@ -20,19 +22,29 @@
 - 請記得要先 `git pull` 再修改。
 - 編輯自己的部份請自行開新的 branch ，完成後再發 pull request。
 	- 不知道怎麼做請去查 GitHub 教學，我也不會。
+- 請在對應的分類底下開自己的檔案，例如：進階圖論放在 `content/Graph/Advanced.tex` 。
 
 ## LaTeX 使用方式
 
 ### 編譯及環境
 
 - Overleaf 上編譯 code 的字體會怪怪的，會介意的話請本機安裝 `texlive` 之類的。套件有點多，如果空間充足的話建議直接安裝 `texlive-full`。
-- 請在 `main.tex` 裡面 include 自己的部份直接編譯。
-- `main.tex` 上面的格式設定請不要動（想修改請發 issue ）。
-- 編譯的指令在 `compile.sh` 裡面都有，可以直接 `./compile.sh`。如果發現編譯之後 `main.pdf` 沒有變動的話，有可能是編譯出現錯誤了。請直接去看 `main.log` 最下面。
+- 如果要編譯整份，請直接在根資料夾裡面打 `make compile` 。
+- 如果要編譯單個章節（單個檔案），請使用 `make compile FILE=path/to/file` 。例如：只要編譯進階圖論，請用 `make compile FILE=Graph/Advanced` 。注意，不需要加 `content/` ，也不需要打副檔名。
 
 ### 內容格式
 
 詳細使用方式可以參考 `Sample/Sample.tex` 。
+想要編譯單個檔案的話，請記的要用以下幾行包住整個內容：
+
+```tex
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+% 你的內容
+
+\end{document}
+```
 
 #### `C++` 程式碼
 ```line=1
@@ -71,5 +83,4 @@ int main() {
 - 變數名稱請盡量有意義，題解盡可能使用與題目敘述相同的符號。
 例如前綴和使用 `pre[]` 較 `a[]` 佳。
 - 盡量不要使用自己的 default code 。`#define ll long long` 等常見者例外。
-- 大括號前面請空格（戰啦）
-    - 如果可以的話請丟給 `clang-format` 裡面排一遍
+- 如果可以的話請丟給 `clang-format` 排一遍。

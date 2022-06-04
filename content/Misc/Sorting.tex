@@ -1,0 +1,290 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\chapter{排序演算法}
+\section{排序問題}
+將一堆資料排序，一直是電腦科學中一個十分重要且基本的問題；在日常生活中，也少不了需要排序的工作。\textbf{排序問題}是大部分演算法教科書第一道經典例題，它的作法有非常多種，接下來我將會探討各種作法的優缺利弊。\\
+\problem{sorting problem}{給定一個正整數$n$，接下來有$n$個整數，目標是將這$n$個整數由小到大按照順序輸出。}
+排序好的數列通常有許多好性質可以執行許多如二分搜等方便的操作，也有許多題目(例如在一個序列中求眾數的問題)是利用排序的衍生概念，能夠熟悉實作原理對競賽一定有極大幫助。
+
+\section{選擇排序 (selection sort)}
+\subsection{樸素做法}
+回憶一下你怎麼排序東西的。不斷找到最小的，放到旁邊去，然後就排好了，對吧。詳細流程如下：
+\begin{enumerate}
+\item 從未排序的數列中找到最小的元素。
+\item 將此元素取出並加入到已排序數列最後。
+\item 重複以上動作直到未排序數列全部處理完成。
+\end{enumerate}
+\begin{C++}
+void selectionSort(int* arr, int len){
+    for(int i = 0, minIdx; i < len-1; i++){
+        minIdx = i;
+        for(int j = i+1; j < len; ++j)
+            if(arr[j] < arr[minIdx])
+                minIdx = j;
+        if(minIdx != i)
+            swap(arr[minIdx], arr[i]);
+    }
+}
+\end{C++}
+\subsection{效率？}
+我們知道找到最小值要花$O(n)$的時間，而每找一次僅能將未排序陣列減少一個元素，需要執行$n-1$次才能排序完畢。因此整個選擇排序需要花$O(n^2)$的時間才能完成。
+
+\section{插入排序 (insertion sort)}
+也有人是這樣排序的(本人就是)，不斷找到下一個數在已排序陣列中該去的位置，並將其插入，當最後一個元素也排到該去的位置即排序完畢。
+\begin{enumerate}
+\item 從未排序數列取出一元素。
+\item 由後往前和已排序數列元素比較，直到遇到不大於自己的元素並插入此元素之後；若都沒有則插入在最前面。
+\item 重複以上動作直到未排序數列全部處理完成。
+\end{enumerate}
+\begin{C++}
+void insertionSort(int *arr, int len){
+    for(int i = 1; i < len; i++){
+        int key = arr[i];
+        int j = i-1;
+        while(key < arr[j] && j >= 0){
+            arr[j+1] = arr[j];
+            j--;
+        }
+        arr[j+1] = key;
+    }
+}
+\end{C++}
+\subsection{它要跑多久}
+相似地，插入操作需要$O(n)$時間，需要插入$n-1$次，因此插入排序一樣是十分慢的$O(n^2)$。
+
+\section{氣泡排序 (bubble sort) 和3t的國中回憶}
+再來是比較不直觀但實作非常方便的氣泡排序，它讓數字像氣泡一樣慢慢浮上來，第$k$次上浮都會使第$k$小值跑到前面去，最終完成排序的目的。氣泡排序有許多實作方法，一般來說都是找到所有相鄰的元素比較一次，不斷交換上來，上浮$n-1$次即完成排序。
+\begin{C++}
+void bubbleSort(int* arr, int len){
+    for(int i = 0; i < len-1; i++)
+        for(int j = 0; j < len-1; j++)
+            if(arr[j] > arr[j+1])
+                swap(arr[j], arr[j+1]);
+}
+\end{C++}
+有的人(迷之音：明明只有你在用 = = )是每次都跟未排序陣列的第一個元素比較，這個比較像選擇排序，一樣可以獲得相同的效果。
+\begin{C++}
+void bubbleSort(int* arr, int len){
+    for(int i = 0; i < len; i++)
+        for(int j = i+1; j < len; j++)
+            if(arr[i] > arr[j])
+                swap(arr[i], arr[j]);
+}
+\end{C++}
+\subsection{我與TLE的故事}
+那這個效率多高呢？很抱歉，一樣是$O(n^2)$。看到code裡面的兩層迴圈就很明顯了，內外層各要跑$O(n)$次。
+\hint{(NPSC 2016 國中組 初賽pC) \\千萬不要拿$O(n^2)$的排序演算法做題，會TLE不瞑目}
+
+\section{合併排序 (merge sort)}
+WTF! TLE，怎麼辦？\\
+其實在$O(n\log n)$時間內有效率的對一個序列排序是可能的，但是想法就會不夠顯然，實作也複雜許多，但是在競賽題的應用層面上相對的比較廣。接下來要介紹的就是其中一種--合併排序。
+\subsection{divide \& conquer}
+我們先思考一個比較簡單的問題：
+\problem{合併遞增序列}{給兩個長度分別為$n,m$的\textbf{遞增}正整數序列$(m,n\leq 5\times 10^6$，值域$\leq10^9)$，將兩序列出現過的數字合併成一個序列，並\textbf{遞增}排序輸出。}
+對於這個問題，我們可以用爬行法的方式解決。先假設這兩個陣列叫做A與B；我們用兩個變數ptrA與ptrB分別指著兩個陣列的開頭。接著選擇ptrA與ptrB兩變數指向的值較小的那一個(若一方已指向最尾端，則直接選擇另外一方)，將其值輸出，然後再把對應的ptr右移一格，直到ptrA與ptrB皆指向陣列的最尾端。\\
+\indent 因為輸入保證兩數列已經做好遞增排序，因此A陣列中未被輸出的數字必定比ptrA指向的值還要大，B陣列亦然。因為有這個性質，我們可以確定的是ptrA與ptrB指向的值較小的那個就是所有未輸出數字的最小值，所以以上的演算法可以保證正確性。
+\begin{C++}
+vector<int> Merge(vector<int> &A, vector<int> &B){
+    vector<int> result;
+    int ptrA = 0, ptrB = 0;
+    while(ptrA != A.size() || ptrB != B.size()){
+        if(ptrA == A.size() || (ptrB != B.size() && B[ptrB] < A[ptrA]))
+            result.push_back(B[ptrB++]);
+        else result.push_back(A[ptrA++]);
+    }
+    return result;
+}
+\end{C++}
+\indent\indent 那我們要怎麼用這個來解決排序問題呢？首先你會發現假設你的序列能夠分成兩個遞增的區間，套用上面的合併演算法就做完了OAO，但是一般的序列切成兩半後幾乎不可能有這種性質，那該怎麼辦呢？\textbf{排序！！！}\\
+\indent\indent\textbf{分治法(divide and conquer)}是一種將原問題分割成相同但輸入量變小的問題，並且再以一定合併程序求解原問題的方法。合併排序就是分治的一道經典問題！我們將左右兩邊的序列都先用合併排序本身排好，然後再合併！\\
+\begin{C++}
+void mergeSort(vector<int> &arr, int len){
+    if(len <= 1) return;
+    int mid = len/2;
+    vector<int> arrL, arrR;
+    for(int i = 0; i < len; i++)
+        (i < mid)? arrL.push_back(arr[i]):
+                   arrR.push_back(arr[i]);
+    mergeSort(arrL, mid);
+    mergeSort(arrR, len-mid);
+    vector<int> result = Merge(arrL, arrR);
+    arr.clear();
+    for(auto i: result) arr.push_back(i);
+}
+\end{C++}
+
+\section{堆積排序 (heap sort)}
+另外一種有效率的排序方法是利用堆積資料結構。仔細觀察插入排序、氣泡排序以及選擇排序，你會發現他們在做的事就是不斷找到未排序的最小值。heap資料結構恰好提供了高效找出最小值的方法，大大提升執行效率。\\
+\indent 將所有數字放進heap，再一個一個拔出來，自然是排序完畢的樣子。
+\begin{C++}
+void heapSort(int *arr, int len){
+    priority_queue<int, vector<int>, greater<int> > pq;
+    for(int i = 0; i < len; i++)
+        pq.push(arr[i]);
+    for(int i = 0; i < len; i++)
+        arr[i] = pq.top(), pq.pop();
+}
+\end{C++}
+heap的插入與刪除只需要$O(\log n)$的時間，因此堆積排序也能在$O(n\log n)$時間內完成。
+\section{快速排序 (quick sort)}
+快速排序，顧名思義就是比較快速的排序(廢話 X。因為它的常數小，所以它通常執行的比合併排序與堆積排序來的快。快速排序使用分治法（Divide and conquer）策略來把一個序列分為\textbf{數值較小}和\textbf{數值較大}的兩個子序列，然後遞迴地排序兩個子序列。\\
+\begin{enumerate}
+\item 挑選基準值：從數列中挑出一個元素，稱為「基準」（pivot），
+\item 分割：重新排序數列，所有比基準值小的元素擺放在基準前面，所有比基準值大的元素擺在基準後面（與基準值相等的數可以到任何一邊）。在這個分割結束之後，對基準值的排序就已經完成，
+\item 遞迴排序子序列：遞迴地將小於基準值元素的子序列和大於基準值元素的子序列排序。
+\end{enumerate}
+遞迴到最底部的判斷條件是數列的大小是零或一，此時該數列顯然已經有序。
+\begin{C++}
+void quickSort(vector<int> &arr, int len){
+    if(len < 2) return;
+    int RND = rand()%len, pivot = arr[RND];
+    vector<int> Less, Greater;
+    for(int i = 0; i < len; i++){
+        if(i == RND) continue;
+        if(arr[i] < pivot)
+            Less.push_back(arr[i]);
+        else Greater.push_back(arr[i]);
+    }
+    quickSort(Less, Less.size());
+    quickSort(Greater, Greater.size());
+    arr.clear();
+    arr.insert(arr.end(),Less.begin(),Less.end());
+    arr.push_back(pivot);
+    arr.insert(arr.end(),Greater.begin(),Greater.end());
+}
+\end{C++}
+\subsection{原地分割}
+上述的版本有個缺點，它一樣需要$O(n)$的額外空間，在電腦中實際執行時也會影響運行速度。因此我們有個辦法可以直接在原序列做分割的動作，不僅降低空間複雜度，也大幅提升演算法效率。\\
+以下是快速排序的泛型(template)實作範例。
+\begin{C++}
+template<typename iter>
+void quickSort(iter l, iter r){
+    if(r-l < 2) return;
+    iter head = l, pivot = r-1;
+    swap(*(l+rand()%(r-l)), *pivot);
+    for(iter it = l; it != pivot; it++){
+        if(*it < *pivot){
+            swap(*it, *head);
+            head++;
+        }
+    }
+    swap(*head, *pivot);
+    quickSort(l, head);
+    quickSort(head+1, r);
+}
+\end{C++}
+\theorem{泛型函數}{C++提供了泛型函數的撰寫功能，當你需要實作相同或相似的功能，但是引數型別可能不盡相同的時候，使用\textbf{泛型}是一個不錯的選擇。另外，C++也提供了\textbf{多型}的功能，可以對於不同型別或不同數量的引數實作不同的函數。}
+\subsection{快速排序，快速嗎？}
+原地分割大大降低的程式執行的常數因子，但快速排序真的夠快嗎？想像一個最差的情況，每次的 pivot 都恰好選擇到最小的數值，這樣數值比 pivot 大的序列就只比原序列少一個數，因此最差需要$O(n^2)$的時間複雜度。但我們可以期望這種最差情況幾乎不可能發生，因此我們可以用平均$O(n\log n)$的複雜度來看待它。
+\section{\inline{std::sort} -- introsort}
+當然，我們 \inline{namespace std} 的強大函數庫也少不了排序！一行搞定！\\
+這裡的\inline{sort()}的原理是introsort，一開始與quick sort一樣，一旦出現遞迴過深的情況，就會改而採取insertion sort或者heap sort，因此是經過極佳常數優化，也是最有效率的排序演算法。記得使用前要先 \inline{include <algorithm>} 唷！
+\begin{C++}
+int arr[5] = {3, 2, 4, 1, 5};
+vector<int> vec = {3, 2, 4, 1, 5};
+
+sort(arr, arr+5);
+// 傳入兩端點指標 (注意是左閉右開的)
+sort(vec.begin(), vec.end());
+// 排序 vector 要傳 iterator
+sort(arr, arr+5, greater<int>());
+// greater<T>() 可以由大到小排序
+sort(arr, arr+5, cmp);
+// 也可以自己寫比較函數
+\end{C++}
+\indent\indent 以下是自訂比較函數的寫法
+\begin{C++}
+bool cmp(int a, int b){
+    return a%10 < b%10;
+}
+// 定義"小於"，return true 代表 a 要排前面
+\end{C++}
+\hint{有了這個強大工具，排序再也不是難事了，也沒有在比賽時TLE的問題了，恭喜！}
+
+\section{$O(n)$ sorting algorithm}
+
+還可以更快嗎？我們看看以下定理。
+
+\theorem{比較排序的複雜度限制}{
+試想一棵樹，每一個非葉節點有兩個子節點，分別代表在排序中比較某兩個元素後會出現的兩種情況(是否小於)。
+而每一個葉節點會是所有元素的一種排列，並且唯一符合它的所有祖先比較的情況。
+如此時間複雜度會是這棵樹的高度 $h$。\\
+葉子的數量至多是 $2^h$，注意到所有葉節點必須包含元素的全排列($n!$種)，否則沒出現的排列就無法被排序。
+故 $2^h \geq n!, h \geq\log{n!} = O(n\log n)$
+}
+
+\subsection{真的不行了嗎？計數排序！}
+計數排序(Counting Sort)演算法是不需進行比較的排序演算法，顧名思義，它會去數元素的數量來進行排序。這種排序法只需要線性時間和空間的複雜度就可以完成排序。雖然如此，計數排序法是並不算是常見的排序演算法，因為它只能用來排序已知數值範圍的序列。也就是說，用個陣列紀錄\textbf{每個數字出現了幾次}。如果數字3出現了5次，那麼\inline{cnt[3]=5}。這樣一來只要讓\inline{i}從0開始跑，然後把\inline{i}輸出\inline{cnt[i]}次，就排序完成了。
+\begin{C++}
+vector<int> CountingSort(vector<int> vec, int len){
+    int cnt[MAXQ] = {};
+    vector<int> ans;
+    for(auto i: vec)
+        cnt[i]++;
+    for(int i = 0; i < MAXQ; i++)
+        for(int j = 0; j < cnt[i]; j++)
+            ans.push_back(i);
+    return ans;
+}
+\end{C++}
+你會發現第6行的\inline{for}迴圈有個\inline{MAXQ}，因此counting sort也不是真正的$O(n)$排序演算法。它的時間複雜度是$O(n+q)$，空間複雜度是$O(q)$，因此當值域太大時這個演算法完全不可行，因此我們需要另外一種排序。
+
+\subsection{基數排序}
+這邊要先介紹什麼是stable sort。
+\definition{stable sort}{
+一個stable的排序必須符合:若兩個元素比較的結果是相等，則排序後他們的先後順序必須和排序前的相同，
+這種情況通常發生在排序struct或以自定義比較函式排序時。
+前面提到的方法有好幾個已是stable的排序方法(如merge sort等)，而其他的排序法都可以稍加修改成 stable sort。\inline{namespace std}裡面也有\inline{stable\_sort()}可以用，用法與\inline{sort()}一樣，前面多加個stable就行了。}
+有了stable sort，那radix sort的概念就十分容易了。我們可以把所有數字依照個位數字做一次stable sort，然後十位，然後百位...，因為每次都使用stable sort，所以當最高位排序完之後，整個序列都排序完畢了。
+\begin{C++}
+int base = 10;
+void RadixSort(vector<int> &vec){
+    vector<int> bucket[base];
+    int p = 1;
+    for(int i = 0; i < DIGIT; i++){
+        for(auto x:vec)
+            bucket[(x/p)%base].push_back(x);
+        vec.clear();
+        for(int b = 0; b < base; b++){
+            for(auto x: bucket[b])
+                vec.push_back(x);
+            bucket[b].clear();
+        }
+        p *= base;
+    }
+}
+\end{C++}
+假設最大的數有$d$位數，那整個流程就要進行$d$次的排序，我們可以拿counting sort來排序，所以總複雜度只有$O(nd)$，如果要排序整數，這是一個有效率又不怕值域太大的問題。
+
+\section{習題的啦}
+大家都會排序了嗎？這裡是一些排序的應用。
+\problem{Sort五部曲 (TIOJ 1287,1328,1682 + ZJ a233,d190)}{sort! sort! sort! sort! sort!}
+\problem{保羅的寶貝 (NPSC 2016 jun-pre pC)}{保羅已經知道$N$個寶貝的重量與$M$個存放寶貝的櫃子離起點的距離，所謂疲勞程度就是每個寶貝重量乘上搬運該寶貝的距離的總和，他想知道他搬運所有寶貝疲勞程度最小是多少？($N,M\leq 10^6$，距離,重量$\leq 10^4$)}
+\problem{蛋糕內的信物 (TIOJ 1364)}{給$N$個正整數的序列，求第$k$大($k,N\leq 10^6$)\\提示：這題可以$O(n)$解呦><}
+\problem{公車司機排班 (NTPC TOI-camp 2018 pC)}{題敘我忘了，我只記得故事跟做法XD}
+\hint{
+當年我的NPSC隊友在順利拿下亞軍之後，在新北市的TOI養成營隊裡因為不會sort而與TOI初選資格錯身而過(備取超過十，後來還是補進去了XD)，當場在座位上爆哭，有人還為了這個改編了很多首歌並且寫了一首詩來紀念他隆重的競賽退休儀式：\\
+萬\ 兔\ 咧滴\ 夠\\
+嗯又嗯又嗯又嗯又\\
+嗯又嗯又嗯又嗯又\\
+早上大排到小\\
+下午前後顛倒\\
+兩兩相加做好\\
+最長工時扣掉\\
+負則不要加到\\
+乘加班費等跑\\
+ＡＣ就沒煩惱\\
+嗯又嗯又嗯又嗯又\\
+嗯又嗯又嗯又嗯又\\
+備註：他參加了 2018, 2019 的 TOI 初選，全部輸光光。\\
+備註2：編這首詩的人現在進資奧一階了\\
+備註3：兩個隊員都不用會排序照樣拿 NPSC 亞軍
+}
+\problem{ZJ c431}{一開始有個數字$ n (1 \leq n \leq 1048576)$，接下來一行$a_1 a_2 a_3 ...... a_n$共$n$個數字$(1 \leq a_i \leq 100)$，請將這$n$個數字由小到大排序}
+\problem{ZJ c531}{有 10 至 20 個用逗號分隔的數字。請將數字中偶數的數字加以排序，請勿更動奇數數字的位置。並將結果輸出。}
+\problem{TIOJ 1609}{給一個二元搜尋樹的前序尋訪結果，求中序輸出結果。}
+\problem{TIOJ 1585}{定義 a < z < b < y < c < x < ........，排序長度 < 1000 的字串}
+\problem{逆序數對 (TIOJ 1080)}{給一個序列$<a_n>$，求有幾對$(i,j)$使得$i<j$且$a_i>a_j$}
+
+\end{document}
