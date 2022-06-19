@@ -1,0 +1,22 @@
+\chapter{樹DP}
+    \section{前言}
+    顧名思義，就是在樹上做 DP。
+    \section{例子}
+        \subsection{算子樹大小}
+        一個點的子樹大小就是在他底下(包含自己)的節點數。\\
+        定義 $dp_u$ 為 $u$ 的子樹大小。\\
+        $dp_u = 1 + \sum\limits_{v\ is \ u's\ son}{dp_v}$ \\
+        可以從根往下 DFS，每次回傳自己的 dp值給爸爸加。\\
+        \begin{C++}
+        int DP(int u /*現在的點*/, int f /*爸爸*/){
+            dp[u] = 1; //自己佔一個
+            for(int v : T[u]){ //枚舉所有鄰居
+                if(v == f) continue; //好馬不吃回頭草
+                dp[u] += DP(v, u); //往下遞迴
+            }
+            return dp[u]; //回傳自己的子樹大小
+        }
+        \end{C++}
+        因為每個節點只會被走過一次，所以就可以在 $O(N)$ 的時間做出來了。
+        \subsection{樹直徑}
+        樹直徑 = 樹上相隔最遠的兩節點之間距離。
