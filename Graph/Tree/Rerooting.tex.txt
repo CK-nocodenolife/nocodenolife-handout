@@ -1,0 +1,77 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\chapter{全方位木DP}
+    \section{介紹}
+    全方位木DP為日本競程選手的叫法，中文又稱換根DP，英文則是rerooting，這個技巧算是在樹DP中的其中一個分支，用途是在樹DP問題有時候要求出不同根下的最佳答案，同時又符合可以全方位木DP的性質時就可以套用，通常全方位木DP不會是唯一的解法，常常會與其他樹DP解法並存，但他的概念與使用時機相對單純，不仿學起來以備不時之需。\\
+    
+    全方位木DP的核心概念就是換根，一開始會先以起始的根求出一個答案，之後在DFS的過程中執行換根的動作，把換根對答案造成的影響給補上後，就能得到新的根的答案，這樣在DFS的過程中藉由換根把每個點都當根一次，就能得到全局的答案，全方位木DP的可行性取決於你有沒有辦法在不TLE的情況下正確的把換根帶來的影響補上，往往需要多維護一些值，每個題目需要維護的值差異也很大。
+    \section{實例}
+    \problem{Tree Distances II(CSES 1133)}{
+    給一個包含N個節點的樹，你需要對每個點輸出他到其他點的距離和
+    }
+	在這個題目中，我們可以很自然的聯想到全方位木DP可能會是一個可行方法，但這題同時也是有樹DP的解法的，讓我們一起看看樹DP與全方位木DP的想法有甚麼差異。
+	\subsection{樹DP解法}
+	分別求出每個點往子樹的距離和與往父節點的路徑和，將其合併就是要輸出的答案，我們可以透過兩次DFS來達成這件事情，分別使用usum[u]與dsum[u]來儲存往父節點的路徑和與往子節點的路徑和，siz[u]來存子樹大小。\\
+	第一次DFS:對一個點u且v為子節點而言，dsum[u]的值為所有子節點v的dsum[v]+siz[v]的和\\
+	第二次DFS:對一個點u且v為子節點而言，usum[v]的值為umax[u]+dmax[u]-dmax[u]-siz[v]*2+n;\\
+	寫成code即為
+	\begin{C++}
+void dfs1(int u){
+    visited[u]=1;
+    siz[pos]=1;
+    for(auto v:children[u]){
+    	if(visited[v]==0){
+    		dfs(v);
+    		siz[u]+=sub[v];
+    		dmax[u]+=dmax[v]+siz[v];
+    	}
+    }
+}
+void dfs2(intu){
+	visited[u]=1;
+	for(auto v:children[u]){
+		if(visited[v]==0){
+			umax[v]=umax[u]+dmax[u]-dmax[v]-sub[v]*2+n;
+			ddfs(v);
+		}
+	}
+}
+    \end{C++}
+    \subsection{全方位木DP解法}
+    首先先求出一個根到其他點的路徑和，然後藉由子樹大小來做換時答案的修改，使用ans[u]來儲存節點的答案，dsum[u]來儲存節點往子樹的路徑和，siz[u]來存子數大小\\
+    第一次DFS:對一個點u且v為子節點而言，dsum[u]的值為所有子節點v的dsum[v]+siz[v]的和\\
+	第二次DFS:利用u與根節點v在答案上的關係做換根，會用到v的子樹大小;\\
+    底下的code記得在執行dfs1之後把ans[st]=dsum[st]。\\
+    \begin{C++}
+void dfs1(int u){
+	visited[u]=1;
+	siz[u]=1;
+	for(auto v:children[u]){
+		if(visited[v]==0){
+			dfs1(v);
+			siz[u]+=siz[v];
+			dsum[u]+=dsum[v]+siz[v];
+		}
+	}
+}
+void dfs2(int u){
+	visited[u]=1;
+	for(auto v:children[u]){
+		if(visited[v]==0){
+			ans[v]=ans[u]-siz[v]*2+n;
+			dfs2(v);
+		}
+	}
+}
+    \end{C++}
+    \subsection{比較與討論}
+    可以看到在這題中樹DP的想法相對複雜，而使用全方位木DP可以有相對簡單的思路，但這不是都是如此，學習全方位木DP可以視為在遇到要遍歷根時的才會用的小技巧，至於好不好用要看個人偏好與題目特性。
+    \section{習題}
+    \problem{V-Subtree(atcoder)}{
+    給一個包含N個節點的樹與常數M，你想要把一些點畫成黑色，使得你所有黑點可以只透過黑點到達任意黑點，你需要對每個點回答他一定是黑色的情況下有幾種畫法，答案可能會很大，請回答在模M下的答案
+    }
+    \problem{F-Expensive Expense(atcoder)}{
+   
+    }
+\end{document}
