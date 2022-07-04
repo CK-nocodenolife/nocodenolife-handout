@@ -1,11 +1,11 @@
 \chapter{樹DP}
     \section{前言}
-    顧名思義，就是在樹上做 DP。
+    顧名思義，就是在樹上做 DP，通常都從子樹轉移上去。
     \section{例子}
-        \subsection{算子樹大小}
+        \subsection{子樹大小}
         一個點的子樹大小就是在他底下(包含自己)的節點數。\\
         定義 $dp_u$ 為 $u$ 的子樹大小。\\
-        $dp_u = 1 + \sum\limits_{v\ is \ u's\ son}{dp_v}$ \\
+        $dp_u = 1 + \sum\limits_{v \ is \ u's \ son}{dp_v}$\\
         可以從根往下 DFS，每次回傳自己的 dp值給爸爸加。\\
         \begin{C++}
         int DP(int u /*現在的點*/, int f /*爸爸*/){
@@ -18,5 +18,84 @@
         }
         \end{C++}
         因為每個節點只會被走過一次，所以就可以在 $O(N)$ 的時間做出來了。
+        
         \subsection{樹直徑}
-        樹直徑 = 樹上相隔最遠的兩節點之間距離。
+        樹直徑 = 樹上相隔最遠的兩節點之間距離。\\
+        於是我們可以爆搜每個點，看他往兩個不同兒子的子樹加起來能走的最長路。\\
+        這好像可以用 DP 去優化，定義 $dp_u = u$ 子樹的最深深度。\\
+        $dp_u = \max\limits_{v \ is \ u's \ son}{dp_v + 1}$\\
+        經過 $u$ 的樹直徑的就是 $u$ 所有兒子中最大 $dp + $ 次大 $dp + 2$\\
+        \begin{C++}
+        int dia; //樹直徑
+        void update(int &fir /*最大*/, int &sec/*次大*/, int new/*拿來更新的*/){
+            sec = max(sec, new); //更新次大
+            if(sec > fir) swap(sec, fir); //更新最大
+        }
+        int DP(int u /*現在的點*/, int f /*爸爸*/){
+            int sec = 0; //次大
+            for(int v : T[u]){ //枚舉所有鄰居
+                if(v == f) continue; //好馬不吃回頭草
+                update(dp[u], sec, DP(v)); //更新最大、次大值
+            }
+            dia = max(dia, dp[u] + sec + 2); //更新樹直徑
+            dp[u] += 1;
+            return dp[u]; //回傳自己的子樹最深深度
+        }
+        \end{C++}
+        跟上一個例子一樣，因為每個點只會被走過一次，因此時間複雜度 $O(N)$
+        
+        \subsection{最遠距離}
+        對於樹上每個點，找出樹上距離最遠的點跟自己的距離。\\
+        這時候我們可能會發現他不只需要子樹的訊息，有可能需要用到上面的。\\
+        乍看之下 DP 已經死掉了，但是由於這題被我放在樹 DP 裡面，因此他確實是樹 DP。\\
+        既然會用到上面的東西，那我們其實可以在 DFS 往下的時候順便把上面的資訊下傳，至於上面的下面 (就是自己的旁邊) 其實也可以從上面傳下來。\\
+        令 $dp_{u, 0} = u$ 往下最深深度，$dp_{u, 1} = u$ 往下次深深度。\\
+        那麼我們可以先 DFS 做一次 DP，接著再 DFS 一次，順便帶著上面的資訊下去跑。\\
+        \begin{C++}
+        void update(int &fir /*最大*/, int &sec/*次大*/, int new/*拿來更新的*/){
+            sec = max(sec, new); //更新次大
+            if(sec > fir) swap(sec, fir); //更新最大
+        }
+        int DP(int u /*現在的點*/, int f /*爸爸*/){
+            for(int v : T[u]){
+                if(v == f) continue; //好馬不吃回頭草
+                update(dp[u][0], dp[u][1], DP(v, u)); //更新最深、次深
+            }
+            return dp[u][0] + 1;
+        }
+        void DFS(int u /*現在的點*/, int f /*爸爸*/, int dis /*上面傳下來的最遠距*/){
+            ans[u] = max(dis, dp[u][0]); // 算答案
+            for(int v : T[u]){ //枚舉所有鄰居
+                if(v == f) continue; //好馬不吃回頭草
+                if(dp[u][0] == dp[v][0] + 1) DFS(v, u, max(dp[u][1], dis) + 1); //如果是最深的兒子就不能喂他吃自己
+                else DFS(v, u, max(dp[u][0], dis) + 1); //喂不是最深的最深的
+            }
+        }
+        \end{C++}
+        因為他還是 DFS，所以時間複雜度仍然是 $O(N)$
+    
+    \section{習題}
+        \problem{CSES Subordinates}{
+            給你一棵 $N$ 個節點的樹，以 $1$ 為根，問每個節點的子樹大小。
+            ($1 \le N \le 2 \cdot 10^5$)
+        }
+        \problem{CSES Tree Diameter}{
+            給你一棵 $N$ 個節點的樹，問你樹直徑多長。
+            ($1 \le N \le 2 \cdot 10^5$)
+        }
+        \problem{CSES Tree Distances I}{
+            給你一棵 $N$ 個節點的樹，問你每個點在樹上跟自己距離最遠的點的距離。
+            ($1 \le N \le 2 \cdot 10^5$)
+        }
+        \problem{CSES Tree Distances II}{
+            給你一棵 $N$ 個節點的樹，問你每個點對於樹上所有點的距離和。
+            ($1 \le N \le 2 \cdot 10^5$)
+        }
+        \problem{Atcoder DP Contest P}{
+            給你一棵 $N$ 個節點的樹，你可以把樹上的節點塗成黑色或白色，但是不能有兩個相鄰的節點都是黑色，問你有幾種塗色方法 $(mod \ 10^9 + 7)$。
+            ($1 \le N \le 10^5$)
+        }
+        \problem{Atcoder DP Contest V}{
+            給你一棵 $N$ 個節點的樹，你可以把樹上的節點塗成黑色或白色，但是兩個黑點之間的路徑必須全部都是黑點，對於每個點輸出當他必須是黑點時有幾種塗色方法 $mod \ M$。
+            ($1 \le N \le 2 \cdot 10^5, 1 \le M \le 10^9$)
+        }
