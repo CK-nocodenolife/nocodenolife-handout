@@ -29,7 +29,6 @@
 \end{itemize}
 
 \section{處理浮點數誤差}
-
 浮點數誤差麻煩又可怕，運算時常常可以打破基本的數學規則\footnotemark。然而在計算幾何中，不論多努力避免，還有必須使用浮點數的時候，例如：歐氏距離、線段交點。這些誤差會在我們做「點是否在線上」等二元判斷的時候造成很大的問題，因此，我們會需要使用一些工具來處理誤差。廢話不多說，直接上 code ：
 
 \begin{C++}
@@ -129,13 +128,104 @@ int dir(Vec a, Vec b, Vec c)
 typedef pair<Vec, Vec> Seg;
 \end{C++}
 
+注意，接下來提到線段的時候都是指包含兩端點的線段。
+
 \subsection{點到直線的距離}
 
-雖然有公式可以帶，但是這裡有個簡單的方式：剛剛有提到兩向量外積大小就是其所張平行四邊形面積，而平行四邊形面積又等於底乘高，假設我們要求 $C$ 到 $\overleftrightarrow{AB}$ 的距離，那就讓 $\overline{AB}$ 當底，高就是所求距離！
+雖然到直線 $ax + by + c = 0$ 的距離有公式可以帶，但是這裡有個簡單的方式：剛剛有提到兩向量外積大小就是其所張平行四邊形面積，而平行四邊形面積又等於底乘高，假設我們要求 $C$ 到 $\overleftrightarrow{AB}$ 的距離，那就讓 $\overline{AB}$ 當底，高就是所求距離！
 
-$dis(C, \overleftrightarrow{AB}) = \frac{|\vec{AB} \times \vec{AC}|}{|\vec{AB}|}$
+$$dis(C, \overleftrightarrow{AB}) = \frac{|\vec{AB} \times \vec{AC}|}{|\vec{AB}|}$$
 
+\begin{table}[h!]
+	\begin{tabular}{p{7cm} p{7cm}}
+		\begin{center}
+			\includegraphics*{images/Geometry/Basic/PointToLine1.pdf}
+		\end{center} &
+		\begin{center}
+			\includegraphics*{images/Geometry/Basic/PointToLine2.pdf}
+		\end{center}
+	\end{tabular}
+\end{table}
 
+\begin{C++}
+double PointToLine (Seg s, Vec p) {
+	Vec v = s.second - s.first;
+	return fabs(cross(v, p)) / abs(v);
+}
+\end{C++}
 
+\subsection{點到線段的距離}
+
+比直線稍微麻煩一點，因為有些時候點到線段沒辦法做垂線，最短距離會是到線段端點！至於什麼情況不能畫垂線呢？畫畫看就知道了：
+\begin{center}
+	\includegraphics*{images/Geometry/Basic/PointToSeg.pdf}
+\end{center}
+
+可以發現，如果 $\angle CAB$ 和 $\angle CBA$ 其中一個超過 $90 ^ \circ$ ，那麼就不能畫垂線了。那要怎麼判斷三個點的夾角跟 $90 ^ \circ$ 的大小關係呢？內積！
+
+\begin{C++}
+double PointToSeg(Seg s, Vec p) {
+	if (dir(s.first, s.second, p) < 0 or
+			dir(s.second, s.first, p) < 0)
+		return min(abs(p - s.first), abs(p - s.second));
+	Vec v = s.second - s.first;
+	return fabs(cross(v, p)) / abs(v);
+}
+\end{C++}
+
+\subsection{判斷點是否在直線上}
+
+其實就是判斷三點共線，方法是用所張有向面積為 $0$ 來判斷。
+
+實作時通常不會包成 \inline{Seg} 的資料型態，因此下面的實作以 \inline{a, b} 來取代 \inline{s.first, s.second} 。
+
+\begin{C++}
+bool PointOnLine(Vec a, Vec b, Vec c)
+{ return ori(a, b, c) == 0; }
+\end{C++}
+
+\subsection{判斷點是否在線段上}
+
+再多判斷 $\vec{AC}$ 和 $\vec{BC}$ 是否非同向即可！
+
+\begin{C++}
+bool PointOnSeg(Vec a, Vec b, Vec c)
+{ return ori(a, b, c) == 0 and dir(c, a, b) <= 0; }
+\end{C++}
+
+\subsection{判斷線段與直線是否相交}
+
+假設線段是 $\overline{AB}$ ，直線是 $\overleftrightarrow{CD}$ ，那只要 $A, B$ 兩個有至少一個在 $\overleftrightarrow{CD}$ 上、或是兩個在 $\overleftrightarrow{CD}$ 的不同側，就代表有相交！
+
+\begin{C++}
+bool SegLineInter(Vec a, Vec b, Vec c, Vec d) {
+	return PointOnLine(c, d, a) or PointOnLine(c, d, b)
+		or ori(c, d, a) != ori(c, d, b);
+}
+\end{C++}
+
+\subsection{判斷兩線段是否相交}
+
+這邊有很多種情況要判斷：
+
+\begin{center}
+	\includegraphics*{images/Geometry/Basic/SegInter.pdf}
+\end{center}
+
+不難發現可以分為兩種情況：
+
+\begin{enumerate}
+	\item 其中一線段的端點在另一線段上
+	\item $\overline{AB}$ 和 $\overleftrightarrow{CD}$ 相交，$\overline{CD}$ 和 $\overleftrightarrow{AB}$ 也相交。
+\end{enumerate}
+
+\begin{C++}
+bool SegInter(Vec a, Vec b, Vec c, Vec d) {
+	return PointOnLine(a, b, c) or PointOnLine(a, b, d)
+		or PointOnLine(c, d, a) or PointOnLine(c, d, b)
+		or (ori(a, b, c) != ori(a, b, d)
+				and ori(c, d, a) != ori(c, d, b));
+}
+\end{C++}
 
 \end{document}

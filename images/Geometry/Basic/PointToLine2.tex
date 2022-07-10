@@ -1,0 +1,41 @@
+\documentclass{minimal}
+\usepackage{tikz}
+\usetikzlibrary{quotes,angles,calc}
+\usepackage[active,tightpage]{preview} 
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{2mm}
+
+\begin{document}
+\begin{tikzpicture}[dot/.style={circle,inner sep=1pt,fill,label=#1},extended line/.style={shorten >=-#1,shorten <=-#1},extended line/.default=1cm]
+
+	\coordinate (A) at (0, 0);
+	\coordinate (B) at (3, 0);
+	\coordinate (C1) at (2, 3);
+	\coordinate (D1) at (5, 3);
+	\coordinate (C2) at (-1, 2);
+	\coordinate (D2) at (2, 2);
+	\coordinate (p1) at ($(A)!(C1)!(B)$);
+	\coordinate (p2) at ($(A)!(C2)!(B)$);
+
+	\node [dot=below:$A$] at (A) {};
+	\node [dot=below:$B$] at (B) {};
+	\node [dot=$C_1$] at (C1) {};
+	\node [dot=$C_2$] at (C2) {};
+
+	\draw [->] (A) -- (B);
+	\draw [dashed] (p2) -- (A);
+
+	\draw [->] (A) -- (C1);
+	\fill [black,opacity=0.2] (A) -- (B) -- (D1) -- (C1) -- cycle;
+	\draw pic["$+$",draw,->]{angle = B--A--C1};
+	\draw [dashed] (C1) -- node[midway,right]{$h_1$} (p1);
+	\draw pic [draw,angle radius=5] {right angle = C1--p1--B};
+
+	\draw [->] (A) -- (C2);
+	\fill [black,opacity=0.2] (A) -- (B) -- (D2) -- (C2) -- cycle;
+	\draw pic[draw,->,angle radius=20]{angle = B--A--C2};
+	\draw [dashed] (C2) -- node[midway,right]{$h_2$} (p2);
+	\draw pic [draw,angle radius=5] {right angle = C2--p2--B};
+
+\end{tikzpicture}
+\end{document}

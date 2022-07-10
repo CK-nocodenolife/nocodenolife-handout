@@ -1,0 +1,36 @@
+\documentclass{minimal}
+\usepackage{tikz}
+\usetikzlibrary{quotes,angles,calc}
+\usepackage[active,tightpage]{preview} 
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{2mm}
+
+\begin{document}
+\begin{tikzpicture}[dot/.style={circle,inner sep=1pt,fill,label={#1}},
+  extended line/.style={shorten >=-#1,shorten <=-#1},
+  extended line/.default=1cm]
+
+	\coordinate (A) at (0, 0);
+	\coordinate (B) at (3, 0);
+	\coordinate (C1) at (2, 3);
+	\coordinate (C2) at (-1, 2);
+	\coordinate (p1) at ($(A)!(C1)!(B)$);
+
+	\node [dot=$A$] at (A) {};
+	\node [dot=$B$] at (B) {};
+	\node [dot=$C_1$] at (C1) {};
+	\node [dot=$C_2$] at (C2) {};
+
+	\draw (A) -- (B);
+	\draw [dashed] (C1) -- (p1);
+	\draw [dashed] (C2) -- (A);
+	\draw pic [draw,angle radius=5] {right angle = C1--p1--B};
+
+	\coordinate (d1) at (0, 3);
+	\coordinate (d2) at (3, 3);
+
+	\draw[extended line=0.5cm,dashed] (A) -- (d1);
+	\draw[extended line=0.5cm,dashed] (B) -- (d2);
+
+\end{tikzpicture}
+\end{document}
