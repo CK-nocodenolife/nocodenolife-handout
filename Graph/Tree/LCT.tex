@@ -1,0 +1,275 @@
+\chapter{Link Cut Tree}
+    \section{前言}
+    把隨便一個樹鏈剖分題抓過來，然後加入加邊和刪邊操作，期間保證都是森林，這時候樹鏈剖分就徹底死在路邊了，輪到 LCT 的回合了。
+    \section{splay}
+    這是一種二元平衡樹。
+        \subsection{旋轉}
+        當我們在 splay 上把一個點的深度往上一格，同時保持整棵樹的中序遍歴不變，這種操作就是旋轉。\\
+            \subsubsection{左旋}
+            表示自己是爸爸的右兒子($p$)。\\
+            $f$ 是 $p$ 的爸爸，$c$ 是 $p$ 的左兒子。\\
+            \includegraphics*[width = 0.7\textwidth]{images/LeftTurn}
+            \subsubsection{右旋}
+            表示自己是爸爸的左兒子($p$)。\\
+            $f$ 是 $p$ 的爸爸，$c$ 是 $p$ 的右兒子。\\
+            \includegraphics*[width = 0.7\textwidth]{images/RightTurn}
+        \begin{C++}
+        array<int, 100004> F; //爸爸
+        array<array<int, 2>, 100004> C; //C[p][0] = 左兒子, C[p][1] = 右兒子
+        int get(int p){ //看自己是哪一邊的
+            return p == C[F[p]][1];
+        }
+        void turn(int p){ //旋轉
+            int f = F[p], g = get(p), c = C[p][!g];
+            if(F[f]) C[F[f]][get(f)] = p;
+            F[p] = F[f], F[f] = p, C[p][!g] = f, C[f][g] = c;
+            if(c) F[c] = f;
+        }
+        \end{C++}
+        \subsection{splay}
+        splay = 把一個點旋轉到根。\\
+        往上時可能會遇到這三種情況 : \\
+        $p$ 是自己，$f$ 是爸爸，$g$ 是阿公。\\
+            \subsubsection{爸爸就是根}
+            \includegraphics*[width = 0.7\textwidth]{images/Froot}
+            \subsubsection{爸爸跟阿公同邊}
+            \includegraphics*[width = 0.7\textwidth]{images/FGsame}
+            \subsubsection{爸爸跟阿公不同邊}
+            \includegraphics*[width = 0.7\textwidth]{images/FGdif}
+        \begin{C++}
+        void splay(int p){
+            for(int f = F[p]; f; turn(p), f = F[p]){
+                if(F[f]) turn(get(p) == get(f)? f : p);
+            }
+        }
+        \end{C++}
+        \subsection{很多功能}
+            \subsubsection{rank(p)}
+            查 p 在 splay 的中序遍歷中排第幾。\\
+            把 p splay上去，看左子樹大小。
+            \subsubsection{find(p, k)}
+            查 p 所在 splay 中 rank 第 k 的編號。\\
+            往下找，如果左子樹大小比 k 大，往左子樹走，反之往右子樹走直到剛好是自己。
+            \subsubsection{merge(u, v)}
+            把 u 和 v 兩點所在的兩棵 splay 合併。\\
+            先把 v splay 上去，再把 u 所在 splay 中最右邊的點 splay 上去，右子樹去接 v。
+            \subsubsection{split(p, k)}
+            把 p 所在的 splay 從 k 和 k + 1 中間砍斷。\\
+            find(p, k)，把那個點 splay 上去，把他跟右子樹中間切斷。
+        \subsection{複雜度證明}
+        勢能證明 : \\
+        有一個通靈出來的勢能函數 $\phi(x) = log(|x|(x$ 子樹大小$))$ \\
+        均攤複雜度 = 實際複雜度 + 總勢能變化 \\
+        splay 複雜度 = $h(x$ 深度$) + \sum\limits_{i = 1}^{t(turn次數)}{\phi(p_i) - \phi(p_{i - 1})}$ \\
+        $ = h + \phi(p_t) - \phi(p_0)$ \\
+        \includegraphics*[width = 0.7\textwidth]{images/TimeFroot} \\
+        $1($實際時間$) + \phi(p') + \phi(f') - \phi(p) - \phi(f) \\ = 1 + \phi(f') - \phi(p) \ (\phi(f) = \phi(p')) \\ \le 1 + \phi(p') - \phi(p) \ (\phi(f') \le \phi(p'))$ \\
+        \includegraphics*[width = 0.7\textwidth]{images/TimeFGsame} \\
+        $2($實際時間$) + \phi(p') + \phi(f') + \phi(g') - \phi(p) - \phi(f) - \phi(g) \\ = 2 + \phi(f') + \phi(g') - \phi(p) - \phi(f) \ (\phi(g) = \phi(p')) \\ \le 2 + \phi(p') + \phi(g') - 2\phi(p) \ (\phi(f') \le \phi(p'), \phi(f) \ge \phi(p)) \\ \le 3\phi(p') - 3\phi(p) \ (log\frac{|g'| + |p|}{2} \ge \frac{log|g'| + log|p|}{2}) \\ \le 3(\phi(p') - \phi(p)))$ \\
+        \includegraphics*[width = 0.7\textwidth]{images/TimeFGdif} \\
+        $2($實際時間$) + \phi(p') + \phi(f') + \phi(g') - \phi(p) - \phi(f) - \phi(g) \\ = 2 + \phi(f') + \phi(g') - \phi(p) - \phi(f) \ (\phi(g) = \phi(p')) \\ \le 2 + \phi(f') + \phi(g') - 2\phi(p) \ (\phi(f) \ge \phi(p)) \\ \le 2\phi(p') - 2\phi(p) \ (log\frac{|f'| + |g'|}{2} \ge \frac{log|f'| + log|g'|}{2}) \\ \le 2(\phi(p') - \phi(p))$ \\\\
+        splay 複雜度 $\le 3(\phi(p_t) - \phi(p_0)) + 1 \\ \le 3logN + 1 \ (\phi(p_t) = logN) \\ \implies O(logN)$
+        \subsection{完整的翻轉懶標 splay}
+        \begin{C++}
+        #include <bits/stdc++.h>
+        #define lc C[p][0]
+        #define rc C[p][1]
+        using namespace std;
+        array<int, 100004> S, F, rev;
+        array<array<int, 2>, 100004> C;
+        void pull(int p){
+            S[p] = S[lc] + S[rc] + 1;
+        }
+        void push(int p){
+            if(rev[p]) swap(lc, rc);
+            rev[lc] ^= rev[p], rev[rc] ^= rev[p];
+            rev[p] = 0;
+        }
+        int get(int p){
+            return p == C[F[p]][1];
+        }
+        void turn(int p){
+            int f = F[p], g = get(p), c = C[p][!g];
+            if(F[f]) C[F[f]][get(f)] = p;
+            F[p] = F[f], F[f] = p, C[p][!g] = f, C[f][g] = c;
+            if(c) F[c] = f;
+            pull(f), pull(p);
+        }
+        void update(int p){
+            if(F[p]) update(F[p]);
+            push(p);
+        }
+        void splay(int p){
+            update(p);
+            for(int f = F[p]; f; turn(p), f = F[p]){
+                if(F[f]) turn(get(p) == get(f)? f : p);
+            }
+        }
+        int rank(int p){
+            splay(p);
+            return S[lc] + 1;
+        }
+        int find(int p, int k){
+            splay(p);
+            while(k){
+                push(p);
+                if(k > S[lc] + 1) k -= S[lc] + 1, p = rc;
+                else if(k <= S[lc]) p = lc;
+                else return p;
+            }
+            return 0;
+        }
+        void merge(int u, int v){
+            if(!S[u] || !S[v] || find(u, 1) == find(v, 1)) return;
+            u = find(u, S[u]), splay(u);
+            C[u][1] = v, F[v] = u;
+            pull(u);
+        }
+        void split(int p, int k){
+            if(!k || !S[p]) return;
+            p = find(p, k), splay(p);
+            F[rc] = 0, rc = 0;
+            pull(p);
+        }
+        \end{C++}
+    \section{LCT}
+    用很多二元平衡樹來表示一棵樹。
+        \subsection{實鏈剖分}
+        樹鏈剖分 : 按照子樹大小分成輕重邊把樹給拆了。\\
+        實鏈剖分 : 隨便亂選出來的虛實邊把樹給拆了。(每個點往下最多有一個實邊，其他都是虛邊)\\
+        於是我們可以對每一條實鏈都砸一棵 splay 去維護。\\
+        \includegraphics*[width = 0.7\textwidth]{images/RITree} \\
+        \includegraphics*[width = 0.7\textwidth]{images/RISplay} \\
+        \subsection{串串}
+        把一個點到原樹上的根中間都變成實邊，並且自己往下都是虛邊。\\
+        \includegraphics*[width = 0.7\textwidth]{images/TreeKabab} \\
+        \includegraphics*[width = 0.7\textwidth]{images/SplayKabab} \\
+        \begin{C++}
+        int kabab(int p){
+            int c;
+            for(c = 0; p; c = p, p = F[p]){
+                splay(p), rc = c, pull(p);
+            }
+            return c;
+        }
+        \end{C++}
+        \subsection{很多功能}
+            \subsubsection{plant(p)}
+            把 p 變成根。\\
+            把 p 給串了，再把那條鏈翻轉。\\
+            \subsubsection{find(p)}
+            找 p 所在樹上的根。\\
+            把 0 給串了，再 splay 上去，然後不斷往左跑就是根了。\\
+            \subsubsection{link(u, v)}
+            在 u 和 v 中間加一條邊。\\
+            把 v 串了再 splay 上去，爸爸變成 u。\\
+            \subsubsection{cut(u, v)}
+            把 u 和 v 中間的邊砍了。\\
+            把 u 變成根，把 v 給串了再 splay u 上去，這時候 v 就會是 u 的右兒子，砍斷就行。\\
+        \subsection{時間複雜度}
+            串一次的均攤合併鏈數一次 $logN$ 條。\\
+            把兩條鏈串在一起會發生的事情 : \\
+            輕虛邊 $\to$ 輕實邊 or 重虛邊 $\to$ 重實邊，
+            輕邊最多遇到 $logN$條\\
+            重虛邊 $\to$ 重實邊 $=$ 重實邊 $\to$ 重虛邊\\
+            重實邊 $\to$ 重虛邊 $=$ 輕虛邊 $\to$ 輕實邊\\\\
+            因此用 treap 之類的二元平衡樹每串一次要 $O(log^2N)$ \\
+            砸 splay 的複雜度 $ = \sum\limits_{i = 1}^{k(kabab \ count)}{3(\phi(p_{it}) - \phi(p_{i0})) + 1} \\ \le 3\phi(root) + k \to O(logN)$ \\
+        \subsection{一整棵 LCT}
+        \begin{C++}
+        #include <bits/stdc++.h>
+        #define lc C[p][0]
+        #define rc C[p][1]
+        using namespace std;
+        array<int, 100004> F, S, rev;
+        array<array<int, 2>, 100004> C;
+        set<pair<int, int>> E;
+        int get(int p){
+            return p == C[F[p]][1];
+        }
+        int root(int p){
+            return p != C[F[p]][get(p)];
+        }
+        void pull(int p){
+            S[p] = S[lc] + S[rc] + 1;
+        }
+        void push(int p){
+            if(rev[p]) swap(lc, rc);
+            rev[lc] ^= rev[p], rev[rc] ^= rev[p];
+            rev[p] = 0;
+        }
+        void turn(int p){
+            int f = F[p], g = get(p), c = C[p][!g];
+            if(!root(f)) C[F[f]][get(f)] = p;
+            F[p] = F[f], F[f] = p, C[p][!g] = f, C[f][g] = c;
+            if(c) F[c] = f;
+            pull(f), pull(p);
+        }
+        void update(int p){
+            if(!root(p)) update(F[p]);
+            push(p);
+        }
+        void splay(int p){
+            update(p);
+            for(int f = F[p]; !root(p); turn(p), f = F[p]){
+                if(!root(f)) turn(get(p) == get(f)? f : p);
+            }
+        }
+        int kabab(int p){
+            int c;
+           for(c = 0; p; c = p, p = F[p]){
+                splay(p), rc = c, pull(p);
+            }
+            return c;
+        }
+        void plant(int p){
+            p = kabab(p);
+            rev[p] ^= 1;
+        }
+        int find(int p){
+            p = kabab(p);
+            for(; lc; push(p), p = lc);
+            splay(p);
+            return p;
+        }
+        void link(int u, int v){
+            if(find(u) == find(v)) return;
+            if(u > v) swap(u, v);
+            E.insert({u, v});
+            plant(u), splay(u), F[u] = v;
+        }
+        void cut(int u, int v){
+            if(u > v) swap(u, v);
+            if(E.find({u, v}) == E.end()) return;
+            E.erase({u, v});
+            plant(u), kabab(v), splay(u);
+            F[v] = 0, C[u][1] = 0;
+            pull(u);
+        }
+        \end{C++}
+    \section{習題}
+        \problem{洛谷 P1501}{
+            給你一棵 $N$ 個點的樹，初始權重都是 $1$，接著給你 $Q$ 筆操作四種 : \\
+            1. 把兩點間路徑上點權都加值。\\
+            2. 刪掉一條邊再加入一條邊(保證還是一棵樹)。\\
+            3. 把兩點間路徑上點權都乘值。\\
+            4. 詢問兩點間路徑點權合($mod \ 51061$)。\\
+            ($1 \le N, Q \le 10^5, 1 \le$ 加乘值 $\le 10^4$)
+        }
+        \problem{洛谷 P4234}{
+            給你一棵 $N$ 個點，$M$ 條邊的圖，讓你找出最小差值生成樹。\\
+            ($1 \le N \le 5 \cdot 10^4, 1 \le M \le 2 \cdot 10^5, 1 \le$ 邊權 $\le 10^4$)
+        }
+        \problem{洛谷 P4219}{
+            給你 $N$ 個點，接著給你 $Q$ 筆操作兩種 : \\
+            1. 在兩點中間加一條邊(保證不連通)。\\
+            2. 詢問兩個點去除中間邊之後各自連通塊大小相乘。\\
+            ($1 \le N, Q \le 10^5$)
+        }
+        \problem{洛谷 P3703}{
+            給你一棵 $N$ 個點的樹，以 1 為根，接著給你 $M$ 筆操作三種 : \\
+            1. 把一個點到根中間的路徑染成一種全新的顏色。\\
+            2. 詢問兩個點間路徑的顏色種類。\\
+            3. 詢問一個點的子樹中的點到根顏色種類最多幾種。\\
+            ($1 \le N, M \le 10^5$)
+        }
