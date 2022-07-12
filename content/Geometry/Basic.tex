@@ -228,4 +228,52 @@ bool SegInter(Vec a, Vec b, Vec c, Vec d) {
 }
 \end{C++}
 
+\subsection{求兩線段交點}
+
+這裡會用到一些國中的幾何：我們可以知道 $\overline{CX} : \overline{DX} = d_1 : d_2 = \triangle ACB : \triangle ADB$ ，而三角形面積我們可以用外積求！不過，要特別注意外積得到的面積會是有向面積，在計算時要注意正負號喔。在使用前，記得保證兩線段不平行喔。
+
+\begin{center}
+	\includegraphics*{images/Geometry/Basic/SegInterPoint.pdf}
+\end{center}
+
+\begin{C++}
+Vec SegInterPoint(Vec a, Vec b, Vec c, Vec d) {
+	assert(cross(b - a, d - c) != 0);
+	double acb = cross(b - a, c - a);
+	double adb = cross(d - a, b - a);
+	return (c * adb + d * acb) / (adb + acb);
+}
+\end{C++}
+
+
+另外，這個方法其實可以用在直線相交，也就是兩線段沒有相交的話會得到它們無限延伸後的交點，不過正確性就交給讀者證明囉。
+
+\section{向量基礎操作的基礎應用}
+
+既然已經會寫基礎的模板了，就來實際應用它們吧！
+
+\subsection{線段 $\overline{AB}$ 的中垂線段}
+
+說中垂線是騙人的！假設我們要求線段 $\overline{AB}$ 的中垂線段 $\overline{CD}$ ，其實我們只要求出符合以下條件的線段就好了：
+
+\begin{enumerate}
+	\item 過 $\overline{AB}$ 的中點 $C = \frac{A + B}{2}$ 。
+	\item 和 $\overline{AB}$ 垂直 $\rightarrow \vec{AB} \cdot \vec{CD} = 0$ 。
+\end{enumerate}
+
+不難發現，假設 $\vec{AB}$ 是 $(x, y)$ ，那只要令 $\vec{CD} = (-y, x), D = C + \vec{CD}$ 就一定會垂直！
+
+\begin{C++}
+Seg SegBisector(Vec a, Vec b) {
+	Vec c = (a + b) / 2;
+	Vec ab = b - a;
+	Vec cd = Vec(-ab.y, ab.x);
+	return Seg(c, c + cd);
+}
+\end{C++}
+
+\subsection{角 $\angle BAC$ 的角平分線段}
+
+說角平分線段也是騙人的！
+
 \end{document}

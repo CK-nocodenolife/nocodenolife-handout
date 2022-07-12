@@ -1,0 +1,41 @@
+\documentclass{minimal}
+\usepackage{tikz}
+\usetikzlibrary{quotes,angles,calc,intersections}
+\usepackage[active,tightpage]{preview} 
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{2mm}
+
+\begin{document}
+\begin{tikzpicture}
+
+	\coordinate (A) at (0, 0);
+	\coordinate (B) at (9, 6);
+
+	\coordinate (C) at (3, 5);
+	\coordinate (D) at (8, 3);
+
+	\node [draw,circle,fill=black,inner sep=1pt,label=$A$] at (A) {};
+	\node [draw,circle,fill=black,inner sep=1pt,label=$B$] at (B) {};
+	\node [draw,circle,fill=black,inner sep=1pt,label=$C$] at (C) {};
+	\node [draw,circle,fill=black,inner sep=1pt,label=$D$] at (D) {};
+
+	\draw [name path=A--B] (A) -- (B);
+	\draw [name path=C--D] (C) -- (D);
+
+	\path [name intersections={of=A--B and C--D,by=X}];
+	\node [draw,circle,fill=black,inner sep=1pt,label=$X$] at (X) {};
+
+
+	\draw [fill=gray,opacity=0.2] (A) -- (C) -- (B) -- cycle;
+	\draw [fill=black,opacity=0.2] (A) -- (D) -- (B) -- cycle;
+
+	\coordinate (c) at ($(A)!(C)!(B)$);
+	\draw pic [draw,angle radius=5] {right angle = C--c--B};
+	\draw [dashed] (C) -- (c) node [below left,midway] {$d_1$};
+
+	\coordinate (d) at ($(A)!(D)!(B)$);
+	\draw pic [draw,angle radius=5] {right angle = D--d--A};
+	\draw [dashed] (D) -- (d) node [above right,midway] {$d_2$};
+
+\end{tikzpicture}
+\end{document}
